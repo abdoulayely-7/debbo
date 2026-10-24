@@ -1,0 +1,8 @@
+@import "/utils/debbo.wxss";
+
+.db-myth { display:flex; align-items:flex-start; gap:16rpx; margin-bottom:16rpx; }
+.db-accord { background:#fff; border-radius:20rpx; margin-bottom:16rpx; overflow:hidden; }
+.db-accord-header { display:flex; align-items:center; padding:28rpx 32rpx; gap:16rpx; }
+.db-accord-arrow { font-size:28rpx; color:var(--muted); transition:transform 0.2s; }
+.db-accord-arrow-open { transform:rotate(180deg); }
+.db-accord-body { padding:0 32rpx 28rpx; display:flex; flex-direction:column; gap:12rpx; }

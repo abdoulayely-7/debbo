@@ -1,0 +1,64 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow"><text class="db-apphead-title">Vie privée</text></view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+      <!-- Info cards -->
+      <view class="db-card">
+        <view class="db-row" style="gap:16rpx;align-items:flex-start;">
+          <image src="/assets/icons/lock.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Données chiffrées</text>
+            <text class="db-small db-muted">Vos données de cycle sont chiffrées et stockées uniquement sur votre appareil. Debbo n'y a pas accès.</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="gap:16rpx;align-items:flex-start;">
+          <image src="/assets/icons/shield.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Paiements discrets</text>
+            <text class="db-small db-muted">Vos achats Debbo ne sont pas visibles dans l'historique Max it. Ils apparaissent comme « Achat Bien-être ».</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="gap:16rpx;align-items:flex-start;">
+          <image src="/assets/icons/info.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Aucune revente de données</text>
+            <text class="db-small db-muted">Debbo ne vend jamais vos données à des tiers. Vos informations de santé restent strictement privées.</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="gap:16rpx;align-items:flex-start;">
+          <image src="/assets/icons/refresh.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Contrôle total</text>
+            <text class="db-small db-muted">Vous pouvez effacer toutes vos données à tout moment depuis cette page.</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Danger zone -->
+      <view class="vp-danger-zone">
+        <text class="vp-danger-label">Zone de danger</text>
+        <view class="db-card vp-danger-card">
+          <text class="db-bold" style="color:#C00;">Effacer toutes mes données</text>
+          <text class="db-small db-muted" style="margin-top:8rpx;">Supprime votre historique de cycle, vos commandes et vos préférences. Action irréversible.</text>
+          <view class="db-btn vp-btn-danger" bindtap="wipeAll"><text>Tout effacer</text></view>
+        </view>
+      </view>
+
+      <view style="text-align:center;padding:16rpx 0 40rpx;" bindtap="goConseils">
+        <text style="font-size:26rpx;color:var(--indigo);">Conseils santé →</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

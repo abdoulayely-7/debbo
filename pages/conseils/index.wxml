@@ -1,0 +1,43 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow">
+      <text class="db-apphead-title">Conseils</text>
+      <view><text class="db-apphead-sub">Validés par des sages-femmes partenaires</text></view>
+    </view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+      <view style="display:flex;gap:12rpx;flex-wrap:wrap;">
+        <view class="db-chip db-chip-ind"><text>Français</text></view>
+        <view class="db-chip"><text>Wolof · bientôt en audio</text></view>
+        <view class="db-chip"><text>Pulaar · bientôt en audio</text></view>
+      </view>
+
+      <view wx:for="{{sections}}" wx:key="id" class="db-accord">
+        <view class="db-accord-header" bindtap="toggleSection" data-id="{{item.id}}">
+          <text class="db-grow" style="flex:1;">{{item.q}}</text>
+          <text class="db-accord-arrow {{item.open ? 'db-accord-arrow-open' : ''}}">▾</text>
+        </view>
+        <view wx:if="{{item.open}}" class="db-accord-body">
+          <view wx:if="{{item.body}}">
+            <text style="white-space:pre-wrap;">{{item.body}}</text>
+          </view>
+          <view wx:for="{{item.myths}}" wx:key="label" wx:for-item="myth" class="db-myth">
+            <view class="db-chip {{myth.type === 'warn' ? 'db-chip-warn' : 'db-chip-ok'}}"><text>{{myth.label}}</text></view>
+            <text class="db-small db-grow">{{myth.text}}</text>
+          </view>
+          <view wx:if="{{item.note}}">
+            <text class="db-small db-muted">{{item.note}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <text class="db-bold">Une question précise ?</text>
+        <text class="db-small db-muted">Posez-la à une sage-femme partenaire. Réponse écrite sous 24 h.</text>
+        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="askQuestion"><text>Poser une question</text></view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

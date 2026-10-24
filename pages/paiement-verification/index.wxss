@@ -1,0 +1,8 @@
+@import "/utils/debbo.wxss";
+
+.verif-screen { background: var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; }
+.verif-center { display:flex; flex-direction:column; align-items:center; gap:24rpx; padding:80rpx 40rpx; }
+.spinner-anim { width:96rpx; height:96rpx; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.verif-title { font-size:36rpx; font-weight:600; color:var(--txt); }
+.verif-sub { font-size:26rpx; color:var(--muted); text-align:center; }

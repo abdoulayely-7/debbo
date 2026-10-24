@@ -1,0 +1,8 @@
+@import "/utils/debbo.wxss";
+
+.hist-disc { background:#FFF0F8; border:1rpx solid #F6D5E3; }
+.hist-section-label { display:block; font-size:22rpx; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:2rpx; padding:16rpx 0 8rpx; }
+.hist-row { display:flex; align-items:center; gap:20rpx; padding:24rpx 28rpx; margin-bottom:10rpx; }
+.hist-icon { font-size:40rpx; min-width:56rpx; text-align:center; }
+.hist-pos { font-size:28rpx; font-weight:700; color:var(--ok); white-space:nowrap; }
+.hist-neg { font-size:28rpx; font-weight:600; color:var(--txt); white-space:nowrap; }

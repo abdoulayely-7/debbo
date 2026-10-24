@@ -1,0 +1,24 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow"><text class="db-apphead-title">Kit prêt à retirer</text></view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body" style="align-items:center;">
+      <image src="/assets/icons/check-circle.svg" style="width:80rpx;height:80rpx;" />
+      <text class="db-bold db-center" style="font-size:40rpx;text-align:center;">Montrez ce code au comptoir</text>
+      <view class="db-code-display"><text>DB-9126</text></view>
+      <view class="db-card" style="width:100%;">
+        <view class="db-kv"><text class="db-muted">Pharmacie</text><text class="db-bold">Pharmacie partenaire Sacré-Cœur</text></view>
+        <view class="db-kv"><text class="db-muted">Contenu</text><text class="db-bold">Kit Essentiel</text></view>
+        <view class="db-kv"><text class="db-muted">Valable</text><text class="db-bold">24 h</text></view>
+        <view class="db-kv"><text class="db-muted">Payé</text><text class="db-bold">1 500 FCFA</text></view>
+        <view class="db-kv"><text class="db-muted">Dans votre historique</text><text class="db-bold">Achat Bien-être</text></view>
+      </view>
+      <text class="db-small db-muted db-center" style="text-align:center;">Sacré-Cœur 3 · 5 min à pied · Ouverte jusqu'à 23 h. Le kit est remis dans un sachet opaque.</text>
+    </view>
+  </scroll-view>
+  <view class="db-footbar">
+    <view class="db-btn db-btn-ghost" bindtap="goHome"><text>Retour à l'accueil</text></view>
+  </view>
+</view>

@@ -1,0 +1,61 @@
+<view class="db-screen">
+
+  <!-- App Header -->
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack">
+      <image src="/assets/icons/back.svg" class="db-icon" />
+    </view>
+    <view class="db-grow">
+      <text class="db-apphead-title">Mon cycle</text>
+      <view><text class="db-apphead-sub">Espace protégé</text></view>
+    </view>
+  </view>
+
+  <!-- Body centré -->
+  <view class="db-body" style="justify-content:center;align-items:center;">
+
+    <image src="/assets/icons/lock.svg" style="width:64rpx;height:64rpx;margin-bottom:16rpx;" />
+
+    <text class="db-bold" style="font-size:32rpx;margin-bottom:8rpx;">Entrez votre code</text>
+
+    <text class="db-small db-muted db-center" style="max-width:500rpx;text-align:center;margin-bottom:32rpx;">
+      Code de l'espace Mon cycle, différent de votre code Max it.
+    </text>
+
+    <!-- Indicateur à points -->
+    <view class="db-dots">
+      <view class="db-dot {{dots[0] ? 'db-dot-filled' : ''}}"></view>
+      <view class="db-dot {{dots[1] ? 'db-dot-filled' : ''}}"></view>
+      <view class="db-dot {{dots[2] ? 'db-dot-filled' : ''}}"></view>
+      <view class="db-dot {{dots[3] ? 'db-dot-filled' : ''}}"></view>
+    </view>
+
+    <!-- Clavier numérique -->
+    <view class="db-keypad" style="width:100%;max-width:560rpx;">
+      <view class="db-key" bindtap="pressKey" data-key="1"><text>1</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="2"><text>2</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="3"><text>3</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="4"><text>4</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="5"><text>5</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="6"><text>6</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="7"><text>7</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="8"><text>8</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="9"><text>9</text></view>
+      <view class="db-key-blank"></view>
+      <view class="db-key" bindtap="pressKey" data-key="0"><text>0</text></view>
+      <view class="db-key" bindtap="pressKey" data-key="⌫"><text>⌫</text></view>
+    </view>
+
+    <!-- Hint démo -->
+    <view style="margin-top:24rpx;padding:10rpx 20rpx;background:var(--indigo-soft);border-radius:999rpx;">
+      <text class="db-small" style="color:var(--indigo);">Code de démonstration : 1234</text>
+    </view>
+
+    <!-- Code oublié -->
+    <view class="db-btn db-btn-ghost db-btn-sm" bindtap="forgot" style="margin-top:24rpx;">
+      <text>Code oublié ? Tout effacer et recommencer</text>
+    </view>
+
+  </view>
+
+</view>

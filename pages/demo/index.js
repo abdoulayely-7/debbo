@@ -12,7 +12,7 @@ const { STATE_KEYS } = app.globalData;
 Page({
   behaviors: [loadingBehavior],
 
-  data: {
+  data: {   
     // Stepper state
     steps: ['Details', 'Review', 'Confirm'],
     currentStep: 0,

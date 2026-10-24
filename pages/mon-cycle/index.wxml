@@ -1,0 +1,109 @@
+<view class="db-screen">
+
+  <!-- App Header -->
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack">
+      <image src="/assets/icons/back.svg" class="db-icon" />
+    </view>
+    <view class="db-grow">
+      <text class="db-apphead-title">Mon cycle</text>
+    </view>
+  </view>
+
+  <!-- Corps scrollable -->
+  <scroll-view scroll-y class="db-body">
+
+    <!-- Carte cycle ring -->
+    <view class="db-card">
+      <view class="db-row">
+        <image src="/assets/icons/calendar.svg" class="db-icon" />
+        <text class="db-bold db-grow">Suivi du cycle privé</text>
+        <view class="db-chip db-chip-ind"><text>Jour 24 sur 28</text></view>
+      </view>
+
+      <!-- Cercle visuel simplifié -->
+      <view class="db-cycle-ring">
+        <text class="db-small db-muted">Dans</text>
+        <text style="font-size:64rpx;font-weight:800;color:var(--accent);">5 j</text>
+        <text class="db-small" style="color:var(--accent-text);">Règles prévues</text>
+      </view>
+
+      <text class="db-small db-center db-muted">Vers le <text class="db-bold">27 oct.</text> · estimation</text>
+
+      <view class="db-row" style="gap:12rpx;align-items:flex-start;">
+        <image src="/assets/icons/info.svg" class="db-icon" />
+        <view class="db-grow">
+          <text class="db-bold">Phase lutéale</text>
+          <text class="db-small db-muted"> · Fatigue ou crampes légères possibles. Une tisane chaude peut aider.</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bande de jours -->
+    <view class="db-card">
+      <scroll-view scroll-x style="white-space:nowrap;">
+        <view style="display:flex;gap:8rpx;padding:4rpx 0;">
+          <view
+            wx:for="{{days}}"
+            wx:key="num"
+            class="db-day {{item.today ? 'db-day-today' : ''}} {{item.period ? 'db-day-period' : ''}} {{item.remind ? 'db-day-remind' : ''}}">
+            <text class="db-small">{{item.label}}</text>
+            <text class="db-bold">{{item.num}}</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- Légende -->
+      <view class="db-row" style="gap:24rpx;flex-wrap:wrap;margin-top:16rpx;">
+        <view class="db-row" style="gap:8rpx;align-items:center;">
+          <view class="db-day db-day-period" style="width:24rpx;height:24rpx;padding:0;min-width:24rpx;"></view>
+          <text class="db-small db-muted">Règles estimées</text>
+        </view>
+        <view class="db-row" style="gap:8rpx;align-items:center;">
+          <view class="db-day db-day-remind" style="width:24rpx;height:24rpx;padding:0;min-width:24rpx;"></view>
+          <text class="db-small db-muted">Période de rappel</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- Bouton recommander -->
+    <view class="db-btn db-btn-indigo" bindtap="goToReorder">
+      <image src="/assets/icons/refresh.svg" class="db-icon" />
+      <text>Recommander mon Kit Essentiel · 1 500 FCFA</text>
+    </view>
+
+    <!-- Carte paramètres -->
+    <view class="db-card">
+      <view class="db-kv">
+        <text class="db-muted">Début des dernières règles</text>
+        <text class="db-bold">29 sept. 2026</text>
+      </view>
+      <view class="db-kv">
+        <text class="db-muted">Durée du cycle</text>
+        <text class="db-bold">28 jours</text>
+      </view>
+      <view class="db-kv">
+        <text class="db-muted">Me prévenir</text>
+        <text class="db-bold">3 j avant</text>
+      </view>
+      <view class="db-btn db-btn-ghost db-btn-sm" bindtap="showNotif">
+        <text>Voir la notification que vous recevrez</text>
+      </view>
+    </view>
+
+    <!-- Carte switch + effacement -->
+    <view class="db-card">
+      <view class="db-row">
+        <text class="db-bold db-grow">Suivi activé</text>
+        <view class="db-switch {{trackingOn ? 'db-switch-on' : ''}}" bindtap="toggleTracking">
+          <view class="db-switch-thumb {{trackingOn ? 'db-switch-thumb-on' : ''}}"></view>
+        </view>
+      </view>
+      <view class="db-btn db-btn-danger db-btn-sm" bindtap="wipeData">
+        <text>Effacer toutes mes données de cycle</text>
+      </view>
+    </view>
+
+  </scroll-view>
+
+</view>

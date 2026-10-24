@@ -1,0 +1,75 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow">
+      <text class="db-apphead-title">Debbo Solidaire</text>
+      <view><text class="db-apphead-sub">Aucune élève ne devrait manquer les cours à cause de ses règles</text></view>
+    </view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+      <view class="db-grid2">
+        <view class="db-stat"><text class="db-stat-num">1 284</text><text class="db-small db-muted">kits offerts ce trimestre</text></view>
+        <view class="db-stat"><text class="db-stat-num">23</text><text class="db-small db-muted">collèges et lycées équipés</text></view>
+        <view class="db-stat"><text class="db-stat-num">41</text><text class="db-small db-muted">couturières et productrices payées</text></view>
+        <view class="db-stat"><text class="db-stat-num" style="font-size:36rpx;">18 400 F</text><text class="db-small db-muted">collectés par le geste solidaire</text></view>
+      </view>
+      <text class="db-small db-muted">Chiffres d'exemple pour la démonstration.</text>
+
+      <text class="db-label">Comment Debbo agit</text>
+
+      <view class="db-card">
+        <view class="db-row" style="align-items:flex-start;gap:16rpx;">
+          <image src="/assets/icons/gift.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Kit suspendu</text>
+            <text class="db-small db-muted">Vous payez un kit, une association partenaire le remet à une élève.</text>
+            <view class="db-btn db-btn-indigo db-btn-sm" bindtap="goOffrir"><text>Offrir un kit</text></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="align-items:flex-start;gap:16rpx;">
+          <image src="/assets/icons/heart.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Geste solidaire à chaque achat</text>
+            <text class="db-small db-muted">Au moment de payer, ajoutez 200 FCFA pour financer des kits.</text>
+            <view class="db-row">
+              <text class="db-grow db-small">Proposer par défaut</text>
+              <view class="db-switch {{defaultRound ? 'db-switch-on' : ''}}" bindtap="toggleDefault">
+                <view class="db-switch-thumb {{defaultRound ? 'db-switch-thumb-on' : ''}}"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="align-items:flex-start;gap:16rpx;">
+          <text style="font-size:36rpx;">🏫</text>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Boîte Debbo à l'école</text>
+            <text class="db-small db-muted">Une réserve de kits chez l'infirmière, réapprovisionnée par les dons. Une élève en urgence n'a rien à payer ni à expliquer.</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-row" style="align-items:flex-start;gap:16rpx;">
+          <image src="/assets/icons/store.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Revenus pour les créatrices locales</text>
+            <text class="db-small db-muted">Les serviettes lavables, trousses et tisanes sont fabriquées par des ateliers et coopératives de femmes.</text>
+            <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goBoutique"><text>Voir leurs produits</text></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <text class="db-bold">Transparence</text>
+        <text class="db-small db-muted">Chaque trimestre, les associations publient dans l'app le nombre de kits remis et les établissements servis.</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

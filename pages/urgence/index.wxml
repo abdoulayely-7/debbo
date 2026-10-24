@@ -1,0 +1,133 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack">
+      <image src="/assets/icons/back.svg" class="db-icon" />
+    </view>
+    <view class="db-grow">
+      <text class="db-apphead-title">J'ai besoin maintenant</text>
+      <view><text class="db-apphead-sub">Dakar · position approximative</text></view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+
+      <!-- Segment mode -->
+      <view class="db-seg">
+        <view class="db-seg-btn {{mode==='retrait' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="retrait">
+          <text>Retrait en pharmacie</text>
+        </view>
+        <view class="db-seg-btn {{mode==='livraison' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="livraison">
+          <text>Livraison discrète</text>
+        </view>
+      </view>
+      <text class="db-small db-muted">Votre kit est préparé au comptoir. Vous montrez un code, vous n'avez rien à demander à voix haute.</text>
+
+      <!-- Pharmacies -->
+      <text class="db-label">Pharmacies partenaires proches</text>
+      <view class="db-opt {{selectedPharma==='p1' ? 'db-opt-selected' : ''}}" bindtap="selectPharma" data-pharma="p1">
+        <view class="db-radio {{selectedPharma==='p1' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+          <text class="db-bold">Pharmacie partenaire Sacré-Cœur</text>
+          <text class="db-small db-muted">0,4 km · 5 min à pied · Ouverte jusqu'à 23 h</text>
+          <view class="db-row" style="gap:8rpx;flex-wrap:wrap;">
+            <view class="db-chip db-chip-ok"><text>Kit prêt</text></view>
+            <view class="db-chip db-chip-acc"><text>La plus proche</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="db-opt {{selectedPharma==='p2' ? 'db-opt-selected' : ''}}" bindtap="selectPharma" data-pharma="p2">
+        <view class="db-radio {{selectedPharma==='p2' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+          <text class="db-bold">Pharmacie partenaire Liberté</text>
+          <text class="db-small db-muted">0,9 km · 11 min à pied · Ouverte jusqu'à 21 h</text>
+          <view class="db-chip db-chip-ok"><text>Kit prêt</text></view>
+        </view>
+      </view>
+      <view class="db-opt {{selectedPharma==='p3' ? 'db-opt-selected' : ''}}" bindtap="selectPharma" data-pharma="p3">
+        <view class="db-radio {{selectedPharma==='p3' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+          <text class="db-bold">Pharmacie de garde Point E</text>
+          <text class="db-small db-muted">1,6 km · 19 min à pied · De garde 24 h/24</text>
+          <view class="db-chip db-chip-ok"><text>Kit prêt</text></view>
+        </view>
+      </view>
+      <view class="db-opt" style="opacity:0.5;">
+        <view class="db-radio"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+          <text class="db-bold">Pharmacie partenaire Mermoz</text>
+          <text class="db-small db-muted">2,3 km · 27 min à pied · Ouverte jusqu'à 20 h</text>
+          <view class="db-chip db-chip-warn"><text>Rupture</text></view>
+        </view>
+      </view>
+
+      <!-- Kits -->
+      <text class="db-label">Choisir le kit</text>
+      <view class="db-opt {{selectedKit==='mini' ? 'db-opt-selected' : ''}}" bindtap="selectKit" data-kit="mini">
+        <view class="db-radio {{selectedKit==='mini' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
+            <text class="db-bold">Kit Dépannage</text>
+            <view class="db-chip db-chip-ok"><text>Petit budget</text></view>
+          </view>
+          <text class="db-small db-muted">3 serviettes jour, 2 lingettes, sachet opaque</text>
+        </view>
+        <text class="db-bold" style="color:var(--accent-text);white-space:nowrap;">500 FCFA</text>
+      </view>
+      <view class="db-opt {{selectedKit==='ess' ? 'db-opt-selected' : ''}}" bindtap="selectKit" data-kit="ess">
+        <view class="db-radio {{selectedKit==='ess' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
+            <text class="db-bold">Kit Essentiel</text>
+            <view class="db-chip db-chip-ind"><text>Le plus choisi</text></view>
+          </view>
+          <text class="db-small db-muted">8 serviettes jour, 2 nuit, lingettes, sachet opaque</text>
+        </view>
+        <text class="db-bold" style="color:var(--accent-text);white-space:nowrap;">1 500 FCFA</text>
+      </view>
+      <view class="db-opt {{selectedKit==='conf' ? 'db-opt-selected' : ''}}" bindtap="selectKit" data-kit="conf">
+        <view class="db-radio {{selectedKit==='conf' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <text class="db-bold">Kit Confort</text>
+          <text class="db-small db-muted">Kit Essentiel + patchs chauffants + culotte de rechange</text>
+        </view>
+        <text class="db-bold" style="color:var(--accent-text);white-space:nowrap;">3 000 FCFA</text>
+      </view>
+      <view class="db-opt {{selectedKit==='lav' ? 'db-opt-selected' : ''}}" bindtap="selectKit" data-kit="lav">
+        <view class="db-radio {{selectedKit==='lav' ? 'db-radio-checked' : ''}}"></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
+            <text class="db-bold">Kit Lavable</text>
+            <view class="db-chip db-chip-ind"><text>Économique sur la durée</text></view>
+          </view>
+          <text class="db-small db-muted">3 serviettes lavables en wax, durée de vie ~2 ans</text>
+        </view>
+        <text class="db-bold" style="color:var(--accent-text);white-space:nowrap;">4 500 FCFA</text>
+      </view>
+
+      <!-- Kit detail -->
+      <view class="db-card">
+        <view class="db-row">
+          <text class="db-label db-grow">Dans le Kit Essentiel</text>
+          <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goNosKits" style="width:auto;">
+            <text>Comparer</text>
+          </view>
+        </view>
+        <view class="db-contents">
+          <view class="db-ci"><text class="db-qty">×8</text><text>Serviettes jour <text class="db-small db-muted">· ailettes, 24 cm</text></text></view>
+          <view class="db-ci"><text class="db-qty">×2</text><text>Serviettes nuit <text class="db-small db-muted">· 29 cm, plus absorbantes</text></text></view>
+          <view class="db-ci"><text class="db-qty">×4</text><text>Lingettes intimes <text class="db-small db-muted">· sans alcool</text></text></view>
+          <view class="db-ci"><text class="db-qty">×2</text><text>Sachets opaques refermables</text></view>
+        </view>
+        <text class="db-small db-muted">Pour un cycle de 4 à 5 jours avec un flux moyen.</text>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <view class="db-footbar">
+    <view class="db-btn db-btn-primary" bindtap="goPay">
+      <text>Payer 1 500 FCFA avec Max it</text>
+    </view>
+  </view>
+</view>

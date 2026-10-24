@@ -1,0 +1,59 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow"><text class="db-apphead-title">Historique Max it</text></view>
+    <view class="db-iconbtn" bindtap="showNotif"><image src="/assets/icons/info.svg" class="db-icon" /></view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+      <!-- Discretion card -->
+      <view class="db-card hist-disc">
+        <view class="db-row" style="gap:16rpx;align-items:flex-start;">
+          <image src="/assets/icons/shield.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold" style="color:var(--indigo);">Mode discret activé</text>
+            <text class="db-small db-muted">Vos achats Debbo n'apparaissent pas ici pour protéger votre vie privée. Dans votre relevé Max it, ils apparaissent comme « Achat Bien-être ».</text>
+          </view>
+        </view>
+      </view>
+
+      <text class="hist-section-label">Octobre 2024</text>
+
+      <!-- transactions -->
+      <view class="db-card hist-row">
+        <text class="hist-icon">🚌</text>
+        <view class="db-grow"><text class="db-bold">Transport Dakar Dem Dikk</text><text class="db-small db-muted">24 oct. 2024</text></view>
+        <text class="hist-neg">-500 FCFA</text>
+      </view>
+      <view class="db-card hist-row">
+        <text class="hist-icon">🤝</text>
+        <view class="db-grow"><text class="db-bold">Tontine Famille</text><text class="db-small db-muted">22 oct. 2024</text></view>
+        <text class="hist-neg">-10 000 FCFA</text>
+      </view>
+      <view class="db-card hist-row">
+        <text class="hist-icon">💡</text>
+        <view class="db-grow"><text class="db-bold">Facture SENELEC</text><text class="db-small db-muted">20 oct. 2024</text></view>
+        <text class="hist-neg">-12 500 FCFA</text>
+      </view>
+      <view class="db-card hist-row">
+        <text class="hist-icon">📥</text>
+        <view class="db-grow"><text class="db-bold">Transfert reçu — Maman</text><text class="db-small db-muted">18 oct. 2024</text></view>
+        <text class="hist-pos">+25 000 FCFA</text>
+      </view>
+      <view class="db-card hist-row">
+        <text class="hist-icon">🚌</text>
+        <view class="db-grow"><text class="db-bold">Transport Dakar Dem Dikk</text><text class="db-small db-muted">17 oct. 2024</text></view>
+        <text class="hist-neg">-500 FCFA</text>
+      </view>
+      <view class="db-card hist-row">
+        <text class="hist-icon">🛒</text>
+        <view class="db-grow"><text class="db-bold">Supermarché Casino</text><text class="db-small db-muted">15 oct. 2024</text></view>
+        <text class="hist-neg">-8 700 FCFA</text>
+      </view>
+
+      <view class="db-footbar">
+        <view class="db-btn db-btn-primary" bindtap="goUrgence"><text>Commander un kit</text></view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

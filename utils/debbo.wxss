@@ -1,0 +1,833 @@
+/* ============================================================================
+   DEBBO — Shared Design Tokens & Component Styles
+   Import this in every Debbo page: @import "/utils/debbo.wxss";
+   ============================================================================ */
+
+/* --------------------------------------------------------------------------
+   CSS Variables (Debbo palette)
+   -------------------------------------------------------------------------- */
+page {
+  --bg: #FFF6FA;
+  --surface: #FFFFFF;
+  --sunk: #FFF0F6;
+  --ink: #2B0F1C;
+  --muted: #74566A;
+  --line: #F6D5E3;
+  --accent: #E0177A;
+  --accent-ink: #FFFFFF;
+  --accent-text: #B3105F;
+  --accent-soft: #FFE2EF;
+  --indigo: #C8136C;
+  --indigo-soft: #FFDDEB;
+  --fuchsia: #D9147A;
+  --bonbon: #FF8CC0;
+  --grad: linear-gradient(135deg, #D9147A 0%, #F2479A 55%, #FF8CC0 100%);
+  --grad-btn: linear-gradient(120deg, #D9147A 0%, #F0408F 100%);
+  --ok: #1D7A4C;
+  --ok-soft: #DDF1E6;
+  --warn: #9A5B00;
+  --warn-soft: #FBEBD2;
+  background-color: var(--bg);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 30rpx;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Page Layout
+   -------------------------------------------------------------------------- */
+.db-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.db-apphead {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 32rpx;
+  background: var(--surface);
+  border-bottom: 1rpx solid var(--line);
+}
+
+.db-apphead-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+
+.db-apphead-sub {
+  font-size: 24rpx;
+  color: var(--muted);
+  margin-top: 2rpx;
+}
+
+.db-body {
+  flex: 1;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.db-footbar {
+  padding: 24rpx 32rpx 48rpx;
+  background: var(--surface);
+  border-top: 1rpx solid var(--line);
+}
+
+/* --------------------------------------------------------------------------
+   Icon Button
+   -------------------------------------------------------------------------- */
+.db-iconbtn {
+  width: 68rpx;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  flex-shrink: 0;
+}
+
+.db-iconbtn:active {
+  background: var(--sunk);
+}
+
+.db-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.db-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  width: 100%;
+  padding: 28rpx 32rpx;
+  border-radius: 28rpx;
+  font-weight: 700;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.db-btn:active {
+  opacity: 0.85;
+}
+
+.db-btn-primary {
+  background: var(--grad-btn);
+  color: #fff;
+}
+
+.db-btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 3rpx solid var(--line);
+}
+
+.db-btn-indigo {
+  background: var(--indigo-soft);
+  color: var(--indigo);
+}
+
+.db-btn-danger {
+  background: transparent;
+  color: var(--accent-text);
+  border: 3rpx solid var(--line);
+}
+
+.db-btn-sm {
+  padding: 16rpx 24rpx;
+  font-size: 26rpx;
+  border-radius: 20rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Cards
+   -------------------------------------------------------------------------- */
+.db-card {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  border-radius: 32rpx;
+  padding: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Chips / Badges
+   -------------------------------------------------------------------------- */
+.db-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  background: var(--sunk);
+  color: var(--muted);
+}
+
+.db-chip-ok {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.db-chip-ind {
+  background: var(--indigo-soft);
+  color: var(--indigo);
+}
+
+.db-chip-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.db-chip-acc {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* --------------------------------------------------------------------------
+   Typography Utilities
+   -------------------------------------------------------------------------- */
+.db-small {
+  font-size: 26rpx;
+}
+
+.db-muted {
+  color: var(--muted);
+}
+
+.db-bold {
+  font-weight: 700;
+}
+
+.db-center {
+  text-align: center;
+}
+
+.db-label {
+  font-size: 24rpx;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 8rpx 0;
+}
+
+.db-sec {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Row / Layout
+   -------------------------------------------------------------------------- */
+.db-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.db-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Segment Control
+   -------------------------------------------------------------------------- */
+.db-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rpx;
+  background: var(--sunk);
+  border-radius: 24rpx;
+  padding: 8rpx;
+}
+
+.db-seg-btn {
+  padding: 18rpx;
+  border-radius: 18rpx;
+  font-weight: 600;
+  font-size: 28rpx;
+  color: var(--muted);
+  text-align: center;
+}
+
+.db-seg-btn-active {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+/* --------------------------------------------------------------------------
+   Radio List Options
+   -------------------------------------------------------------------------- */
+.db-opt {
+  background: var(--surface);
+  border: 3rpx solid var(--line);
+  border-radius: 28rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+}
+
+.db-opt-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.db-radio {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--muted);
+  flex-shrink: 0;
+  margin-top: 4rpx;
+}
+
+.db-radio-checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Grid 2 columns
+   -------------------------------------------------------------------------- */
+.db-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+
+.db-grid2-wide {
+  grid-column: 1 / -1;
+}
+
+/* --------------------------------------------------------------------------
+   Contents list (kit contents)
+   -------------------------------------------------------------------------- */
+.db-contents {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.db-ci {
+  display: flex;
+  gap: 20rpx;
+  align-items: baseline;
+  font-size: 28rpx;
+}
+
+.db-qty {
+  font-weight: 700;
+  font-size: 26rpx;
+  min-width: 56rpx;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Key-Value pairs
+   -------------------------------------------------------------------------- */
+.db-kv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 28rpx;
+  padding: 12rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+
+.db-kv:last-child {
+  border-bottom: none;
+}
+
+/* --------------------------------------------------------------------------
+   History items
+   -------------------------------------------------------------------------- */
+.db-hist {
+  display: flex;
+  flex-direction: column;
+}
+
+.db-it {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--line);
+}
+
+.db-it:last-child {
+  border-bottom: none;
+}
+
+.db-av {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  background: var(--sunk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 32rpx;
+}
+
+.db-amt {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 28rpx;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Payment Keypad
+   -------------------------------------------------------------------------- */
+.db-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+}
+
+.db-key {
+  padding: 28rpx 0;
+  border-radius: 28rpx;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  font-size: 44rpx;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.db-key:active {
+  background: var(--sunk);
+}
+
+.db-key-blank {
+  visibility: hidden;
+}
+
+.db-dots {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+  padding: 32rpx 0;
+}
+
+.db-dot {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--muted);
+}
+
+.db-dot-filled {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Withdrawal Code Display
+   -------------------------------------------------------------------------- */
+.db-code-display {
+  font-size: 72rpx;
+  font-weight: 700;
+  letter-spacing: 16rpx;
+  text-align: center;
+  color: var(--ink);
+  padding: 40rpx;
+  background: var(--sunk);
+  border-radius: 28rpx;
+}
+
+/* --------------------------------------------------------------------------
+   SOS / Urgence button
+   -------------------------------------------------------------------------- */
+.db-sos {
+  background: var(--grad);
+  border-radius: 40rpx;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  color: white;
+}
+
+.db-sos-kicker {
+  font-size: 24rpx;
+  font-weight: 700;
+  opacity: 0.85;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.db-sos-title {
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.db-sos-sub {
+  font-size: 26rpx;
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Home Tiles
+   -------------------------------------------------------------------------- */
+.db-tile {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  border-radius: 28rpx;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.db-tile:active {
+  background: var(--sunk);
+}
+
+.db-tile-cy {
+  background: var(--indigo-soft);
+  border-color: transparent;
+}
+
+.db-tile-icon {
+  font-size: 36rpx;
+  margin-bottom: 4rpx;
+}
+
+.db-tile-title {
+  font-weight: 700;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.db-tile-sub {
+  font-size: 26rpx;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   Feature cards (accueil discover section)
+   -------------------------------------------------------------------------- */
+.db-feat {
+  border-radius: 32rpx;
+  padding: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.db-feat:active {
+  opacity: 0.85;
+}
+
+.db-feat-kits {
+  background: linear-gradient(160deg, #FFE6F1, #FFD0E5);
+  color: var(--accent-text);
+}
+
+.db-feat-tips {
+  background: linear-gradient(160deg, #E8F5EC, #D0EDD8);
+  color: var(--ok);
+}
+
+.db-feat-soli {
+  background: var(--grad);
+  color: #fff;
+  border-radius: 32rpx;
+}
+
+.db-feat-hist {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+}
+
+.db-feat-title {
+  font-weight: 700;
+  font-size: 30rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Product cards (boutique)
+   -------------------------------------------------------------------------- */
+.db-prod {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  border-radius: 28rpx;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+.db-prod:active {
+  background: var(--sunk);
+}
+
+.db-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72rpx;
+  margin-bottom: 8rpx;
+}
+
+.db-thumb-prot {
+  background: #FFE0EC;
+}
+
+.db-thumb-hyg {
+  background: #E0F0FF;
+}
+
+.db-thumb-bien {
+  background: #E8FFE8;
+}
+
+.db-thumb-acc {
+  background: #FFF0E0;
+}
+
+.db-prod-name {
+  font-weight: 700;
+  font-size: 28rpx;
+}
+
+.db-prod-vendor {
+  font-size: 24rpx;
+  color: var(--muted);
+}
+
+.db-prod-price {
+  font-weight: 700;
+  font-size: 28rpx;
+  color: var(--accent-text);
+}
+
+/* --------------------------------------------------------------------------
+   Qty stepper
+   -------------------------------------------------------------------------- */
+.db-qty-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.db-qty-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  border: 2rpx solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 32rpx;
+}
+
+.db-qty-btn:active {
+  background: var(--sunk);
+}
+
+/* --------------------------------------------------------------------------
+   Switch toggle
+   -------------------------------------------------------------------------- */
+.db-switch {
+  width: 96rpx;
+  height: 56rpx;
+  border-radius: 999rpx;
+  background: var(--line);
+  display: flex;
+  align-items: center;
+  padding: 6rpx;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.db-switch-on {
+  background: var(--accent);
+}
+
+.db-switch-thumb {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.2s;
+}
+
+.db-switch-thumb-on {
+  transform: translateX(40rpx);
+}
+
+/* --------------------------------------------------------------------------
+   Accordion (Conseils)
+   -------------------------------------------------------------------------- */
+.db-accord {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  border-radius: 28rpx;
+  overflow: hidden;
+}
+
+.db-accord-header {
+  padding: 28rpx;
+  font-weight: 600;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.db-accord-header:active {
+  background: var(--sunk);
+}
+
+.db-accord-arrow {
+  font-size: 24rpx;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+
+.db-accord-arrow-open {
+  transform: rotate(180deg);
+}
+
+.db-accord-body {
+  padding: 0 28rpx 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Stats card (Solidaire)
+   -------------------------------------------------------------------------- */
+.db-stat {
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  border-radius: 28rpx;
+  padding: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.db-stat-num {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Cycle ring visualization
+   -------------------------------------------------------------------------- */
+.db-cycle-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 0;
+  gap: 16rpx;
+}
+
+.db-cycle-info {
+  font-size: 28rpx;
+  color: var(--muted);
+  text-align: center;
+}
+
+.db-cycle-days {
+  display: flex;
+  gap: 8rpx;
+  overflow-x: auto;
+  padding: 8rpx 0;
+}
+
+.db-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+  padding: 12rpx 16rpx;
+  border-radius: 20rpx;
+  min-width: 72rpx;
+  font-size: 26rpx;
+}
+
+.db-day-today {
+  background: var(--sunk);
+  font-weight: 700;
+}
+
+.db-day-period {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.db-day-remind {
+  background: var(--indigo-soft);
+  color: var(--indigo);
+}
+
+/* --------------------------------------------------------------------------
+   Mini transaction (accueil hist preview)
+   -------------------------------------------------------------------------- */
+.db-mini-tx {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background: var(--sunk);
+  border-radius: 20rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Progress bar
+   -------------------------------------------------------------------------- */
+.db-goal {
+  height: 8rpx;
+  background: rgba(255,255,255,0.3);
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+
+.db-goal-fill {
+  height: 100%;
+  background: white;
+  border-radius: 999rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Myth (conseils vrai/faux)
+   -------------------------------------------------------------------------- */
+.db-myth {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+  font-size: 28rpx;
+}

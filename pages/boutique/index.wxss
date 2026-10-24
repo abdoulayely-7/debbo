@@ -1,0 +1,2 @@
+@import "/utils/debbo.wxss";
+.db-chip { cursor: pointer; }

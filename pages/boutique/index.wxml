@@ -1,0 +1,43 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow">
+      <text class="db-apphead-title">Boutique Debbo</text>
+      <view><text class="db-apphead-sub">Pharmacies et créatrices vérifiées</text></view>
+    </view>
+    <view class="db-iconbtn" bindtap="goPanier">
+      <image src="/assets/icons/cart.svg" class="db-icon" />
+    </view>
+  </view>
+
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+
+      <!-- Filter chips -->
+      <scroll-view scroll-x style="white-space:nowrap;">
+        <view style="display:flex;gap:12rpx;padding:4rpx 0;">
+          <view class="db-chip {{activeFilter==='tout' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="tout"><text>Tout</text></view>
+          <view class="db-chip {{activeFilter==='prot' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="prot"><text>Protections</text></view>
+          <view class="db-chip {{activeFilter==='hyg' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="hyg"><text>Hygiène</text></view>
+          <view class="db-chip {{activeFilter==='bien' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="bien"><text>Bien-être</text></view>
+          <view class="db-chip {{activeFilter==='acc' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="acc"><text>Accessoires</text></view>
+          <view class="db-chip {{activeFilter==='local' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="local"><text>Fait au Sénégal</text></view>
+        </view>
+      </scroll-view>
+
+      <!-- Product grid -->
+      <view class="db-grid2">
+        <view wx:for="{{filtered}}" wx:key="id" class="db-prod" bindtap="goFicheProduit">
+          <view class="db-thumb db-thumb-prot"><text style="font-size:72rpx;">{{item.emoji}}</text></view>
+          <view wx:if="{{item.local}}"><view class="db-chip db-chip-ok"><text>Fait au Sénégal</text></view></view>
+          <text class="db-prod-name">{{item.name}}</text>
+          <text class="db-prod-vendor">{{item.vendor}}</text>
+          <text class="db-prod-price">{{item.price}}</text>
+        </view>
+      </view>
+
+      <text class="db-small db-muted">Retrait en pharmacie partenaire ou livraison discrète. Libellé « Achat Bien-être » dans l'historique.</text>
+
+    </view>
+  </scroll-view>
+</view>
