@@ -1,0 +1,5 @@
+@import "/utils/debbo.wxss";
+
+.code-card { text-align:center; }
+.code-label { display:block; font-size:26rpx; color:var(--muted); margin-bottom:16rpx; }
+.code-tip { display:block; font-size:24rpx; color:var(--muted); margin-top:12rpx; }

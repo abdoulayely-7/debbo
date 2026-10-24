@@ -1,0 +1,1163 @@
+<!doctype html><html lang="fr"><head><title>Debbo · mid-fi · 18 écrans</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap">
+<style>
+/* Layout: brief de présentation à gauche, téléphone interactif à droite ; sur mobile, l'app occupe tout l'écran. */
+:root{
+  /* Palette Sonatel / Orange : orange Orange, noir, blanc, bleu-vert du logo Sonatel */
+  --bg:#FFF6FA; --surface:#FFFFFF; --sunk:#FFF0F6; --ink:#2B0F1C; --muted:#74566A; --line:#F6D5E3;
+  --accent:#E0177A; --accent-ink:#FFFFFF; --accent-text:#B3105F; --accent-soft:#FFE2EF; --indigo:#C8136C; --indigo-soft:#FFDDEB;
+  --fuchsia:#D9147A; --bonbon:#FF8CC0;
+  --grad:linear-gradient(135deg,#D9147A 0%,#F2479A 55%,#FF8CC0 100%);
+  --grad-btn:linear-gradient(120deg,#D9147A 0%,#F0408F 100%);
+  --ok:#1D7A4C; --ok-soft:#DDF1E6; --warn:#9A5B00; --warn-soft:#FBEBD2; --frame:#000000;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#150A10; --surface:#21111A; --sunk:#1A0D14; --ink:#FCEAF3; --muted:#C7A3B6; --line:#3D1F2E;
+  --accent:#FF5AA5; --accent-ink:#FFFFFF; --accent-text:#FF8CC0; --accent-soft:#3F1328; --indigo:#FF7DB8; --indigo-soft:#3A1527;
+  --fuchsia:#E0208A; --bonbon:#FF9FCB;
+  --grad:linear-gradient(135deg,#C9126F 0%,#E8408F 55%,#FF8CC0 100%);
+  --grad-btn:linear-gradient(120deg,#C9126F 0%,#E8408F 100%);
+  --ok:#5CC892; --ok-soft:#163425; --warn:#E6AE52; --warn-soft:#3A2A10; --frame:#000000; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#150A10; --surface:#21111A; --sunk:#1A0D14; --ink:#FCEAF3; --muted:#C7A3B6; --line:#3D1F2E;
+  --accent:#FF5AA5; --accent-ink:#FFFFFF; --accent-text:#FF8CC0; --accent-soft:#3F1328; --indigo:#FF7DB8; --indigo-soft:#3A1527;
+  --fuchsia:#E0208A; --bonbon:#FF9FCB;
+  --grad:linear-gradient(135deg,#C9126F 0%,#E8408F 55%,#FF8CC0 100%);
+  --grad-btn:linear-gradient(120deg,#C9126F 0%,#E8408F 100%);
+  --ok:#5CC892; --ok-soft:#163425; --warn:#E6AE52; --warn-soft:#3A2A10; --frame:#000000; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+p{margin:0}
+
+.stage{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;max-width:1080px;margin:0 auto;padding-block:40px;align-items:start}
+.brief{display:flex;flex-direction:column;gap:22px;padding-top:12px;min-width:0}
+.brief .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.brief h1{font-size:64px;line-height:.95;font-weight:800;letter-spacing:-.02em}
+.brief h1 span{color:var(--accent)}
+.brief .lede{font-size:18px;max-width:34ch;color:var(--ink)}
+.brief .gloss{font-size:13px;color:var(--muted)}
+.pillars{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.pillar{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:120px minmax(0,1fr) 18px;gap:12px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line)}
+.pillar:hover .p-name,.pillar:focus-visible .p-name{color:var(--accent-text)}
+.pillar:focus-visible{outline:2px solid var(--accent)}
+.p-name{font-family:var(--f-display);font-weight:700;font-size:17px}
+.p-desc{font-size:14px;color:var(--muted)}
+.p-go{color:var(--muted);font-size:14px}
+.tech{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px;max-width:52ch}
+.tech b{color:var(--ink);font-weight:600}
+
+/* Téléphone */
+.phone{width:390px;height:800px;border-radius:46px;background:var(--frame);padding:12px;box-shadow:0 30px 60px -30px rgba(0,0,0,.35)}
+.screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--sunk);display:flex;flex-direction:column}
+.statusbar{display:flex;justify-content:space-between;padding:12px 26px 4px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.host{display:flex;align-items:center;gap:8px;padding:6px 14px 8px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);background:var(--surface)}
+.host .pill{margin-left:auto;display:flex;gap:2px;border:1px solid var(--line);border-radius:99px;padding:2px}
+.host .pill button{all:unset;cursor:pointer;width:28px;height:22px;display:grid;place-items:center;border-radius:99px;color:var(--ink)}
+.host .pill button:hover{background:var(--sunk)}
+.host .pill button:focus-visible{outline:2px solid var(--accent)}
+.apphead{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface)}
+.apphead h2{font-size:18px;font-weight:700}
+.iconbtn{all:unset;cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;color:var(--ink)}
+.iconbtn:hover{background:var(--sunk)}
+.iconbtn:focus-visible{outline:2px solid var(--accent)}
+.body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.body>*{flex-shrink:0!important}
+.footbar{padding:12px 16px 18px;background:var(--surface);border-top:1px solid var(--line)}
+
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:14px;font-weight:700;text-align:center}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn.primary{background:var(--grad-btn);color:#fff;box-shadow:0 6px 16px -8px var(--fuchsia)}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.btn.indigo{background:var(--grad-btn);color:#fff;box-shadow:0 6px 16px -8px var(--fuchsia)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+.sos{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:22px 20px;border-radius:22px;background:var(--grad);color:#fff;box-shadow:0 12px 28px -14px var(--fuchsia);position:relative;overflow:hidden}
+.sos:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.sos .k{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.85;font-weight:600}
+.sos .t{font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1}
+.sos .s{font-size:14px;opacity:.9}
+.sos::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;border:18px solid currentColor;opacity:.12}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--line);min-height:104px}
+.tile:hover{border-color:var(--accent)}
+.tile:focus-visible{outline:2px solid var(--accent)}
+.tile .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--grad);color:#fff}
+.tile.cy .ic{background:var(--grad);color:#fff}
+.tile b{font-size:14px}
+.tile span{font-size:12px;color:var(--muted)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.row{display:flex;align-items:center;gap:10px}
+.row .grow{flex:1;min-width:0}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.acc{background:var(--accent-soft);color:var(--accent-text)}
+.chip.ind{background:var(--indigo-soft);color:var(--indigo)}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{all:unset;cursor:pointer;text-align:center;padding:9px;border-radius:9px;font-weight:600;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.seg button:focus-visible{outline:2px solid var(--accent)}
+
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;width:100%}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
+.opt:focus-visible{outline:2px solid var(--accent)}
+.opt .radio{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid var(--line);margin-top:2px}
+.opt[aria-checked="true"] .radio{border:5px solid var(--accent)}
+.opt .price{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.list{display:flex;flex-direction:column;gap:8px}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13px;font-weight:600}
+.field input,.field select{font:inherit;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+
+.code{font-family:var(--f-mono);font-size:40px;font-weight:700;letter-spacing:.08em;text-align:center;padding:18px;border-radius:16px;background:var(--surface);border:2px dashed var(--accent);color:var(--ink)}
+.center{text-align:center}
+.bigtitle{font-size:26px;font-weight:800;line-height:1.05}
+
+.switch{all:unset;cursor:pointer;flex:none;width:46px;height:28px;border-radius:99px;background:var(--line);position:relative;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);transition:left .2s}
+.switch[aria-checked="true"]{background:var(--grad-btn)}
+.switch[aria-checked="true"]::after{left:21px}
+.switch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.day{padding:6px 0;border-radius:10px;font-size:12px;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;gap:1px}
+.day small{font-size:10px;color:var(--muted)}
+.day.today{outline:1.5px solid var(--ink)}
+.day.period{background:var(--grad-btn);color:#fff}
+.day.period small{color:var(--accent-ink);opacity:.8}
+.day.remind{background:var(--indigo-soft);color:var(--indigo)}
+
+.cyc{display:flex;flex-direction:column;gap:10px}
+.cyc .big{font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.cycbar{position:relative;height:14px;border-radius:99px;background:var(--sunk);border:1px solid var(--line);overflow:hidden}
+.cycbar .zone{position:absolute;top:0;bottom:0}
+.cycbar .zone.per{background:var(--accent)}
+.cycbar .zone.rem{background:var(--indigo-soft)}
+.cycbar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--indigo);opacity:.25;border-radius:99px 0 0 99px}
+.cycbar .now{position:absolute;top:-3px;bottom:-3px;width:4px;margin-left:-2px;border-radius:4px;background:var(--ink);box-shadow:0 0 0 2px var(--surface)}
+.ring{position:relative;width:208px;height:208px;margin:4px auto}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .trk{stroke:var(--indigo-soft)}
+.ring .arc{stroke:url(#ringGrad);transition:stroke-dashoffset .5s ease}
+.ring .arc.per{stroke:url(#ringGrad)}
+.ring .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring .val{display:flex;align-items:center;gap:10px}
+.ring .val b{font-family:var(--f-display);font-size:44px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.ring .adj{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);font-size:18px;line-height:1;display:grid;place-items:center}
+.ring .cap{font-weight:700;color:var(--accent-text);font-size:14px}
+.ring.inper .cap{color:var(--accent-text)}
+.phase{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.phase svg{flex-shrink:0;color:var(--indigo);margin-top:2px}
+.cycscale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.minibar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:2px}
+.minibar i{display:block;height:100%;background:linear-gradient(90deg,var(--bonbon),var(--fuchsia));border-radius:99px}
+.dots{display:flex;gap:14px;justify-content:center;padding:8px 0}
+.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--indigo)}
+.dots i.on{background:var(--grad-btn)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.keypad button{all:unset;cursor:pointer;text-align:center;padding:14px 0;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.keypad button:focus-visible{outline:2px solid var(--accent)}
+.keypad button.blank{visibility:hidden}
+
+details.adv{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+details.adv summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.adv summary::-webkit-details-marker{display:none}
+details.adv summary::after{content:"+";color:var(--muted);font-weight:500}
+details.adv[open] summary::after{content:"–"}
+details.adv .ct{padding-top:10px;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.myth{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start;font-size:14px}
+
+.hist{display:flex;flex-direction:column}
+.hist .it{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.hist .it:last-child{border-bottom:0}
+.hist .av{width:36px;height:36px;border-radius:12px;background:var(--sunk);display:grid;place-items:center;color:var(--muted);flex:none}
+.hist .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.hist .it.new{background:var(--accent-soft);margin:0 -14px;padding:12px 14px}
+
+.toast{position:absolute;left:10px;right:10px;top:10px;z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 14px;display:flex;gap:10px;box-shadow:0 12px 30px -12px rgba(0,0,0,.35);transform:translateY(-130%);transition:transform .35s ease}
+.toast.show{transform:none}
+.toast .ap{width:34px;height:34px;border-radius:9px;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-weight:800;font-size:12px;flex:none}
+
+.sheet-wrap{position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.5);display:flex;align-items:flex-end}
+.sheet{width:100%;background:var(--surface);border-radius:24px 24px 0 0;padding:18px 18px 22px;display:flex;flex-direction:column;gap:14px}
+.sheet.mx{padding:0 0 18px;gap:0;overflow:hidden}
+.mx-top{background:#000;color:#fff;padding:12px 18px 16px;display:flex;flex-direction:column;gap:10px}
+.mx-top .grab{background:#444}
+.mx-brand{display:flex;align-items:center;gap:10px}
+.mx-logo{width:34px;height:34px;border-radius:10px;background:#FF7900;color:#000;font-weight:800;font-size:10px;display:grid;place-items:center;letter-spacing:-.03em;flex:none;white-space:nowrap;line-height:1}
+.mx-brand b{font-size:15px}.mx-brand span{font-size:12px;color:#BDBDBD}
+.mx-sec{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:#7BE0A6;background:rgba(123,224,166,.12);padding:5px 9px;border-radius:99px}
+.mx-amt{font-family:var(--f-display);font-size:36px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.mx-to{font-size:13px;color:#D6D6D6}
+.mx-body{padding:16px 18px 0;display:flex;flex-direction:column;gap:14px}
+.mx-perks{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.mx-perks div{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:11px;font-weight:600;color:var(--ink);animation:rise .4s both;animation-delay:calc(var(--i)*80ms)}
+.mx-perks i{width:38px;height:38px;border-radius:12px;background:#FFF1E5;color:#C25700;display:grid;place-items:center;font-style:normal}
+.btn.mxpay{background:#FF7900;color:#000;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn.mxpay .mx-logo{width:28px;height:28px;border-radius:8px;background:#000;color:#FF7900;font-size:8px}
+.mx-perks i svg{width:18px;height:18px}
+.mx-dots{display:flex;gap:16px;justify-content:center;padding:6px 0}
+.mx-dots i{width:16px;height:16px;border-radius:50%;border:2px solid #000;transition:background .15s}
+.mx-dots i.on{background:#FF7900;border-color:#FF7900;animation:pop .2s both}
+.sheet.mx .keypad button{font-size:22px}
+.mx-wait{display:flex;flex-direction:column;align-items:center;gap:14px;padding:34px 18px 26px;text-align:center}
+.mx-ring{width:64px;height:64px;border-radius:50%;border:5px solid #FFE0C2;border-top-color:#FF7900;animation:spin .8s linear infinite;display:grid;place-items:center}
+.mx-ok{width:72px;height:72px;border-radius:50%;background:#1D7A4C;color:#fff;display:grid;place-items:center;animation:pop .35s both}
+.mx-ok path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .15s ease forwards}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mx-perks i{background:#3A2410;color:#FFA352}:root:not([data-theme="light"]) .mx-dots i{border-color:#fff}}
+:root[data-theme="dark"] .mx-perks i{background:#3A2410;color:#FFA352}:root[data-theme="dark"] .mx-dots i{border-color:#fff}
+.sheet .grab{width:40px;height:4px;border-radius:9px;background:var(--line);margin:0 auto}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.kv b{font-variant-numeric:tabular-nums;text-align:right}
+.spinner{width:36px;height:36px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--accent);margin:10px auto;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.cover{position:absolute;inset:0;z-index:40;background:var(--sunk);display:flex;flex-direction:column}
+.hostgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px 16px}
+.hostgrid div{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--muted);text-align:center}
+.hostgrid i{width:48px;height:48px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:block}
+.hostgrid .deb i{background:var(--accent-soft);border-color:var(--accent)}
+
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips button{all:unset;cursor:pointer;flex:none;font-size:13px;font-weight:600;padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--grad-btn);color:#fff;border-color:transparent}
+.chips button:focus-visible{outline:2px solid var(--accent)}
+.prod{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;min-width:0}
+.prod:hover{border-color:var(--bonbon)}
+.prod{transition:transform .15s ease}.prod:active{transform:scale(.97)}
+.prod .pp{color:var(--accent-text)}
+.prod:focus-visible{outline:2px solid var(--accent)}
+.prod b{font-size:13px;line-height:1.25}
+.prod .pp{font-weight:700;font-variant-numeric:tabular-nums;font-size:14px}
+.thumb{aspect-ratio:4/3;max-width:100%;border-radius:14px;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,#FFF0F7 0%,#FFD3E7 100%);color:var(--fuchsia)}
+.thumb::after{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:var(--bonbon);opacity:.28;right:-18%;bottom:-30%}
+.thumb::before{content:"";position:absolute;width:28%;aspect-ratio:1;border-radius:50%;background:#fff;opacity:.55;left:-8%;top:-10%}
+.thumb .art{width:58%;height:auto;max-height:78%;position:relative;z-index:1}
+.thumb.big .art{width:auto;height:72%}
+/* nuances de rose bonbon par rayon */
+.thumb.c-hyg{background:linear-gradient(150deg,#FFF2F8 0%,#FFC9E1 100%)}
+.thumb.c-bien{background:linear-gradient(150deg,#FFF4F6 0%,#FFD6DF 100%)}
+.thumb.c-acc{background:linear-gradient(150deg,#FDEEFA 0%,#F9CDEB 100%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .thumb{background:linear-gradient(150deg,#3A1428,#5A1C3C);color:var(--bonbon)}}
+:root[data-theme="dark"] .thumb{background:linear-gradient(150deg,#3A1428,#5A1C3C);color:var(--bonbon)}
+.contents{display:flex;flex-direction:column}
+.contents .ci{display:grid;grid-template-columns:36px minmax(0,1fr);gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.contents .ci:last-child{border-bottom:0}
+.contents .q{font-family:var(--f-mono);font-weight:700;color:var(--accent-text);font-size:13px}
+.stat{gap:2px}
+.stat b{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums;line-height:1.1}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{all:unset;cursor:pointer;width:28px;height:28px;border-radius:8px;border:1px solid var(--line);display:grid;place-items:center;font-weight:700}
+.qty button:focus-visible{outline:2px solid var(--accent)}
+.badge{position:relative}
+.badge em{position:absolute;top:0;right:0;min-width:16px;height:16px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-size:10px;font-style:normal;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.sheet{max-height:92%;overflow-y:auto}
+.mech{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.mech .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--indigo-soft);color:var(--indigo)}
+.demo-note{font-size:11px;color:var(--muted);text-align:center;padding:4px 0 0}
+
+@media (max-width:900px){
+  .stage{grid-template-columns:1fr;gap:28px;padding-block:24px}
+  .brief h1{font-size:48px}
+  .phone-col{justify-self:center;width:100%;max-width:390px}
+  .phone{width:100%;height:760px;max-height:calc(100dvh - 32px);min-height:620px}
+}
+@media (max-width:480px){
+  .phone{padding:0;border-radius:24px;background:transparent;box-shadow:none;border:1px solid var(--line)}
+  .screen{border-radius:24px}
+  .pillar{grid-template-columns:96px minmax(0,1fr) 14px}
+}
+/* Cartes « Découvrir » : peu de texte, visuel animé */
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:-6px}
+.sec b{font-family:var(--f-display);font-size:17px}
+.feat{all:unset;box-sizing:border-box;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:20px;min-height:150px;
+  animation:rise .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*70ms);transition:transform .15s ease}
+.feat:active{transform:scale(.97)}
+.feat:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.feat b{font-family:var(--f-display);font-size:18px;line-height:1.1;position:relative}
+.feat .pill{align-self:flex-start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--surface);position:relative}
+.feat .vis{height:64px;display:flex;align-items:center;position:relative}
+.feat .vis svg{height:64px;width:auto;overflow:visible}
+.feat::before{content:"";position:absolute;width:120px;height:120px;border-radius:50%;right:-40px;top:-40px;background:currentColor;opacity:.08}
+.f-kits{background:linear-gradient(160deg,#FFE6F1,#FFD0E5);color:var(--accent-text)}
+.f-tips{background:color-mix(in srgb,#7B4BA0 14%,var(--surface));color:#6A3C8F}
+.f-soli{background:var(--grad);color:#fff;min-height:0;box-shadow:0 12px 28px -14px var(--fuchsia)}
+.f-soli .pill{background:rgba(255,255,255,.2);color:#fff}
+.f-hist{background:var(--surface);border:1px solid var(--line);color:var(--ink);min-height:0}
+.soli-row{display:flex;align-items:center;gap:14px;position:relative}
+.soli-row .num{font-family:var(--f-display);font-size:40px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.goal{height:8px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden;position:relative}
+.goal i{display:block;height:100%;width:var(--w);background:#fff;border-radius:99px;animation:grow 1.2s .3s cubic-bezier(.2,.8,.2,1) both}
+.mini-tx{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--sunk);border:1px dashed var(--line);animation:slidein .5s .35s cubic-bezier(.2,.8,.2,1) both}
+.mini-tx .av{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-text);flex:none}
+.mini-tx .amt{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mini-tx>span:nth-child(2){flex:1;min-width:0}
+.shield-ok{position:absolute;right:14px;top:14px;color:var(--ok);animation:pop .4s .8s both}
+/* animations des visuels */
+.bob{animation:bob 2.6s ease-in-out infinite}
+.bob.d2{animation-delay:-.9s}.bob.d3{animation-delay:-1.7s}
+.beat{transform-origin:center;transform-box:fill-box;animation:beat 1.4s ease-in-out infinite}
+.blink{animation:blink 2.4s ease-in-out infinite}
+.blink.d2{animation-delay:.4s}.blink.d3{animation-delay:.8s}
+.check{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .6s .6s ease forwards}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes beat{0%,60%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1.05)}}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes grow{from{width:0}}
+@keyframes slidein{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.wide{grid-column:1/-1;flex-direction:row;align-items:center;min-height:0}
+.wide span.grow{flex:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<style id="capcss">.brief,.demo-note{display:none!important}
+.stage{display:block!important;padding:0!important;max-width:none!important}
+body{margin:0!important;padding:0!important;background:#fff!important}
+.phone-col{padding:0!important;margin:0!important}
+.phone{padding:0!important;border-radius:0!important;box-shadow:none!important;width:390px!important;height:844px;background:none!important}
+.screen{border-radius:0!important}
+*{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
+:root,:root[data-theme]{--bg:#F4F4F4!important;--surface:#FFFFFF!important;--sunk:#F4F4F4!important;--ink:#222222!important;--muted:#666666!important;--line:#CCCCCC!important;
+--accent:#7A7A7A!important;--accent-ink:#FFFFFF!important;--accent-text:#333333!important;--accent-soft:#E4E4E4!important;--indigo:#6A6A6A!important;--indigo-soft:#E4E4E4!important;
+--fuchsia:#7A7A7A!important;--bonbon:#B0B0B0!important;--grad:#8C8C8C!important;--grad-btn:#6A6A6A!important;--ok:#555555!important;--ok-soft:#E4E4E4!important;--warn:#555555!important;--warn-soft:#E4E4E4!important;
+--f-display:"Figtree",system-ui,sans-serif!important}
+html{filter:grayscale(1)}
+*{box-shadow:none!important;text-shadow:none!important}
+.thumb .art,.feat .vis svg,.soli-row>svg{visibility:hidden}
+.thumb,.feat .vis{background:#E4E4E4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0L100 100M100 0L0 100' stroke='%23B5B5B5' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat!important;border-radius:10px;min-height:56px}
+.thumb::before,.thumb::after,.feat::before,.sos::after{display:none!important}
+.feat .vis{width:100%}
+.soli-row>svg{background:#BDBDBD;border-radius:99px}
+.f-kits,.f-tips,.f-soli,.sos{background:#FFFFFF!important;color:#222!important;border:1.5px solid #BDBDBD!important}
+.f-soli .pill,.feat .pill{background:#E4E4E4!important;color:#222!important}
+.goal{background:#E4E4E4!important}.goal i{background:#8C8C8C!important}
+.sos .k,.sos .t,.sos .s{color:#222!important}
+.mx-top{background:#5A5A5A!important}.btn.mxpay{background:#5A5A5A!important;color:#fff!important}
+.mx-logo{background:#BDBDBD!important;color:#222!important}
+</style><style>.board{display:flex;flex-wrap:wrap;gap:80px;padding:60px;align-items:flex-start;width:2740px}
+.cell{display:flex;flex-direction:column;gap:16px}.lbl{font:700 24px/1 Figtree,sans-serif;color:#2B0F1C;margin:0}
+.phone{flex:none}</style></head><body><div class="board"><section class="cell"><h2 class="lbl">01-Accueil</h2><div class="phone" style="height: 1172px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead">
+    <div class="grow" style="flex:1;min-width:0"><h2>Bonjour</h2></div></div>
+  <div class="body">
+    <button class="sos" data-go="urgence"><span class="k">Urgence</span><span class="t">J'ai besoin<br>maintenant</span><span class="s">Pharmacie la plus proche à 0,4 km · retrait par code</span></button>
+    
+    <div class="grid2">
+      <button class="tile cy" data-go="cycle"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div><b>Mon cycle <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></b><span>Règles dans ~5 jours</span><div class="minibar" aria-hidden="true"><i style="width:86%"></i></div></button>
+      <button class="tile" data-act="reorder"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><b>Mon kit habituel</b><span>Kit Essentiel · 1 500 FCFA</span></button>
+      <button class="tile wide" data-go="boutique"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><span class="grow" style="display:flex;flex-direction:column;gap:2px"><b>Boutique</b><span>12 produits · fait au Sénégal</span></span><span class="muted">→</span></button>
+    </div>
+    <div class="sec"><b>Découvrir</b></div>
+    <div class="grid2">
+      <button class="feat f-kits" style="--i:0" data-go="kits" aria-label="Nos kits, à partir de 500 FCFA">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><rect x="4" y="30" width="30" height="28" rx="6" fill="var(--surface)"></rect><path d="M12 30v-6a7 7 0 0 1 14 0v6"></path></g>
+    <g class="bob d2"><rect x="42" y="18" width="36" height="40" rx="7" fill="var(--surface)"></rect><path d="M51 18v-7a9 9 0 0 1 18 0v7"></path><path d="M60 32c-4-5-11-1-7 5l7 7 7-7c4-6-3-10-7-5z" fill="currentColor" stroke="none"></path></g>
+    <g class="bob d3"><rect x="86" y="26" width="30" height="32" rx="6" fill="var(--surface)"></rect><path d="M94 26v-6a7 7 0 0 1 14 0v6"></path></g></svg></div><b>Nos kits</b><span class="pill">dès 500 FCFA</span></button>
+      <button class="feat f-tips" style="--i:1" data-go="conseils" aria-label="Conseils validés par des sages-femmes">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><path d="M6 10h56a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V18a8 8 0 0 1 8-8z" fill="var(--surface)"></path>
+    <circle class="blink" cx="24" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d2" cx="38" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d3" cx="52" cy="28" r="3.5" fill="currentColor" stroke="none"></circle></g>
+    <g class="bob d2"><circle cx="96" cy="34" r="18" fill="var(--surface)"></circle><path class="check" d="M87 34l6 6 12-12"></path></g></svg></div><b>Conseils</b><span class="pill">✓ Sages-femmes</span></button>
+    </div>
+    <button class="feat f-soli" style="--i:2" data-go="solidaire" aria-label="Debbo Solidaire, 1284 kits offerts">
+      <div class="soli-row"><svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path class="beat" d="M24 41C10 31 4 24 4 16a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 15-20 25z" fill="#fff"></path></svg><div style="flex:1"><div class="num" data-count="1284">1 284</div><div style="font-weight:600;opacity:.9">kits offerts aux élèves</div></div><span class="pill">Offrir →</span></div>
+      <div class="goal" aria-hidden="true"><i style="--w:64%"></i></div>
+      <div class="small" style="opacity:.85;position:relative">Objectif 2 000 ce trimestre</div>
+    </button>
+    <button class="feat f-hist" style="--i:3" data-go="historique" aria-label="Voir comment l'achat apparaît dans l'historique Max it">
+      <span class="shield-ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span>
+      <b style="font-size:16px">Discret dans Max it</b>
+      <div class="mini-tx"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><span><b style="font-family:var(--f-body);font-size:14px">Achat Bien-être</b><br><span class="small muted">Sans nom de produit</span></span><span class="amt">−1 500 FCFA</span></div>
+    </button>
+    <button class="card" data-go="confiance" style="all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span style="color:var(--ok)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span><span class="grow small" style="flex:1"><b>Votre vie privée</b><br><span class="muted">Ce qui reste sur votre téléphone, et comment tout effacer.</span></span><span class="muted">→</span>
+    </button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">02-Cycle-code</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Mon cycle</h2><div class="small muted">Espace protégé</div></div></div>
+    <div class="body" style="justify-content:center">
+      <div class="center" style="color:var(--indigo)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></div>
+      <p class="center" style="font-weight:600">Entrez votre code</p>
+      <p class="center small muted">Utile quand le téléphone est partagé en famille. Ce code est différent de votre code secret Max it.</p>
+      <div class="dots" aria-hidden="true"><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+      <div class="keypad"><button data-key="1" aria-label="1">1</button><button data-key="2" aria-label="2">2</button><button data-key="3" aria-label="3">3</button><button data-key="4" aria-label="4">4</button><button data-key="5" aria-label="5">5</button><button data-key="6" aria-label="6">6</button><button data-key="7" aria-label="7">7</button><button data-key="8" aria-label="8">8</button><button data-key="9" aria-label="9">9</button><button class="blank" tabindex="-1" aria-hidden="true"></button><button data-key="0" aria-label="0">0</button><button data-key="⌫" aria-label="Effacer">⌫</button></div>
+      <p class="center small"><span class="chip ind">Code de démonstration : 1234</span></p>
+      <button class="btn ghost small" data-act="forgot" style="font-weight:600">Code oublié ? Tout effacer et recommencer</button>
+    </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">03-Mon-cycle</h2><div class="phone" style="height: 1226px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Mon cycle</h2></div></div>
+  <div class="body">
+    <div class="card cyc">
+        <div class="row" style="gap:8px"><span style="color:var(--indigo)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span><b style="flex:1">Suivi du cycle privé</b><span class="chip ind">Jour 24 sur 28</span></div>
+        <div class="ring " role="img" aria-label="Jour 24 sur 28. Dans 5 jours">
+          <svg viewBox="0 0 208 208" aria-hidden="true">
+            <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--bonbon)"></stop><stop offset="1" stop-color="var(--fuchsia)"></stop></linearGradient></defs>
+            <circle class="trk" cx="104" cy="104" r="92" fill="none" stroke-width="16"></circle>
+            <circle class="arc " cx="104" cy="104" r="92" fill="none" stroke-width="16" stroke-linecap="round" stroke-dasharray="578.1" stroke-dashoffset="82.6"></circle>
+          </svg>
+          <div class="mid">
+            <span class="small muted">Dans</span>
+            <div class="val">
+              <button class="adj" data-act="cyc-shift" data-d="-1" aria-label="Règles un jour plus tôt">−</button>
+              <b>5 j</b>
+              <button class="adj" data-act="cyc-shift" data-d="1" aria-label="Règles un jour plus tard">+</button>
+            </div>
+            <span class="cap">Règles prévues</span>
+          </div>
+        </div>
+        <div class="small center">Vers le <b>27 oct.</b> · estimation</div>
+        <div class="phase small"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><div><b>Phase lutéale</b> · Fatigue ou crampes légères possibles. Une tisane chaude peut aider.</div></div>
+      </div>
+    <div class="card">
+      <div class="days"><div class="day  today"><small>jeu</small>22</div><div class="day  "><small>ven</small>23</div><div class="day remind "><small>sam</small>24</div><div class="day remind "><small>dim</small>25</div><div class="day remind "><small>lun</small>26</div><div class="day period "><small>mar</small>27</div><div class="day period "><small>mer</small>28</div><div class="day period "><small>jeu</small>29</div><div class="day period "><small>ven</small>30</div><div class="day period "><small>sam</small>31</div><div class="day  "><small>dim</small>1</div><div class="day  "><small>lun</small>2</div><div class="day  "><small>mar</small>3</div><div class="day  "><small>mer</small>4</div></div>
+      <div class="row small" style="gap:14px;flex-wrap:wrap"><span class="row" style="gap:6px"><i class="day period" style="width:12px;height:12px;padding:0"></i>Règles estimées</span><span class="row" style="gap:6px"><i class="day remind" style="width:12px;height:12px;padding:0"></i>Période de rappel</span></div>
+    </div>
+    <button class="btn indigo" data-act="reorder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg> Recommander mon Kit Essentiel · 1 500 FCFA</button>
+    <div class="card">
+      <div class="field"><label for="c-last">Début des dernières règles</label><input type="date" id="c-last" value="2026-09-29" max="2026-10-22" style=""></div>
+      <div class="grid2">
+        <div class="field"><label for="c-len">Durée du cycle</label><select id="c-len"><option value="21">21 jours</option><option value="22">22 jours</option><option value="23">23 jours</option><option value="24">24 jours</option><option value="25">25 jours</option><option value="26">26 jours</option><option value="27">27 jours</option><option selected="" value="28">28 jours</option><option value="29">29 jours</option><option value="30">30 jours</option><option value="31">31 jours</option><option value="32">32 jours</option><option value="33">33 jours</option><option value="34">34 jours</option><option value="35">35 jours</option></select></div>
+        <div class="field"><label for="c-rem">Me prévenir</label><select id="c-rem"><option value="1">1 j avant</option><option value="2">2 j avant</option><option selected="" value="3">3 j avant</option><option value="5">5 j avant</option></select></div>
+      </div>
+      <button class="btn ghost small" data-act="notif" style="font-weight:600">Voir la notification que vous recevrez</button>
+    </div>
+    <div class="card small">
+      <div class="row"><b class="grow" style="flex:1">Suivi activé</b><button class="switch" role="switch" aria-checked="true" aria-label="Désactiver le suivi du cycle" data-act="cycle-off"></button></div>
+      <button class="btn ghost small" data-act="wipe" style="color:var(--accent-text);font-weight:600">Effacer toutes mes données de cycle</button>
+    </div>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">04-Urgence</h2><div class="phone" style="height: 1547px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>J’ai besoin maintenant</h2><div class="small muted">Dakar · position approximative</div></div></div>
+  <div class="body">
+    <div class="seg" role="group" aria-label="Mode de réception">
+      <button aria-pressed="true" data-mode="retrait">Retrait en pharmacie</button>
+      <button aria-pressed="false" data-mode="livraison">Livraison discrète</button>
+    </div>
+    <p class="small muted">Votre kit est préparé au comptoir. Vous montrez un code, vous n'avez rien à demander à voix haute.</p>
+    <div class="label">Pharmacies partenaires proches</div>
+    <div class="list" role="radiogroup" aria-label="Pharmacie">
+      <button class="opt" role="radio" aria-checked="true" data-pharma="p1">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <b>Pharmacie partenaire Sacré-Cœur</b>
+          <span class="small muted">0,4 km · 5 min à pied · Ouverte jusqu’à 23 h</span>
+          <span><span class="chip ok">Kit prêt</span> <span class="chip acc">La plus proche</span></span>
+        </span></button><button class="opt" role="radio" aria-checked="false" data-pharma="p2">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <b>Pharmacie partenaire Liberté</b>
+          <span class="small muted">0,9 km · 11 min à pied · Ouverte jusqu’à 21 h</span>
+          <span><span class="chip ok">Kit prêt</span> </span>
+        </span></button><button class="opt" role="radio" aria-checked="false" data-pharma="p3">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <b>Pharmacie de garde Point E</b>
+          <span class="small muted">1,6 km · 19 min à pied · De garde 24 h/24</span>
+          <span><span class="chip ok">Kit prêt</span> </span>
+        </span></button><button class="opt" role="radio" aria-checked="false" aria-disabled="true" data-pharma="p4">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+          <b>Pharmacie partenaire Mermoz</b>
+          <span class="small muted">2,3 km · 27 min à pied · Ouverte jusqu’à 20 h</span>
+          <span><span class="chip warn">Rupture</span> </span>
+        </span></button>
+    </div>
+    
+    <div class="label">Choisir le kit</div>
+    <div class="list" role="radiogroup" aria-label="Kit">
+      <button class="opt" role="radio" aria-checked="false" data-kit="mini">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><b>Kit Dépannage <span class="chip ok">Petit budget</span></b><span class="small muted">3 serviettes jour, 2 lingettes, sachet opaque</span></span>
+        <span class="price">500 FCFA</span></button><button class="opt" role="radio" aria-checked="true" data-kit="ess">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><b>Kit Essentiel <span class="chip ind">Le plus choisi</span></b><span class="small muted">8 serviettes jour, 2 nuit, lingettes, sachet opaque</span></span>
+        <span class="price">1 500 FCFA</span></button><button class="opt" role="radio" aria-checked="false" data-kit="conf">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><b>Kit Confort </b><span class="small muted">Kit Essentiel + patchs chauffants + culotte de rechange</span></span>
+        <span class="price">3 000 FCFA</span></button><button class="opt" role="radio" aria-checked="false" data-kit="lav">
+        <span class="radio"></span>
+        <span class="grow" style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><b>Kit Lavable <span class="chip ind">Économique sur la durée</span></b><span class="small muted">3 serviettes lavables en wax, durée de vie ~2 ans</span></span>
+        <span class="price">4 500 FCFA</span></button>
+    </div>
+    <div class="card">
+      <div class="row"><span class="label grow" style="flex:1">Dans le Kit Essentiel</span><button class="btn ghost small" data-go="kits" style="width:auto;padding:6px 10px;font-weight:600">Comparer</button></div>
+      <div class="contents"><div class="ci"><span class="q">×8</span><span>Serviettes jour<span class="small muted"> · ailettes, 24 cm</span></span></div><div class="ci"><span class="q">×2</span><span>Serviettes nuit<span class="small muted"> · 29 cm, plus absorbantes</span></span></div><div class="ci"><span class="q">×4</span><span>Lingettes intimes<span class="small muted"> · sans alcool</span></span></div><div class="ci"><span class="q">×2</span><span>Sachets opaques refermables</span></div></div>
+      <span class="small muted">Pour un cycle de 4 à 5 jours avec un flux moyen.</span>
+    </div>
+  </div>
+  <div class="footbar"><button class="btn primary" data-act="pay">Payer 1 500 FCFA avec Max it</button></div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">05-Nos-kits</h2><div class="phone" style="height: 1873px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Nos kits</h2><div class="small muted">Ce qu’il y a dans chaque kit</div></div></div>
+  <div class="body">
+    <p class="small muted">Préparés par les pharmacies partenaires avec des produits vendus en pharmacie, remis dans un sachet opaque. Le contenu est identique dans toutes les pharmacies.</p>
+    <div class="card">
+      <div class="row" style="align-items:flex-start"><div class="grow" style="flex:1;min-width:0"><b style="font-size:16px">Kit Dépannage</b> <span class="chip ok">Petit budget</span><div class="small muted">Pour tenir une demi-journée à une journée, le temps de rentrer.</div></div><b style="font-variant-numeric:tabular-nums;white-space:nowrap">500 FCFA</b></div>
+      <div class="contents"><div class="ci"><span class="q">×3</span><span>Serviettes jour<span class="small muted"> · ailettes, 24 cm</span></span></div><div class="ci"><span class="q">×2</span><span>Lingettes intimes<span class="small muted"> · sans alcool</span></span></div><div class="ci"><span class="q">×1</span><span>Sachet opaque refermable<span class="small muted"> · pour jeter discrètement</span></span></div></div>
+      <button class="btn ghost small" data-act="take-kit" data-k="mini">Retirer ce kit maintenant</button>
+    </div><div class="card">
+      <div class="row" style="align-items:flex-start"><div class="grow" style="flex:1;min-width:0"><b style="font-size:16px">Kit Essentiel</b> <span class="chip ind">Le plus choisi</span><div class="small muted">Pour un cycle de 4 à 5 jours avec un flux moyen.</div></div><b style="font-variant-numeric:tabular-nums;white-space:nowrap">1 500 FCFA</b></div>
+      <div class="contents"><div class="ci"><span class="q">×8</span><span>Serviettes jour<span class="small muted"> · ailettes, 24 cm</span></span></div><div class="ci"><span class="q">×2</span><span>Serviettes nuit<span class="small muted"> · 29 cm, plus absorbantes</span></span></div><div class="ci"><span class="q">×4</span><span>Lingettes intimes<span class="small muted"> · sans alcool</span></span></div><div class="ci"><span class="q">×2</span><span>Sachets opaques refermables</span></div></div>
+      <button class="btn primary small" data-act="take-kit" data-k="ess">Retirer ce kit maintenant</button>
+    </div><div class="card">
+      <div class="row" style="align-items:flex-start"><div class="grow" style="flex:1;min-width:0"><b style="font-size:16px">Kit Confort</b> <div class="small muted">Pour un cycle, avec de quoi se changer et se soulager au bureau ou en cours.</div></div><b style="font-variant-numeric:tabular-nums;white-space:nowrap">3 000 FCFA</b></div>
+      <div class="contents"><div class="ci"><span class="q">×8</span><span>Serviettes jour<span class="small muted"> · ailettes, 24 cm</span></span></div><div class="ci"><span class="q">×2</span><span>Serviettes nuit<span class="small muted"> · 29 cm</span></span></div><div class="ci"><span class="q">×4</span><span>Lingettes intimes<span class="small muted"> · sans alcool</span></span></div><div class="ci"><span class="q">×2</span><span>Patchs chauffants<span class="small muted"> · chaleur douce 8 h contre les crampes</span></span></div><div class="ci"><span class="q">×1</span><span>Culotte coton de rechange<span class="small muted"> · taille unique extensible</span></span></div><div class="ci"><span class="q">×1</span><span>Pochette zippée<span class="small muted"> · pour tout garder dans le sac</span></span></div></div>
+      <button class="btn ghost small" data-act="take-kit" data-k="conf">Retirer ce kit maintenant</button>
+    </div><div class="card">
+      <div class="row" style="align-items:flex-start"><div class="grow" style="flex:1;min-width:0"><b style="font-size:16px">Kit Lavable</b> <span class="chip ind">Économique sur la durée</span><div class="small muted">Environ 2 ans d’usage, soit moins de 200 FCFA par mois. Cousu par un atelier de femmes à Thiès.</div></div><b style="font-variant-numeric:tabular-nums;white-space:nowrap">4 500 FCFA</b></div>
+      <div class="contents"><div class="ci"><span class="q">×3</span><span>Serviettes lavables<span class="small muted"> · 2 jour et 1 nuit, coton absorbant et wax</span></span></div><div class="ci"><span class="q">×1</span><span>Pochette imperméable<span class="small muted"> · pour ranger une serviette utilisée</span></span></div><div class="ci"><span class="q">×1</span><span>Savon doux 100 g<span class="small muted"> · pour le lavage à l’eau froide</span></span></div><div class="ci"><span class="q">×1</span><span>Notice d’entretien<span class="small muted"> · en français, wolof et pulaar</span></span></div></div>
+      <button class="btn ghost small" data-act="take-kit" data-k="lav">Retirer ce kit maintenant</button>
+    </div>
+    <div class="card small"><b>Besoin d'autre chose ?</b><span class="muted">Composez votre propre panier dans la boutique : coupe menstruelle, culotte menstruelle, tampons, produits faits au Sénégal.</span><button class="btn ghost small" data-go="boutique" style="font-weight:600">Ouvrir la boutique</button></div>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">06-Boutique</h2><div class="phone" style="height: 1881px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div style="flex:1;min-width:0"><h2>Boutique Debbo</h2><div class="small muted">Pharmacies et créatrices vérifiées</div></div>
+    <button class="iconbtn badge" data-go="panier" aria-label="Panier, 0 article"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"></path><circle cx="9" cy="20" r="1.5"></circle><circle cx="17" cy="20" r="1.5"></circle></svg></button></div>
+  <div class="body">
+    <div class="chips" role="group" aria-label="Catégories"><button aria-pressed="true" data-cat="tout">Tout</button><button aria-pressed="false" data-cat="prot">Protections</button><button aria-pressed="false" data-cat="hyg">Hygiène</button><button aria-pressed="false" data-cat="bien">Bien-être</button><button aria-pressed="false" data-cat="acc">Accessoires</button><button aria-pressed="false" data-cat="local">Fait au Sénégal</button></div>
+    
+    <div class="grid2"><button class="prod" data-prod="serv">
+      <div class="thumb c-prot"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="20" width="36" height="24" rx="12" fill="var(--surface)"></rect><rect x="22" y="25" width="20" height="14" rx="7" fill="currentColor" opacity=".18" stroke="none"></rect><path d="M14 32H6M50 32h8"></path><path d="M8 28v8M56 28v8" opacity=".6"></path></svg></div>
+      
+      <b>Serviettes jour ×10</b><span class="small muted">Pharmacie partenaire Sacré-Cœur</span><span class="pp">1 000 FCFA</span></button><button class="prod" data-prod="lavwax">
+      <div class="thumb c-prot"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="18" width="32" height="28" rx="12" fill="var(--surface)"></rect><g stroke-width="1.6" opacity=".55"><path d="M20 25h24M18 39h28"></path></g><g fill="currentColor" stroke="none" opacity=".6"><path d="M24 29l3 3-3 3-3-3zM32 29l3 3-3 3-3-3zM40 29l3 3-3 3-3-3z"></path></g><path d="M16 32H8l4-5M48 32h8l-4-5"></path><circle cx="10" cy="36" r="2" fill="currentColor"></circle><circle cx="54" cy="36" r="2" fill="currentColor"></circle></svg></div>
+      <span><span class="chip ok">Fait au Sénégal</span></span>
+      <b>Serviettes lavables en wax ×3</b><span class="small muted">Atelier de couturières, Thiès</span><span class="pp">4 500 FCFA</span></button><button class="prod" data-prod="cup">
+      <div class="thumb c-prot"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 12h28c0 16-6 26-14 26S18 28 18 12z" fill="var(--surface)"></path><path d="M21 20c3 1 19 1 22 0" opacity=".5"></path><path d="M32 38v14"></path><circle cx="32" cy="54" r="2.5" fill="currentColor"></circle></svg></div>
+      
+      <b>Coupe menstruelle, taille S</b><span class="small muted">Pharmacie partenaire Sacré-Cœur</span><span class="pp">6 500 FCFA</span></button><button class="prod" data-prod="culm">
+      <div class="thumb c-prot"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 18h44l-4 14c-4 2-9 6-11 14H25c-2-8-7-12-11-14z" fill="var(--surface)"></path><path d="M25 46h14"></path><path d="M24 34c3 2 13 2 16 0v8c-3 3-13 3-16 0z" fill="currentColor" opacity=".2" stroke="none"></path><path d="M10 22h44" opacity=".5"></path></svg></div>
+      
+      <b>Culotte menstruelle, flux moyen</b><span class="small muted">Pharmacie partenaire Point E</span><span class="pp">7 000 FCFA</span></button><button class="prod" data-prod="tamp">
+      <div class="thumb c-prot"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g transform="rotate(-35 32 32)"><rect x="24" y="8" width="16" height="30" rx="8" fill="var(--surface)"></rect><rect x="26" y="36" width="12" height="12" rx="2" fill="currentColor" opacity=".18"></rect><path d="M32 48c0 6 4 6 4 10"></path></g></svg></div>
+      
+      <b>Tampons flux normal ×16</b><span class="small muted">Pharmacie partenaire Liberté</span><span class="pp">2 500 FCFA</span></button><button class="prod" data-prod="gel">
+      <div class="thumb c-hyg"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="22" y="22" width="20" height="34" rx="6" fill="var(--surface)"></rect><path d="M27 22v-6h10v6M37 16h7l2 3"></path><path d="M27 34h10M27 40h7" opacity=".6"></path><path d="M32 46c-2 2.5-2 5 0 5s2-2.5 0-5z" fill="currentColor" stroke="none"></path></svg></div>
+      
+      <b>Gel intime doux, pH neutre 250 ml</b><span class="small muted">Pharmacie partenaire Point E</span><span class="pp">2 800 FCFA</span></button><button class="prod" data-prod="ling">
+      <div class="thumb c-hyg"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="20" width="44" height="30" rx="8" fill="var(--surface)"></rect><path d="M24 24h16c0 6-3 8-8 8s-8-2-8-8z" fill="currentColor" opacity=".18"></path><path d="M28 26c2 2 6 2 8 0"></path><path d="M18 40h28M18 45h18" opacity=".55"></path></svg></div>
+      
+      <b>Lingettes intimes ×20</b><span class="small muted">Pharmacie partenaire Liberté</span><span class="pp">1 200 FCFA</span></button><button class="prod" data-prod="patch">
+      <div class="thumb c-bien"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="16" width="36" height="32" rx="10" fill="var(--surface)"></rect><path d="M25 38c-3-4 3-6 0-10M32 38c-3-4 3-6 0-10M39 38c-3-4 3-6 0-10"></path></svg></div>
+      
+      <b>Patchs chauffants ×4</b><span class="small muted">Pharmacie partenaire Sacré-Cœur</span><span class="pp">2 000 FCFA</span></button><button class="prod" data-prod="bouil">
+      <div class="thumb c-bien"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 24c0-6 6-8 18-8s18 2 18 8v14c0 10-8 14-18 14S14 48 14 38z" fill="var(--surface)"></path><path d="M14 30c6 3 30 3 36 0" opacity=".5"></path><g fill="currentColor" stroke="none" opacity=".6"><circle cx="24" cy="40" r="1.6"></circle><circle cx="31" cy="44" r="1.6"></circle><circle cx="38" cy="39" r="1.6"></circle><circle cx="28" cy="36" r="1.6"></circle><circle cx="41" cy="45" r="1.6"></circle></g></svg></div>
+      <span><span class="chip ok">Fait au Sénégal</span></span>
+      <b>Bouillotte sèche aux graines</b><span class="small muted">GIE de femmes, Kaolack</span><span class="pp">3 500 FCFA</span></button><button class="prod" data-prod="tis">
+      <div class="thumb c-bien"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 28h34v6c0 10-7 16-17 16S12 44 12 34z" fill="var(--surface)"></path><path d="M46 31h3a5 5 0 0 1 0 10h-5"></path><path d="M8 54h42"></path><path d="M24 22c-2-3 2-5 0-8M32 22c-2-3 2-5 0-8" opacity=".6"></path><path d="M48 18c-8 0-11 5-11 9 6 0 11-3 11-9z" fill="currentColor" opacity=".35"></path></svg></div>
+      <span><span class="chip ok">Fait au Sénégal</span></span>
+      <b>Tisane gingembre-citronnelle ×20</b><span class="small muted">Coopérative de femmes, Ziguinchor</span><span class="pp">1 500 FCFA</span></button><button class="prod" data-prod="trousse">
+      <div class="thumb c-acc"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 24h44v20c0 4-3 6-6 6H16c-3 0-6-2-6-6z" fill="var(--surface)"></path><path d="M10 24c0-4 3-6 6-6h32c3 0 6 2 6 6"></path><path d="M14 24h36" stroke-dasharray="2 3"></path><path d="M44 24v6"></path><circle cx="44" cy="32" r="2" fill="currentColor"></circle><g fill="currentColor" stroke="none" opacity=".5"><path d="M22 36l3 3-3 3-3-3zM32 36l3 3-3 3-3-3zM42 40l3 3-3 3-3-3z"></path></g></svg></div>
+      <span><span class="chip ok">Fait au Sénégal</span></span>
+      <b>Trousse discrète en wax</b><span class="small muted">Atelier de couturières, Thiès</span><span class="pp">2 500 FCFA</span></button><button class="prod" data-prod="cul3">
+      <div class="thumb c-acc"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g opacity=".45"><path d="M20 12h32l-3 10c-3 1-6 4-7 9h-12c-1-5-4-8-7-9z"></path></g><path d="M12 24h36l-3 11c-3 1-7 5-8 11H23c-1-6-5-10-8-11z" fill="var(--surface)"></path><path d="M12 28h36" opacity=".5"></path></svg></div>
+      
+      <b>Culottes coton ×3</b><span class="small muted">Pharmacie partenaire Mermoz</span><span class="pp">3 000 FCFA</span></button></div>
+    <p class="small muted">Retrait en pharmacie partenaire ou livraison discrète. Libellé « Achat Bien-être » dans l'historique.</p>
+  </div>
+  </div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">07-Fiche-produit</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Boutique</h2></div></div>
+  <div class="body">
+    <div class="thumb big c-prot" style="aspect-ratio:16/9"><svg class="art" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="18" width="32" height="28" rx="12" fill="var(--surface)"></rect><g stroke-width="1.6" opacity=".55"><path d="M20 25h24M18 39h28"></path></g><g fill="currentColor" stroke="none" opacity=".6"><path d="M24 29l3 3-3 3-3-3zM32 29l3 3-3 3-3-3zM40 29l3 3-3 3-3-3z"></path></g><path d="M16 32H8l4-5M48 32h8l-4-5"></path><circle cx="10" cy="36" r="2" fill="currentColor"></circle><circle cx="54" cy="36" r="2" fill="currentColor"></circle></svg></div>
+    <div class="row" style="align-items:flex-start"><div class="grow" style="flex:1;min-width:0"><h3 style="font-size:20px">Serviettes lavables en wax ×3</h3><div class="small muted">Atelier de couturières, Thiès</div></div><b style="font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums">4 500 FCFA</b></div>
+    <p>Coton absorbant, dessus en wax, pression pour fixer à la culotte. Environ 2 ans d’usage.</p>
+    
+    <div class="card small">
+      <div class="kv"><span class="muted">Vendu par</span><b>Atelier de couturières, Thiès</b></div>
+      <div class="kv"><span class="muted">Réception</span><b>Retrait ou livraison discrète</b></div>
+      <div class="kv"><span class="muted">Part pour la créatrice</span><b>60 % du prix</b></div>
+    </div>
+  </div>
+  <div class="footbar"><button class="btn primary" data-addcart="lavwax">Ajouter au panier</button></div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">08-Panier</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Mon panier</h2></div></div>
+  <div class="body">
+    <div class="card"><div class="hist"><div class="it"><div class="grow" style="flex:1;min-width:0"><b>Serviettes lavables en wax ×3</b><div class="small muted">4 500 FCFA · Atelier de couturières, Thiès</div></div>
+      <div class="qty"><button data-qty="lavwax" data-d="-1" aria-label="Retirer un Serviettes lavables en wax ×3">−</button><span style="min-width:18px;text-align:center;font-variant-numeric:tabular-nums">1</span><button data-qty="lavwax" data-d="1" aria-label="Ajouter un Serviettes lavables en wax ×3">+</button></div></div><div class="it"><div class="grow" style="flex:1;min-width:0"><b>Tisane gingembre-citronnelle ×20</b><div class="small muted">1 500 FCFA · Coopérative de femmes, Ziguinchor</div></div>
+      <div class="qty"><button data-qty="tis" data-d="-1" aria-label="Retirer un Tisane gingembre-citronnelle ×20">−</button><span style="min-width:18px;text-align:center;font-variant-numeric:tabular-nums">1</span><button data-qty="tis" data-d="1" aria-label="Ajouter un Tisane gingembre-citronnelle ×20">+</button></div></div></div></div>
+    <div class="seg" role="group" aria-label="Mode de réception">
+      <button aria-pressed="true" data-mode="retrait">Retrait en pharmacie</button>
+      <button aria-pressed="false" data-mode="livraison">Livraison discrète</button>
+    </div>
+    <p class="small muted">Tout est regroupé à la Pharmacie partenaire Sacré-Cœur (5 min à pied), dans un sachet opaque.</p>
+    <div class="card small">
+      <div class="kv"><span class="muted">Sous-total</span><b>6 000 FCFA</b></div>
+      
+    </div>
+  </div>
+  <div class="footbar"><button class="btn primary" data-act="pay-cart">Payer 6 000 FCFA avec Max it</button></div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"><div class="ap">Max</div><div class="small"><b>Debbo</b><div>Tisane gingembre-citronnelle ×20 ajouté au panier.</div></div></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">09-Paiement-recapitulatif</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead">
+    <div class="grow" style="flex:1;min-width:0"><h2>Bonjour</h2></div></div>
+  <div class="body">
+    <button class="sos" data-go="urgence"><span class="k">Urgence</span><span class="t">J'ai besoin<br>maintenant</span><span class="s">Pharmacie la plus proche à 0,4 km · retrait par code</span></button>
+    
+    <div class="grid2">
+      <button class="tile cy" data-go="cycle"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div><b>Mon cycle <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></b><span>Règles dans ~5 jours</span><div class="minibar" aria-hidden="true"><i style="width:86%"></i></div></button>
+      <button class="tile" data-act="reorder"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><b>Mon kit habituel</b><span>Kit Essentiel · 1 500 FCFA</span></button>
+      <button class="tile wide" data-go="boutique"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><span class="grow" style="display:flex;flex-direction:column;gap:2px"><b>Boutique</b><span>12 produits · fait au Sénégal</span></span><span class="muted">→</span></button>
+    </div>
+    <div class="sec"><b>Découvrir</b></div>
+    <div class="grid2">
+      <button class="feat f-kits" style="--i:0" data-go="kits" aria-label="Nos kits, à partir de 500 FCFA">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><rect x="4" y="30" width="30" height="28" rx="6" fill="var(--surface)"></rect><path d="M12 30v-6a7 7 0 0 1 14 0v6"></path></g>
+    <g class="bob d2"><rect x="42" y="18" width="36" height="40" rx="7" fill="var(--surface)"></rect><path d="M51 18v-7a9 9 0 0 1 18 0v7"></path><path d="M60 32c-4-5-11-1-7 5l7 7 7-7c4-6-3-10-7-5z" fill="currentColor" stroke="none"></path></g>
+    <g class="bob d3"><rect x="86" y="26" width="30" height="32" rx="6" fill="var(--surface)"></rect><path d="M94 26v-6a7 7 0 0 1 14 0v6"></path></g></svg></div><b>Nos kits</b><span class="pill">dès 500 FCFA</span></button>
+      <button class="feat f-tips" style="--i:1" data-go="conseils" aria-label="Conseils validés par des sages-femmes">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><path d="M6 10h56a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V18a8 8 0 0 1 8-8z" fill="var(--surface)"></path>
+    <circle class="blink" cx="24" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d2" cx="38" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d3" cx="52" cy="28" r="3.5" fill="currentColor" stroke="none"></circle></g>
+    <g class="bob d2"><circle cx="96" cy="34" r="18" fill="var(--surface)"></circle><path class="check" d="M87 34l6 6 12-12"></path></g></svg></div><b>Conseils</b><span class="pill">✓ Sages-femmes</span></button>
+    </div>
+    <button class="feat f-soli" style="--i:2" data-go="solidaire" aria-label="Debbo Solidaire, 1284 kits offerts">
+      <div class="soli-row"><svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path class="beat" d="M24 41C10 31 4 24 4 16a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 15-20 25z" fill="#fff"></path></svg><div style="flex:1"><div class="num" data-count="1284">1 284</div><div style="font-weight:600;opacity:.9">kits offerts aux élèves</div></div><span class="pill">Offrir →</span></div>
+      <div class="goal" aria-hidden="true"><i style="--w:64%"></i></div>
+      <div class="small" style="opacity:.85;position:relative">Objectif 2 000 ce trimestre</div>
+    </button>
+    <button class="feat f-hist" style="--i:3" data-go="historique" aria-label="Voir comment l'achat apparaît dans l'historique Max it">
+      <span class="shield-ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span>
+      <b style="font-size:16px">Discret dans Max it</b>
+      <div class="mini-tx"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><span><b style="font-family:var(--f-body);font-size:14px">Achat Bien-être</b><br><span class="small muted">Sans nom de produit</span></span><span class="amt">−1 500 FCFA</span></div>
+    </button>
+    <button class="card" data-go="confiance" style="all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span style="color:var(--ok)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span><span class="grow small" style="flex:1"><b>Votre vie privée</b><br><span class="muted">Ce qui reste sur votre téléphone, et comment tout effacer.</span></span><span class="muted">→</span>
+    </button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"><div class="sheet-wrap" data-act="sheet-bg"><div class="sheet mx" role="dialog" aria-label="Paiement Max it">
+    <div class="mx-top"><div class="grab"></div>
+      <div class="mx-brand"><span class="mx-logo">Max it</span><div><b>Paiement Max it</b><br><span>Étape 1 sur 2 · Récapitulatif</span></div>
+      <span class="mx-sec"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>Sécurisé</span></div>
+      <div class="mx-amt">1 500 FCFA</div>
+      <div class="mx-to">à <b style="color:#fff">Debbo</b> · Mini app certifiée Max it</div></div>
+    <div class="mx-body">
+      <div class="seg" role="group" aria-label="Pour qui">
+        <button aria-pressed="true" data-for="moi">Pour moi</button>
+        <button aria-pressed="false" data-for="proche">Pour une proche</button></div>
+      <div class="card small" style="background:var(--sunk)">
+        <div class="kv"><span class="muted">Kit Essentiel</span><b>1 500 FCFA</b></div>
+        
+        <div class="kv"><span class="muted">Payé depuis</span><b>Compte Max it</b></div>
+        <div class="kv"><span class="muted">Dans l'historique</span><b>Achat Bien-être</b></div>
+      </div>
+      <div class="row small"><span class="grow" style="flex:1"><b>+200 FCFA pour une élève</b></span><button class="switch" role="switch" aria-checked="false" aria-label="Ajouter le geste solidaire" data-act="round"></button></div>
+      <div class="mx-perks" aria-label="Avec Max it">
+        <div style="--i:0"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></i>Votre code Max it</div>
+        <div style="--i:1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg></i>Paiement instantané</div>
+        <div style="--i:2"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></i>Libellé discret</div>
+        <div style="--i:3"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"></path><path d="M9 8h6M9 12h6"></path></svg></i>Reçu Max it</div>
+      </div>
+      <button class="btn mxpay" data-act="confirm"><span class="mx-logo">Max it</span>Payer 1 500 FCFA avec Max it</button>
+      <button class="btn ghost small" data-act="sheet-close">Annuler</button>
+    </div>
+  </div></div></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">10-Paiement-code-secret</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead">
+    <div class="grow" style="flex:1;min-width:0"><h2>Bonjour</h2></div></div>
+  <div class="body">
+    <button class="sos" data-go="urgence"><span class="k">Urgence</span><span class="t">J'ai besoin<br>maintenant</span><span class="s">Pharmacie la plus proche à 0,4 km · retrait par code</span></button>
+    
+    <div class="grid2">
+      <button class="tile cy" data-go="cycle"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div><b>Mon cycle <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></b><span>Règles dans ~5 jours</span><div class="minibar" aria-hidden="true"><i style="width:86%"></i></div></button>
+      <button class="tile" data-act="reorder"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><b>Mon kit habituel</b><span>Kit Essentiel · 1 500 FCFA</span></button>
+      <button class="tile wide" data-go="boutique"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><span class="grow" style="display:flex;flex-direction:column;gap:2px"><b>Boutique</b><span>12 produits · fait au Sénégal</span></span><span class="muted">→</span></button>
+    </div>
+    <div class="sec"><b>Découvrir</b></div>
+    <div class="grid2">
+      <button class="feat f-kits" style="--i:0" data-go="kits" aria-label="Nos kits, à partir de 500 FCFA">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><rect x="4" y="30" width="30" height="28" rx="6" fill="var(--surface)"></rect><path d="M12 30v-6a7 7 0 0 1 14 0v6"></path></g>
+    <g class="bob d2"><rect x="42" y="18" width="36" height="40" rx="7" fill="var(--surface)"></rect><path d="M51 18v-7a9 9 0 0 1 18 0v7"></path><path d="M60 32c-4-5-11-1-7 5l7 7 7-7c4-6-3-10-7-5z" fill="currentColor" stroke="none"></path></g>
+    <g class="bob d3"><rect x="86" y="26" width="30" height="32" rx="6" fill="var(--surface)"></rect><path d="M94 26v-6a7 7 0 0 1 14 0v6"></path></g></svg></div><b>Nos kits</b><span class="pill">dès 500 FCFA</span></button>
+      <button class="feat f-tips" style="--i:1" data-go="conseils" aria-label="Conseils validés par des sages-femmes">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><path d="M6 10h56a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V18a8 8 0 0 1 8-8z" fill="var(--surface)"></path>
+    <circle class="blink" cx="24" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d2" cx="38" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d3" cx="52" cy="28" r="3.5" fill="currentColor" stroke="none"></circle></g>
+    <g class="bob d2"><circle cx="96" cy="34" r="18" fill="var(--surface)"></circle><path class="check" d="M87 34l6 6 12-12"></path></g></svg></div><b>Conseils</b><span class="pill">✓ Sages-femmes</span></button>
+    </div>
+    <button class="feat f-soli" style="--i:2" data-go="solidaire" aria-label="Debbo Solidaire, 1284 kits offerts">
+      <div class="soli-row"><svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path class="beat" d="M24 41C10 31 4 24 4 16a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 15-20 25z" fill="#fff"></path></svg><div style="flex:1"><div class="num" data-count="1284">1 284</div><div style="font-weight:600;opacity:.9">kits offerts aux élèves</div></div><span class="pill">Offrir →</span></div>
+      <div class="goal" aria-hidden="true"><i style="--w:64%"></i></div>
+      <div class="small" style="opacity:.85;position:relative">Objectif 2 000 ce trimestre</div>
+    </button>
+    <button class="feat f-hist" style="--i:3" data-go="historique" aria-label="Voir comment l'achat apparaît dans l'historique Max it">
+      <span class="shield-ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span>
+      <b style="font-size:16px">Discret dans Max it</b>
+      <div class="mini-tx"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><span><b style="font-family:var(--f-body);font-size:14px">Achat Bien-être</b><br><span class="small muted">Sans nom de produit</span></span><span class="amt">−1 500 FCFA</span></div>
+    </button>
+    <button class="card" data-go="confiance" style="all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span style="color:var(--ok)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span><span class="grow small" style="flex:1"><b>Votre vie privée</b><br><span class="muted">Ce qui reste sur votre téléphone, et comment tout effacer.</span></span><span class="muted">→</span>
+    </button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"><div class="sheet-wrap" data-act="sheet-bg"><div class="sheet mx" role="dialog" aria-label="Code secret Max it">
+      <div class="mx-top"><div class="grab"></div>
+      <div class="mx-brand"><span class="mx-logo">Max it</span><div><b>Paiement Max it</b><br><span>Étape 2 sur 2 · Validation</span></div>
+      <span class="mx-sec"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>Sécurisé</span></div>
+      <div class="mx-amt">1 500 FCFA</div>
+      <div class="mx-to">à <b style="color:#fff">Debbo</b> · Mini app certifiée Max it</div></div>
+      <div class="mx-body">
+        <p class="center" style="font-weight:700;margin:0">Saisissez votre code secret Max it</p>
+        <div class="mx-dots" aria-live="polite" aria-label="2 chiffres saisis sur 4"><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></div>
+        <div class="keypad"><button data-mxkey="1" aria-label="1">1</button><button data-mxkey="2" aria-label="2">2</button><button data-mxkey="3" aria-label="3">3</button><button data-mxkey="4" aria-label="4">4</button><button data-mxkey="5" aria-label="5">5</button><button data-mxkey="6" aria-label="6">6</button><button data-mxkey="7" aria-label="7">7</button><button data-mxkey="8" aria-label="8">8</button><button data-mxkey="9" aria-label="9">9</button><button class="blank" tabindex="-1" aria-hidden="true"></button><button data-mxkey="0" aria-label="0">0</button><button data-mxkey="⌫" aria-label="Effacer">⌫</button></div>
+        <p class="small muted center" style="margin:0">Debbo ne voit jamais votre code : il est vérifié par Max it.<br><span class="chip ind" style="margin-top:6px;display:inline-block">Démo : 4 chiffres au choix</span></p>
+        <button class="btn ghost small" data-act="mx-back">Retour au récapitulatif</button>
+      </div></div></div></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">11-Paiement-verification</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead">
+    <div class="grow" style="flex:1;min-width:0"><h2>Bonjour</h2></div></div>
+  <div class="body">
+    <button class="sos" data-go="urgence"><span class="k">Urgence</span><span class="t">J'ai besoin<br>maintenant</span><span class="s">Pharmacie la plus proche à 0,4 km · retrait par code</span></button>
+    
+    <div class="grid2">
+      <button class="tile cy" data-go="cycle"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div><b>Mon cycle <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></b><span>Règles dans ~5 jours</span><div class="minibar" aria-hidden="true"><i style="width:86%"></i></div></button>
+      <button class="tile" data-act="reorder"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><b>Mon kit habituel</b><span>Kit Essentiel · 1 500 FCFA</span></button>
+      <button class="tile wide" data-go="boutique"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><span class="grow" style="display:flex;flex-direction:column;gap:2px"><b>Boutique</b><span>12 produits · fait au Sénégal</span></span><span class="muted">→</span></button>
+    </div>
+    <div class="sec"><b>Découvrir</b></div>
+    <div class="grid2">
+      <button class="feat f-kits" style="--i:0" data-go="kits" aria-label="Nos kits, à partir de 500 FCFA">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><rect x="4" y="30" width="30" height="28" rx="6" fill="var(--surface)"></rect><path d="M12 30v-6a7 7 0 0 1 14 0v6"></path></g>
+    <g class="bob d2"><rect x="42" y="18" width="36" height="40" rx="7" fill="var(--surface)"></rect><path d="M51 18v-7a9 9 0 0 1 18 0v7"></path><path d="M60 32c-4-5-11-1-7 5l7 7 7-7c4-6-3-10-7-5z" fill="currentColor" stroke="none"></path></g>
+    <g class="bob d3"><rect x="86" y="26" width="30" height="32" rx="6" fill="var(--surface)"></rect><path d="M94 26v-6a7 7 0 0 1 14 0v6"></path></g></svg></div><b>Nos kits</b><span class="pill">dès 500 FCFA</span></button>
+      <button class="feat f-tips" style="--i:1" data-go="conseils" aria-label="Conseils validés par des sages-femmes">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><path d="M6 10h56a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V18a8 8 0 0 1 8-8z" fill="var(--surface)"></path>
+    <circle class="blink" cx="24" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d2" cx="38" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d3" cx="52" cy="28" r="3.5" fill="currentColor" stroke="none"></circle></g>
+    <g class="bob d2"><circle cx="96" cy="34" r="18" fill="var(--surface)"></circle><path class="check" d="M87 34l6 6 12-12"></path></g></svg></div><b>Conseils</b><span class="pill">✓ Sages-femmes</span></button>
+    </div>
+    <button class="feat f-soli" style="--i:2" data-go="solidaire" aria-label="Debbo Solidaire, 1284 kits offerts">
+      <div class="soli-row"><svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path class="beat" d="M24 41C10 31 4 24 4 16a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 15-20 25z" fill="#fff"></path></svg><div style="flex:1"><div class="num" data-count="1284">1 284</div><div style="font-weight:600;opacity:.9">kits offerts aux élèves</div></div><span class="pill">Offrir →</span></div>
+      <div class="goal" aria-hidden="true"><i style="--w:64%"></i></div>
+      <div class="small" style="opacity:.85;position:relative">Objectif 2 000 ce trimestre</div>
+    </button>
+    <button class="feat f-hist" style="--i:3" data-go="historique" aria-label="Voir comment l'achat apparaît dans l'historique Max it">
+      <span class="shield-ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span>
+      <b style="font-size:16px">Discret dans Max it</b>
+      <div class="mini-tx"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><span><b style="font-family:var(--f-body);font-size:14px">Achat Bien-être</b><br><span class="small muted">Sans nom de produit</span></span><span class="amt">−1 500 FCFA</span></div>
+    </button>
+    <button class="card" data-go="confiance" style="all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span style="color:var(--ok)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span><span class="grow small" style="flex:1"><b>Votre vie privée</b><br><span class="muted">Ce qui reste sur votre téléphone, et comment tout effacer.</span></span><span class="muted">→</span>
+    </button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"><div class="sheet-wrap" data-act="sheet-bg"><div class="sheet mx" role="dialog" aria-label="Code secret Max it"><div class="mx-wait"><div class="mx-ring"></div><b>Max it vérifie votre code…</b><span class="small muted">Ne fermez pas l'application</span></div></div></div></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">12-Paiement-reussi</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead">
+    <div class="grow" style="flex:1;min-width:0"><h2>Bonjour</h2></div></div>
+  <div class="body">
+    <button class="sos" data-go="urgence"><span class="k">Urgence</span><span class="t">J'ai besoin<br>maintenant</span><span class="s">Pharmacie la plus proche à 0,4 km · retrait par code</span></button>
+    
+    <div class="grid2">
+      <button class="tile cy" data-go="cycle"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></div><b>Mon cycle <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></b><span>Règles dans ~5 jours</span><div class="minibar" aria-hidden="true"><i style="width:86%"></i></div></button>
+      <button class="tile" data-act="reorder"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><b>Mon kit habituel</b><span>Kit Essentiel · 1 500 FCFA</span></button>
+      <button class="tile wide" data-go="boutique"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><span class="grow" style="display:flex;flex-direction:column;gap:2px"><b>Boutique</b><span>12 produits · fait au Sénégal</span></span><span class="muted">→</span></button>
+    </div>
+    <div class="sec"><b>Découvrir</b></div>
+    <div class="grid2">
+      <button class="feat f-kits" style="--i:0" data-go="kits" aria-label="Nos kits, à partir de 500 FCFA">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><rect x="4" y="30" width="30" height="28" rx="6" fill="var(--surface)"></rect><path d="M12 30v-6a7 7 0 0 1 14 0v6"></path></g>
+    <g class="bob d2"><rect x="42" y="18" width="36" height="40" rx="7" fill="var(--surface)"></rect><path d="M51 18v-7a9 9 0 0 1 18 0v7"></path><path d="M60 32c-4-5-11-1-7 5l7 7 7-7c4-6-3-10-7-5z" fill="currentColor" stroke="none"></path></g>
+    <g class="bob d3"><rect x="86" y="26" width="30" height="32" rx="6" fill="var(--surface)"></rect><path d="M94 26v-6a7 7 0 0 1 14 0v6"></path></g></svg></div><b>Nos kits</b><span class="pill">dès 500 FCFA</span></button>
+      <button class="feat f-tips" style="--i:1" data-go="conseils" aria-label="Conseils validés par des sages-femmes">
+        <div class="vis"><svg viewBox="0 0 120 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <g class="bob"><path d="M6 10h56a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H30l-12 10v-10h-4a8 8 0 0 1-8-8V18a8 8 0 0 1 8-8z" fill="var(--surface)"></path>
+    <circle class="blink" cx="24" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d2" cx="38" cy="28" r="3.5" fill="currentColor" stroke="none"></circle><circle class="blink d3" cx="52" cy="28" r="3.5" fill="currentColor" stroke="none"></circle></g>
+    <g class="bob d2"><circle cx="96" cy="34" r="18" fill="var(--surface)"></circle><path class="check" d="M87 34l6 6 12-12"></path></g></svg></div><b>Conseils</b><span class="pill">✓ Sages-femmes</span></button>
+    </div>
+    <button class="feat f-soli" style="--i:2" data-go="solidaire" aria-label="Debbo Solidaire, 1284 kits offerts">
+      <div class="soli-row"><svg viewBox="0 0 48 48" width="52" height="52" aria-hidden="true"><path class="beat" d="M24 41C10 31 4 24 4 16a10 10 0 0 1 20-3 10 10 0 0 1 20 3c0 8-6 15-20 25z" fill="#fff"></path></svg><div style="flex:1"><div class="num" data-count="1284">1 284</div><div style="font-weight:600;opacity:.9">kits offerts aux élèves</div></div><span class="pill">Offrir →</span></div>
+      <div class="goal" aria-hidden="true"><i style="--w:64%"></i></div>
+      <div class="small" style="opacity:.85;position:relative">Objectif 2 000 ce trimestre</div>
+    </button>
+    <button class="feat f-hist" style="--i:3" data-go="historique" aria-label="Voir comment l'achat apparaît dans l'historique Max it">
+      <span class="shield-ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span>
+      <b style="font-size:16px">Discret dans Max it</b>
+      <div class="mini-tx"><span class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><span><b style="font-family:var(--f-body);font-size:14px">Achat Bien-être</b><br><span class="small muted">Sans nom de produit</span></span><span class="amt">−1 500 FCFA</span></div>
+    </button>
+    <button class="card" data-go="confiance" style="all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:12px;align-items:center">
+      <span style="color:var(--ok)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg></span><span class="grow small" style="flex:1"><b>Votre vie privée</b><br><span class="muted">Ce qui reste sur votre téléphone, et comment tout effacer.</span></span><span class="muted">→</span>
+    </button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"><div class="sheet-wrap" data-act="sheet-bg"><div class="sheet mx" role="dialog" aria-label="Code secret Max it"><div class="mx-wait"><div class="mx-ok"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+      <b style="font-size:18px">Paiement réussi</b><span class="mx-amt" style="font-size:28px">1 500 FCFA</span>
+      <span class="small muted">Reçu disponible dans votre historique Max it<br>sous « Achat Bien-être »</span></div></div></div></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">13-Code-de-retrait</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Kit prêt à retirer</h2></div></div>
+  <div class="body">
+    <div class="center" style="color:var(--ok)"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"></circle><path d="M7.5 12.5l3 3 6-6"></path></svg></div>
+    <h3 class="bigtitle center">Montrez ce code au comptoir</h3>
+    <div class="code" aria-label="Code de retrait">DB-1436</div>
+    <div class="card small">
+      <div class="kv"><span class="muted">Pharmacie</span><b>Pharmacie partenaire Sacré-Cœur</b></div>
+      <div class="kv"><span class="muted">Contenu</span><b>Kit Essentiel</b></div>
+      <div class="kv"><span class="muted">Valable</span><b>24 h</b></div>
+      <div class="kv"><span class="muted">Payé</span><b>1 500 FCFA</b></div>
+      <div class="kv"><span class="muted">Dans votre historique</span><b>Achat Bien-être</b></div>
+    </div>
+    
+    <p class="small muted center">Sacré-Cœur 3 · 5 min à pied · Ouverte jusqu’à 23 h. Le kit est remis dans un sachet opaque.</p>
+  </div>
+  <div class="footbar"><button class="btn ghost" data-act="home">Retour à l'accueil</button></div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">14-Conseils</h2><div class="phone" style="height: 845px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Conseils</h2><div class="small muted">Validés par des sages-femmes partenaires</div></div></div>
+  <div class="body">
+    <div class="row" style="gap:6px;flex-wrap:wrap"><span class="chip ind">Français</span><span class="chip">Wolof · bientôt en audio</span><span class="chip">Pulaar · bientôt en audio</span></div>
+    <details class="adv" open=""><summary>Toutes les combien changer de protection ?</summary><div class="ct">
+      <p>Une serviette jetable se change toutes les 4 à 6 heures, plus souvent si le flux est abondant. Ne gardez pas la même toute la journée, même si elle semble peu remplie.</p>
+      <p>Une serviette lavable se rince à l'eau froide, puis se lave au savon et sèche au soleil.</p>
+      <p class="small muted">Relu par une sage-femme partenaire · mis à jour oct. 2026</p></div></details>
+    <details class="adv"><summary>Douleurs : qu'est-ce qui aide ?</summary><div class="ct">
+      <p>La chaleur sur le bas du ventre, la marche douce et une bonne hydratation soulagent souvent. Le paracétamol peut aider ; demandez conseil au pharmacien pour le dosage.</p>
+      <p>Une douleur qui vous empêche d'aller au travail ou en cours n'est pas « normale » : parlez-en à une sage-femme.</p></div></details>
+    <details class="adv"><summary>Quand consulter sans attendre</summary><div class="ct">
+      <p>Saignements qui remplissent une protection en moins d'une heure, plusieurs heures de suite.</p>
+      <p>Fièvre, malaise ou vertiges pendant les règles.</p>
+      <p>Règles absentes plus de 3 mois, ou saignements entre les règles.</p></div></details>
+    <details class="adv"><summary>Vrai ou faux ? Ce qu'on lit sur les réseaux</summary><div class="ct">
+      <div class="myth"><span class="chip warn">Faux</span><span>« Il ne faut pas se laver pendant les règles. » Une toilette quotidienne à l'eau claire est recommandée.</span></div>
+      <div class="myth"><span class="chip warn">Faux</span><span>« Un sang foncé veut dire qu'on est malade. » La couleur varie naturellement au fil des jours.</span></div>
+      <div class="myth"><span class="chip ok">Vrai</span><span>« Le cycle peut changer avec le stress ou un voyage. » Un décalage de quelques jours est courant.</span></div></div></details>
+    <div class="card small"><b>Une question précise ?</b><span class="muted">Posez-la à une sage-femme partenaire. Réponse écrite sous 24 h, sans que votre nom soit affiché.</span><button class="btn ghost small" data-act="toast" data-msg="Question envoyée. Vous recevrez une notification « Nouveau message Bien-être ».">Poser une question</button></div>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">15-Debbo-Solidaire</h2><div class="phone" style="height: 1408px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Debbo Solidaire</h2><div class="small muted">Aucune élève ne devrait manquer les cours à cause de ses règles</div></div></div>
+  <div class="body">
+    <div class="grid2">
+      <div class="card stat"><b>1 284</b><span class="small muted">kits offerts ce trimestre</span></div>
+      <div class="card stat"><b>23</b><span class="small muted">collèges et lycées équipés</span></div>
+      <div class="card stat"><b>41</b><span class="small muted">couturières et productrices payées</span></div>
+      <div class="card stat"><b>18 400 FCFA</b><span class="small muted">collectés par le geste solidaire</span></div>
+    </div>
+    <p class="small muted">Chiffres d'exemple pour la démonstration.</p>
+    <div class="label">Comment Debbo agit</div>
+    <div class="card"><div class="mech"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M3 12h18M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zm0 0s2-5 4.5-3.5S15 8 12 8z"></path></svg></div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b>Kit suspendu</b><span class="small muted">Vous payez un kit, une association partenaire le remet à une élève.</span><button class="btn indigo small" data-go="offrir" style="margin-top:4px">Offrir un kit</button></div></div></div>
+    <div class="card"><div class="mech"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"></path></svg></div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b>Geste solidaire à chaque achat</b><span class="small muted">Au moment de payer, ajoutez 200 FCFA pour financer des kits. Activé ou non, c’est vous qui choisissez.</span><div class="row small" style="margin-top:4px"><span class="grow" style="flex:1">Proposer par défaut</span><button class="switch" role="switch" aria-checked="false" aria-label="Activer le geste solidaire par défaut" data-act="round-default"></button></div></div></div></div>
+    <div class="card"><div class="mech"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-5 9 5-9 5z"></path><path d="M7 11v5c0 1.5 2.5 3 5 3s5-1.5 5-3v-5"></path></svg></div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b>Boîte Debbo à l’école</b><span class="small muted">Une réserve de kits chez l’infirmière ou la surveillante, réapprovisionnée par les dons. Une élève en urgence n’a rien à payer ni à expliquer.</span></div></div></div>
+    <div class="card"><div class="mech"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16"></path><path d="M9 20v-6h6v6"></path></svg></div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b>Revenus pour les créatrices locales</b><span class="small muted">Les serviettes lavables, trousses et tisanes de la boutique sont fabriquées par des ateliers et coopératives de femmes.</span><button class="btn ghost small" data-act="local" style="margin-top:4px;font-weight:600">Voir leurs produits</button></div></div></div>
+    <div class="card"><div class="mech"><div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H9l-5 4z"></path></svg></div><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><b>Causeries avec des sages-femmes</b><span class="small muted">Séances dans les collèges et les quartiers, en français, wolof et pulaar, pour remplacer les idées reçues par des informations vérifiées.</span></div></div></div>
+    <div class="card small"><b>Transparence</b><span class="muted">Chaque trimestre, les associations publient dans l'app le nombre de kits remis et les établissements servis.</span></div>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">16-Offrir-un-kit</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Offrir un kit</h2><div class="small muted">Ouvert à tous</div></div></div>
+  <div class="body">
+    <div class="card">
+      <div class="row"><span style="color:var(--accent-text)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span><b class="grow" style="flex:1">Pour une femme de ma famille</b></div>
+      <p class="small muted">Un père, un frère, un mari ou une amie peut payer le kit. La personne reçoit un code de retrait à présenter en pharmacie.</p>
+      <button class="btn primary" data-act="gift-relative">Acheter pour une proche</button>
+    </div>
+    <div class="card">
+      <div class="row"><span style="color:var(--indigo)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M3 12h18M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zm0 0s2-5 4.5-3.5S15 8 12 8z"></path></svg></span><b class="grow" style="flex:1">Pour une jeune fille, via une association</b></div>
+      <p class="small muted">Les kits sont distribués dans les collèges et lycées par des associations partenaires. Exemple de compteur : <b style="color:var(--ink)">1 284</b> kits offerts ce trimestre.</p>
+      <div class="seg" role="group" aria-label="Montant du don" style="grid-template-columns:repeat(3,1fr)">
+        <button aria-pressed="false" data-gift="500">500</button><button aria-pressed="true" data-gift="1500">1 500</button><button aria-pressed="false" data-gift="4500">4 500</button>
+      </div>
+      <p class="small muted">1 kit Essentiel pour un mois</p>
+      <button class="btn indigo" data-act="gift-asso">Offrir 1 500 FCFA</button>
+      <button class="btn ghost small" data-go="solidaire" style="font-weight:600">Voir où vont les dons</button>
+    </div>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">17-Historique-Max-it</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Historique Max it</h2><div class="small muted">Ce que voit quelqu’un qui ouvre votre téléphone</div></div></div>
+  <div class="body">
+    <div class="card"><div class="hist">
+      <div class="it "><div class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><div class="grow" style="flex:1;min-width:0"><b>Transport</b><div class="small muted">Hier, 18:20</div></div><div class="amt">−300 FCFA</div></div><div class="it "><div class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><div class="grow" style="flex:1;min-width:0"><b>Tontine du quartier</b><div class="small muted">19 oct.</div></div><div class="amt">−5 000 FCFA</div></div><div class="it "><div class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><div class="grow" style="flex:1;min-width:0"><b>Facture électricité</b><div class="small muted">15 oct.</div></div><div class="amt">−12 450 FCFA</div></div><div class="it "><div class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l3 3-3 3"></path><path d="M4 11V9a4 4 0 0 1 4-4h12M7 22l-3-3 3-3"></path><path d="M20 13v2a4 4 0 0 1-4 4H4"></path></svg></div><div class="grow" style="flex:1;min-width:0"><b>Transfert reçu</b><div class="small muted">12 oct.</div></div><div class="amt">+25 000 FCFA</div></div>
+    </div></div>
+    <div class="card small">
+      <div class="label">Discrétion à chaque étape</div>
+      <div><b>Historique :</b> « Achat Bien-être », sans nom de produit.</div>
+      <div><b>Notifications :</b> « Votre rappel Max it », sans mot intime.</div>
+      <div><b>Emballage :</b> sachet opaque, colis sans marque.</div>
+      <div><b>Sortie rapide :</b> l'icône en forme d'œil barré en haut ramène à l'accueil Max it.</div>
+    </div>
+    <button class="btn ghost" data-act="notif">Voir une notification neutre</button>
+    <button class="btn primary" data-go="urgence">Faire un achat test</button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section>
+<section class="cell"><h2 class="lbl">18-Vie-privee</h2><div class="phone" style="height: 844px !important;">
+      <div class="screen" id="screen">
+        <div class="statusbar" aria-hidden="true"><span id="clock">21:12</span><span>4G ▪▪▪ 82%</span></div>
+        <div class="host">
+          <span>Max it › <b style="color:var(--ink)">Debbo</b></span>
+          <div class="pill">
+            <button id="quick-exit" aria-label="Masquer Debbo rapidement" title="Masquer rapidement"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 6.1A9.8 9.8 0 0 1 12 6c5 0 9 6 9 6a17 17 0 0 1-3 3.4M6.6 6.6C4.3 8.1 3 12 3 12s4 6 9 6a9 9 0 0 0 4.4-1.1"></path></svg></button>
+            <button id="close-app" aria-label="Fermer la mini-app" title="Fermer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+          </div>
+        </div>
+        <div id="view" style="flex:1;display:flex;flex-direction:column;min-height:0"><div class="apphead"><button class="iconbtn" data-act="back" aria-label="Retour"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <div class="grow" style="flex:1;min-width:0"><h2>Votre vie privée</h2></div></div>
+  <div class="body">
+    <div class="card small">
+      <div class="label">Sur ce téléphone uniquement</div>
+      <div class="row"><span class="grow" style="flex:1">Dates du cycle</span><span class="chip ind">Activé</span></div>
+      <div class="row"><span class="grow" style="flex:1">Code « Mon cycle »</span><span class="chip ind">Défini</span></div>
+    </div>
+    <div class="card small">
+      <div class="label">Ce que Debbo reçoit pour une commande</div>
+      <div>Le kit choisi, la pharmacie et le paiement. Rien sur votre cycle.</div>
+      <div class="label" style="padding-top:6px">Ce que la pharmacie voit</div>
+      <div>Un code de retrait et le kit à préparer. Ni votre nom, ni votre numéro.</div>
+    </div>
+    <div class="card small">
+      <div class="label">Conseils fiables</div>
+      <div>Chaque fiche est relue par une sage-femme partenaire et datée. Debbo ne publie aucun conseil sponsorisé par une marque.</div>
+      <button class="btn ghost small" data-go="conseils" style="font-weight:600">Lire les conseils</button>
+    </div>
+    <button class="btn ghost" data-act="wipe-all" style="color:var(--accent-text)">Tout effacer de ce téléphone</button>
+  </div></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <div id="overlay"></div>
+      </div>
+    </div></section></div></body></html>

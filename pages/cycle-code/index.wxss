@@ -1,0 +1,5 @@
+@import "/utils/debbo.wxss";
+
+.db-body {
+  align-items: center;
+}

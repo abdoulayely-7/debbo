@@ -1,0 +1,6 @@
+@import "/utils/debbo.wxss";
+
+.vp-danger-zone { padding:8rpx 0; }
+.vp-danger-label { display:block; font-size:22rpx; color:#C00; font-weight:700; text-transform:uppercase; letter-spacing:2rpx; margin-bottom:12rpx; }
+.vp-danger-card { border:1rpx solid #FFB3B3; }
+.vp-btn-danger { background:#C00; color:#fff; margin-top:20rpx; }

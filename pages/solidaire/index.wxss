@@ -1,0 +1,5 @@
+@import "/utils/debbo.wxss";
+
+.db-stat { background:#fff; border-radius:20rpx; padding:28rpx 20rpx; text-align:center; }
+.db-stat-num { display:block; font-size:48rpx; font-weight:800; color:var(--indigo); line-height:1.1; }
+.db-label { display:block; font-size:24rpx; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:2rpx; padding:16rpx 0 8rpx; }

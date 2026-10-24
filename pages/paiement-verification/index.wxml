@@ -1,0 +1,7 @@
+<view class="db-screen verif-screen">
+  <view class="verif-center">
+    <image src="/assets/icons/spinner.svg" class="spinner-anim" mode="aspectFit"/>
+    <text class="verif-title">Vérification en cours…</text>
+    <text class="verif-sub">Ne fermez pas l'application</text>
+  </view>
+</view>

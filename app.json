@@ -1,13 +1,31 @@
 {
   "pages": [
+    "pages/accueil/index",
+    "pages/cycle-code/index",
+    "pages/mon-cycle/index",
+    "pages/urgence/index",
+    "pages/nos-kits/index",
+    "pages/boutique/index",
+    "pages/fiche-produit/index",
+    "pages/panier/index",
+    "pages/paiement-recap/index",
+    "pages/paiement-code/index",
+    "pages/paiement-verification/index",
+    "pages/paiement-reussi/index",
+    "pages/code-retrait/index",
+    "pages/conseils/index",
+    "pages/solidaire/index",
+    "pages/offrir-kit/index",
+    "pages/historique/index",
+    "pages/vie-privee/index",
     "pages/index/index",
     "pages/demo/index"
   ],
   "style": "v2",
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "TCMPP Boilerplate",
+    "navigationBarBackgroundColor": "#FFF6FA",
+    "navigationBarTitleText": "Debbo",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },

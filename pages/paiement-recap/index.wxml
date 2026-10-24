@@ -1,0 +1,32 @@
+<view class="db-screen">
+  <view class="db-apphead">
+    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
+    <view class="db-grow"><text class="db-apphead-title">Récapitulatif</text></view>
+  </view>
+  <scroll-view scroll-y style="flex:1;">
+    <view class="db-body">
+      <view class="db-card">
+        <text class="db-label">Votre commande</text>
+        <view class="db-kv"><text class="db-muted">Kit</text><text class="db-bold">Kit Essentiel</text></view>
+        <view class="db-kv"><text class="db-muted">Pharmacie</text><text class="db-bold">Pharmacie partenaire Sacré-Cœur</text></view>
+        <view class="db-kv"><text class="db-muted">Mode</text><text class="db-bold">Retrait par code</text></view>
+        <view class="db-kv"><text class="db-muted">Dans votre historique</text><text class="db-bold">Achat Bien-être</text></view>
+      </view>
+      <view class="db-card">
+        <view class="db-kv" style="border-bottom:none;">
+          <text class="db-muted" style="font-size:32rpx;">Total à payer</text>
+          <text class="db-bold" style="font-size:40rpx;color:var(--accent-text);">1 500 FCFA</text>
+        </view>
+      </view>
+      <view class="db-card">
+        <view class="db-row" style="gap:12rpx;">
+          <image src="/assets/icons/shield.svg" class="db-icon" />
+          <text class="db-small db-muted db-grow">Paiement Max it sécurisé · Code secret habituel · Libellé neutre dans l'historique</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="db-footbar">
+    <view class="db-btn db-btn-primary" bindtap="goConfirm"><text>Confirmer et saisir le code</text></view>
+  </view>
+</view>
