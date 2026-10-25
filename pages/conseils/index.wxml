@@ -32,6 +32,7 @@
         <text class="db-small db-muted">Posez-la à une sage-femme partenaire. Réponse écrite sous 24 h.</text>
         <view class="db-btn db-btn-ghost db-btn-sm" bindtap="askQuestion"><text>Poser une question</text></view>
       </view>
+      <view class="db-tab-spacer" />
     </view>
   </scroll-view>
 </view>

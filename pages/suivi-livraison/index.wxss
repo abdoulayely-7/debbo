@@ -1,22 +1,206 @@
 @import "/utils/debbo.wxss";
 
-/* Full-height column: nav bar, map (fixed share), sheet (scrolls) */
+/* Stepper colours: app-stepper reads --bs-primary, scoped to this page */
 .sl {
+  --bs-primary: #E0177A;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   background: var(--bg);
 }
 
-/* ---------------------------------------------------------------- Map */
+/* --------------------------------------------------------- Status head */
+.sl-head {
+  flex-shrink: 0;
+  background: var(--surface);
+  border-bottom: 1rpx solid var(--line);
+  padding: 24rpx 32rpx 8rpx;
+}
+
+.sl-status {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.sl-kicker {
+  font-size: 22rpx;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.sl-headline {
+  font-size: 40rpx;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.sl-eta {
+  flex-shrink: 0;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 32rpx;
+  background: var(--grad);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 16rpx 32rpx -16rpx var(--fuchsia);
+}
+
+.sl-eta__num {
+  font-size: 40rpx;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sl-eta__unit {
+  font-size: 20rpx;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.sl-steps {
+  margin: 16rpx -8rpx 0;
+}
+
+/* --------------------------------------------------------------- Panels */
+.sl-review {
+  padding: 16rpx 24rpx;
+  border-radius: 999rpx;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 24rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.sl-panel-title {
+  font-size: 34rpx;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.sl-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  margin-top: -8rpx;
+  animation: sl-panel-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.sl-success {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 28rpx;
+  border-radius: 32rpx;
+  background: var(--ok-soft);
+}
+
+.sl-success__ring {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: sl-pop 480ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.sl-success__icon {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.sl-place {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+}
+
+.sl-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding: 28rpx;
+  border-radius: 28rpx;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+}
+
+.sl-check {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  font-size: 28rpx;
+  color: var(--muted);
+}
+
+.sl-check__dot {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--line);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.sl-check--done { color: var(--ink); }
+.sl-check--done .sl-check__dot { background: var(--accent); border-color: var(--accent); }
+.sl-check--live { color: var(--ink); font-weight: 600; }
+.sl-check--live .sl-check__dot { border-color: var(--accent); animation: sl-breathe 1.2s ease-in-out infinite; }
+
+.sl-progress {
+  height: 10rpx;
+  border-radius: 999rpx;
+  background: var(--accent-soft);
+  overflow: hidden;
+}
+
+.sl-progress__bar {
+  width: 40%;
+  height: 100%;
+  border-radius: 999rpx;
+  background: var(--grad-btn);
+  animation: sl-indeterminate 1.4s ease-in-out infinite;
+}
+
+.sl-stars {
+  display: flex;
+  gap: 16rpx;
+}
+
+.sl-star {
+  font-size: 56rpx;
+  line-height: 1;
+  color: var(--line);
+  transition: transform 160ms ease-out;
+}
+
+.sl-star:active { transform: scale(0.9); }
+.sl-star--on { color: #F5A524; }
+
+/* ------------------------------------------------------------------ Map */
 .sl-map {
   position: relative;
-  height: 46vh;
-  flex-shrink: 0;
+  height: 440rpx;
+  border-radius: 32rpx;
   overflow: hidden;
+  border: 2rpx solid var(--line);
   background-color: #F4EEF1;
-  /* street grid */
   background-image:
     linear-gradient(#FFFFFF 10rpx, transparent 10rpx),
     linear-gradient(90deg, #FFFFFF 10rpx, transparent 10rpx),
@@ -44,7 +228,7 @@
   background: #DCEBF5;
 }
 
-.sl-place {
+.sl-label {
   position: absolute;
   font-size: 20rpx;
   font-weight: 600;
@@ -155,108 +339,16 @@
   animation: sl-ping 1.8s ease-out infinite;
 }
 
-.sl-eta-chip {
+.sl-map-chip {
   position: absolute;
-  left: 24rpx;
-  top: 24rpx;
-  padding: 12rpx 24rpx;
+  left: 20rpx;
+  top: 20rpx;
+  padding: 10rpx 22rpx;
   border-radius: 999rpx;
   background: var(--ink);
   color: #FFFFFF;
-  font-size: 26rpx;
+  font-size: 24rpx;
   font-weight: 700;
-  box-shadow: 0 8rpx 20rpx rgba(43, 15, 28, 0.25);
-}
-
-/* -------------------------------------------------------------- Sheet */
-.sl-sheet {
-  flex: 1;
-  height: 0;
-  margin-top: -40rpx;
-  position: relative;
-  z-index: 5;
-  background: var(--surface);
-  border-radius: 40rpx 40rpx 0 0;
-  box-shadow: 0 -12rpx 40rpx rgba(43, 15, 28, 0.08);
-}
-
-.sl-sheet__inner {
-  padding: 16rpx 32rpx;
-  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  gap: 28rpx;
-  animation: sl-sheet-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.sl-handle {
-  align-self: center;
-  width: 72rpx;
-  height: 8rpx;
-  border-radius: 999rpx;
-  background: var(--line);
-}
-
-.sl-title {
-  font-size: 44rpx;
-  font-weight: 800;
-  line-height: 1.15;
-  color: var(--ink);
-}
-
-.sl-sub {
-  margin-top: -16rpx;
-  font-size: 28rpx;
-  color: var(--muted);
-}
-
-.sl-strong {
-  color: var(--accent-text);
-  font-weight: 700;
-}
-
-.sl-steps {
-  display: flex;
-  gap: 10rpx;
-}
-
-.sl-step {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10rpx;
-  font-size: 22rpx;
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.sl-step__bar {
-  position: relative;
-  height: 10rpx;
-  border-radius: 999rpx;
-  background: var(--line);
-  overflow: hidden;
-}
-
-.sl-step__bar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: var(--grad-btn);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 500ms ease-out;
-}
-
-.sl-step--done { color: var(--accent-text); }
-.sl-step--done .sl-step__bar::after { transform: scaleX(1); }
-.sl-step--live { color: var(--ink); }
-.sl-step--live .sl-step__bar::after {
-  transform: scaleX(1);
-  animation: sl-shimmer 1.4s ease-in-out infinite;
 }
 
 .sl-courier {
@@ -312,6 +404,21 @@
 }
 
 /* ------------------------------------------------------------- Motion */
+@keyframes sl-panel-in {
+  from { opacity: 0; transform: translateY(24rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sl-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sl-indeterminate {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
 @keyframes sl-ping {
   0%   { transform: scale(0.4); opacity: 0.35; }
   100% { transform: scale(1.4); opacity: 0; }
@@ -327,21 +434,13 @@
   to   { transform: translateY(-6rpx); }
 }
 
-@keyframes sl-shimmer {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.45; }
-}
-
-@keyframes sl-sheet-in {
-  from { opacity: 0; transform: translateY(40rpx); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .sl-moto { transition: none; }
+  .sl-panel,
+  .sl-success__ring,
+  .sl-progress__bar,
+  .sl-check--live .sl-check__dot,
   .sl-moto__bubble,
   .sl-moto__pulse,
-  .sl-pin__halo,
-  .sl-step--live .sl-step__bar::after,
-  .sl-sheet__inner { animation: none; }
+  .sl-pin__halo { animation: none; }
 }

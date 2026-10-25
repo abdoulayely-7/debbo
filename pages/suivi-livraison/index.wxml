@@ -1,92 +1,182 @@
 <view class="sl">
-  <app-nav-bar title="Suivi de livraison" sub="{{order.label}} · sachet opaque" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Suivi de commande" sub="{{orderCode}} · {{order.label}}" backIcon="/assets/icons/back.svg" />
 
-  <!-- Carte stylisée -->
-  <view id="map" class="sl-map">
-    <view class="sl-park sl-park--a" />
-    <view class="sl-park sl-park--b" />
-    <view class="sl-sea" />
-    <text class="sl-place" style="left:6%;top:88%;">Pharmacie Sacré-Cœur</text>
-    <text class="sl-place" style="left:52%;top:42%;">VDN</text>
-    <text class="sl-place" style="left:60%;top:10%;">Sacré-Cœur 3</text>
-
-    <block wx:if="{{ready}}">
-      <view
-        wx:for="{{segments}}"
-        wx:key="index"
-        class="sl-route {{item.horizontal ? 'sl-route--h' : 'sl-route--v'}}"
-        style="left:{{item.left}}px;top:{{item.top}}px;{{item.horizontal ? 'width' : 'height'}}:{{item.size}}px;"
+  <!-- Statut + étapes -->
+  <view class="sl-head">
+    <view class="sl-status">
+      <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+        <text class="sl-kicker">Étape {{stage + 1}} sur {{steps.length}}</text>
+        <text class="sl-headline" wx:if="{{done}}">{{isDelivery ? 'Kit livré, merci !' : 'Kit retiré, merci !'}}</text>
+        <text class="sl-headline" wx:elif="{{stage === 0}}">Paiement confirmé</text>
+        <text class="sl-headline" wx:elif="{{stage === 1}}">Votre kit est en préparation</text>
+        <text class="sl-headline" wx:elif="{{stage === 2 && isDelivery}}">Vous serez bientôt livrée</text>
+        <text class="sl-headline" wx:elif="{{stage === 2}}">Votre kit vous attend</text>
+        <text class="sl-headline" wx:else>Votre livreuse est arrivée</text>
+      </view>
+      <view wx:if="{{isDelivery && !done}}" class="sl-eta">
+        <text class="sl-eta__num">{{etaLabel}}</text>
+        <text class="sl-eta__unit">min</text>
+      </view>
+    </view>
+    <view class="sl-steps">
+      <app-stepper
+        steps="{{steps}}"
+        current="{{done ? steps.length : stage}}"
+        variant="dense"
+        clickable
+        bind:change="onStepChange"
       />
-
-      <view class="sl-pin sl-pin--start" style="transform:translate({{pins.start.x}}px,{{pins.start.y}}px);">
-        <view class="sl-pin__dot"><image src="/assets/icons/store.svg" class="sl-pin__icon" /></view>
-      </view>
-
-      <view class="sl-pin sl-pin--end" style="transform:translate({{pins.end.x}}px,{{pins.end.y}}px);">
-        <view class="sl-pin__halo" />
-        <view class="sl-pin__dot sl-pin__dot--home"><image src="/assets/icons/pin.svg" class="sl-pin__icon" /></view>
-      </view>
-
-      <view class="sl-moto {{stage==='prep' ? 'sl-moto--wait' : ''}}" style="transform:translate({{moto.x}}px,{{moto.y}}px);">
-        <view class="sl-moto__pulse" />
-        <view class="sl-moto__bubble">
-          <image src="/assets/icons/moto.svg" class="sl-moto__img {{moto.flip ? 'sl-moto__img--flip' : ''}}" />
-        </view>
-      </view>
-    </block>
-
-    <view class="sl-eta-chip">
-      <text wx:if="{{stage==='prep'}}">Préparation…</text>
-      <text wx:elif="{{stage==='ride'}}">{{etaMin}} min</text>
-      <text wx:else>Arrivée</text>
     </view>
   </view>
 
-  <!-- Panneau du bas -->
-  <scroll-view scroll-y class="sl-sheet">
-    <view class="sl-sheet__inner">
-      <view class="sl-handle" />
+  <scroll-view scroll-y class="db-scroll">
+    <view class="db-body">
 
-      <text class="sl-title" wx:if="{{stage==='prep'}}">Votre kit est en préparation</text>
-      <text class="sl-title" wx:elif="{{stage==='ride'}}">Vous serez bientôt livrée</text>
-      <text class="sl-title" wx:else>Votre livreuse est arrivée</text>
-      <text class="sl-sub" wx:if="{{stage!=='arrived'}}">Arrivée estimée dans <text class="sl-strong">{{etaMin}} min</text> · Sacré-Cœur 3, villa 12</text>
-      <text class="sl-sub" wx:else>Donnez-lui le code de remise ci-dessous.</text>
-
-      <!-- Étapes -->
-      <view class="sl-steps">
-        <view class="sl-step sl-step--done"><view class="sl-step__bar" /><text>Payé</text></view>
-        <view class="sl-step {{stage!=='prep' ? 'sl-step--done' : 'sl-step--live'}}"><view class="sl-step__bar" /><text>Préparé</text></view>
-        <view class="sl-step {{stage==='arrived' ? 'sl-step--done' : (stage==='ride' ? 'sl-step--live' : '')}}"><view class="sl-step__bar" /><text>En route</text></view>
-        <view class="sl-step {{stage==='arrived' ? 'sl-step--done' : ''}}"><view class="sl-step__bar" /><text>Livré</text></view>
+      <view wx:if="{{view !== stage}}" class="sl-review" bindtap="backToCurrent">
+        <text>Vous consultez l'étape {{view + 1}}. Revenir à l'étape en cours →</text>
       </view>
 
-      <!-- Livreuse -->
-      <view class="sl-courier">
-        <view class="sl-avatar"><text>{{courier.name[0]}}</text></view>
-        <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
-          <text class="db-bold">{{courier.name}} · livreuse partenaire</text>
-          <text class="db-small db-muted">Moto · {{courier.plate}} · ★ {{courier.rating}}</text>
+      <text wx:if="{{view !== stage}}" class="sl-panel-title">{{steps[view].title}}</text>
+
+      <!-- Étape 1 : paiement -->
+      <view wx:if="{{view === 0}}" class="sl-panel">
+        <view class="sl-success">
+          <view class="sl-success__ring"><image src="/assets/icons/check-circle.svg" class="sl-success__icon" /></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <text class="db-bold" style="font-size:32rpx;">{{amountLabel}} FCFA payés</text>
+            <text class="db-small db-muted">Avec Max it · code secret vérifié par Max it</text>
+          </view>
         </view>
-        <view class="sl-action" hover-class="db-press" bindtap="messageCourier" aria-role="button" aria-label="Envoyer un message"><image src="/assets/icons/chat.svg" class="db-icon" /></view>
-        <view class="sl-action" hover-class="db-press" bindtap="callCourier" aria-role="button" aria-label="Appeler"><image src="/assets/icons/phone.svg" class="db-icon" /></view>
+        <view class="db-card">
+          <view class="db-kv"><text class="db-muted">Commande</text><text class="db-bold">{{orderCode}}</text></view>
+          <view class="db-kv"><text class="db-muted">Contenu</text><text class="db-bold">{{order.label}}</text></view>
+          <view class="db-kv"><text class="db-muted">Mode</text><text class="db-bold">{{isDelivery ? 'Livraison discrète' : 'Retrait en pharmacie'}}</text></view>
+          <view class="db-kv"><text class="db-muted">Dans l'historique Max it</text><text class="db-bold">Achat Bien-être</text></view>
+        </view>
       </view>
 
-      <!-- Code de remise -->
-      <view class="sl-code">
-        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
-          <text class="db-label" style="padding:0;">Code de remise</text>
-          <text class="db-small db-muted">À dire à la livreuse, rien d'autre.</text>
+      <!-- Étape 2 : préparation -->
+      <view wx:elif="{{view === 1}}" class="sl-panel">
+        <view class="sl-place">
+          <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/store.svg" class="db-icon" /></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
+            <text class="db-bold">{{pharmacy.name}}</text>
+            <text class="db-small db-muted">{{pharmacy.walk}} · {{pharmacy.hours}}</text>
+          </view>
         </view>
-        <text class="sl-code__value">{{handoverCode}}</text>
+        <view class="sl-checklist">
+          <view class="sl-check sl-check--done"><view class="sl-check__dot" /><text>Commande reçue par la pharmacie</text></view>
+          <view class="sl-check {{stage > 1 ? 'sl-check--done' : 'sl-check--live'}}"><view class="sl-check__dot" /><text>{{order.label}} rassemblé</text></view>
+          <view class="sl-check {{stage > 1 ? 'sl-check--done' : ''}}"><view class="sl-check__dot" /><text>Sachet opaque scellé, seul le code est écrit dessus</text></view>
+        </view>
+        <view wx:if="{{stage === 1}}" class="sl-progress"><view class="sl-progress__bar" /></view>
+      </view>
+
+      <!-- Étape 3 : livraison en cours -->
+      <view wx:elif="{{view === 2 && isDelivery}}" class="sl-panel">
+        <view id="map" class="sl-map">
+          <view class="sl-park sl-park--a" />
+          <view class="sl-park sl-park--b" />
+          <view class="sl-sea" />
+          <text class="sl-label" style="left:5%;top:88%;">Pharmacie Sacré-Cœur</text>
+          <text class="sl-label" style="left:52%;top:42%;">VDN</text>
+          <text class="sl-label" style="left:58%;top:8%;">Chez vous</text>
+
+          <block wx:if="{{mapReady}}">
+            <view
+              wx:for="{{segments}}"
+              wx:key="index"
+              class="sl-route {{item.horizontal ? 'sl-route--h' : 'sl-route--v'}}"
+              style="left:{{item.left}}px;top:{{item.top}}px;{{item.horizontal ? 'width' : 'height'}}:{{item.size}}px;"
+            />
+            <view class="sl-pin" style="transform:translate({{pins.start.x}}px,{{pins.start.y}}px);">
+              <view class="sl-pin__dot"><image src="/assets/icons/store.svg" class="sl-pin__icon" /></view>
+            </view>
+            <view class="sl-pin" style="transform:translate({{pins.end.x}}px,{{pins.end.y}}px);">
+              <view class="sl-pin__halo" />
+              <view class="sl-pin__dot sl-pin__dot--home"><image src="/assets/icons/pin.svg" class="sl-pin__icon" /></view>
+            </view>
+            <view class="sl-moto" style="transform:translate({{moto.x}}px,{{moto.y}}px);">
+              <view class="sl-moto__pulse" />
+              <view class="sl-moto__bubble">
+                <image src="/assets/icons/moto.svg" class="sl-moto__img {{moto.flip ? 'sl-moto__img--flip' : ''}}" />
+              </view>
+            </view>
+          </block>
+
+          <view class="sl-map-chip"><text>{{stage > 2 ? 'Arrivée' : etaMin + ' min'}}</text></view>
+        </view>
+
+        <view class="sl-courier">
+          <view class="sl-avatar"><text>{{courier.name[0]}}</text></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
+            <text class="db-bold">{{courier.name}} · livreuse partenaire</text>
+            <text class="db-small db-muted">Moto · {{courier.plate}} · ★ {{courier.rating}}</text>
+          </view>
+          <view class="sl-action" hover-class="db-press" bindtap="messageCourier" aria-role="button" aria-label="Envoyer un message"><image src="/assets/icons/chat.svg" class="db-icon" /></view>
+          <view class="sl-action" hover-class="db-press" bindtap="callCourier" aria-role="button" aria-label="Appeler"><image src="/assets/icons/phone.svg" class="db-icon" /></view>
+        </view>
+
+        <view class="db-row" style="gap:12rpx;align-items:flex-start;">
+          <image src="/assets/icons/pin.svg" class="db-icon" />
+          <text class="db-small db-muted db-grow">Sacré-Cœur 3, villa 12 · appels et messages via un numéro masqué.</text>
+        </view>
+      </view>
+
+      <!-- Étape 3 : retrait au comptoir -->
+      <view wx:elif="{{view === 2}}" class="sl-panel">
+        <view class="sl-code">
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <text class="db-label" style="padding:0;">Code de retrait</text>
+            <text class="db-small db-muted">Montrez-le au comptoir, rien d'autre à dire.</text>
+          </view>
+          <text class="sl-code__value">{{orderCode}}</text>
+        </view>
+        <view class="sl-place">
+          <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/store.svg" class="db-icon" /></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
+            <text class="db-bold">{{pharmacy.name}}</text>
+            <text class="db-small db-muted">{{pharmacy.walk}} · {{pharmacy.hours}} · valable 24 h</text>
+          </view>
+        </view>
+        <view wx:if="{{!done}}" class="db-btn db-btn-primary" hover-class="db-press" bindtap="confirmReceived"><text>J'ai récupéré mon kit</text></view>
+      </view>
+
+      <!-- Étape 4 : remise -->
+      <view wx:elif="{{view === 3}}" class="sl-panel">
+        <block wx:if="{{!done}}">
+          <view class="sl-code">
+            <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+              <text class="db-label" style="padding:0;">Code de remise</text>
+              <text class="db-small db-muted">À dire à la livreuse, rien d'autre.</text>
+            </view>
+            <text class="sl-code__value">{{handoverCode}}</text>
+          </view>
+          <view class="db-btn db-btn-primary" hover-class="db-press" bindtap="confirmReceived"><text>J'ai reçu mon kit</text></view>
+        </block>
+        <block wx:else>
+          <view class="sl-success">
+            <view class="sl-success__ring"><image src="/assets/icons/heart.svg" class="sl-success__icon" /></view>
+            <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+              <text class="db-bold" style="font-size:32rpx;">Prenez soin de vous</text>
+              <text class="db-small db-muted">Un rappel discret vous préviendra avant le prochain cycle.</text>
+            </view>
+          </view>
+          <view class="db-card">
+            <text wx:if="{{isDelivery}}" class="db-bold">Comment s'est passée la livraison ?</text>
+            <text wx:else class="db-bold">Comment s'est passé le retrait ?</text>
+            <view class="sl-stars">
+              <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="sl-star {{rating >= item ? 'sl-star--on' : ''}}" bindtap="rate" data-n="{{item}}" aria-label="{{item}} étoile(s)"><text>★</text></view>
+            </view>
+          </view>
+          <view class="db-btn db-btn-ghost" hover-class="db-press" bindtap="goHome"><text>Retour à l'accueil</text></view>
+        </block>
       </view>
 
       <view class="db-row" style="gap:12rpx;align-items:flex-start;">
         <image src="/assets/icons/shield.svg" class="db-icon" />
-        <text class="db-small db-muted db-grow">Sachet opaque scellé : la livreuse ne connaît pas le contenu. Appels et messages passent par un numéro masqué.</text>
+        <text class="db-small db-muted db-grow">Sachet opaque scellé : ni la pharmacie ni la livreuse n'ont votre nom. Libellé « Achat Bien-être » dans Max it.</text>
       </view>
-
-      <view class="db-btn db-btn-ghost" hover-class="db-press" bindtap="goHome"><text>Retour à l'accueil</text></view>
     </view>
   </scroll-view>
 </view>

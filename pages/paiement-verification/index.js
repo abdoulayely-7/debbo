@@ -1,13 +1,9 @@
-import { MODES, getOrder } from '../../utils/debbo-order';
-
 Page({
   data: {},
   onLoad() {
+    // Delivery and pickup share the step-by-step order page.
     this.timer = setTimeout(() => {
-      const url = getOrder().mode === MODES.LIVRAISON
-        ? '/pages/suivi-livraison/index'
-        : '/pages/paiement-reussi/index';
-      wx.redirectTo({ url });
+      wx.redirectTo({ url: '/pages/suivi-livraison/index' });
     }, 2000);
   },
   onUnload() {

@@ -1,8 +1,8 @@
 <view class="db-screen">
   <app-nav-bar title="Mon cycle" sub="Espace protégé" showBack="{{false}}" backIcon="/assets/icons/back.svg" />
 
-  <!-- Body centré -->
-  <view class="db-body" style="justify-content:center;align-items:center;">
+  <scroll-view scroll-y class="db-scroll">
+  <view class="db-body" style="align-items:center;">
 
     <image src="/assets/icons/lock.svg" style="width:64rpx;height:64rpx;margin-bottom:16rpx;" />
 
@@ -46,6 +46,8 @@
       <text>Code oublié ? Tout effacer et recommencer</text>
     </view>
 
+    <view class="db-tab-spacer" />
   </view>
+  </scroll-view>
 
 </view>

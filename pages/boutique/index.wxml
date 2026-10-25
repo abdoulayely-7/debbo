@@ -43,6 +43,7 @@
 
       <text class="db-small db-muted">Livraison discrète ou retrait en pharmacie partenaire. Libellé « Achat Bien-être » dans l'historique.</text>
 
+      <view class="db-tab-spacer" />
     </view>
   </scroll-view>
 </view>

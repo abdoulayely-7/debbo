@@ -20,6 +20,7 @@
             <image src="/assets/icons/lock.svg" style="width:28rpx;height:28rpx;" />
           </view>
           <text class="db-tile-sub">Règles dans ~5 jours</text>
+          <view class="db-row" style="gap:6rpx;"><image src="/assets/icons/bell.svg" style="width:24rpx;height:24rpx;" /><text class="db-small" style="color:var(--accent-text);font-size:22rpx;font-weight:600;">{{reminderText}}</text></view>
           <view class="db-goal db-goal-soft"><view class="db-goal-fill" style="width:82%;"></view></view>
         </view>
 
@@ -95,6 +96,7 @@
         <text class="db-muted">→</text>
       </view>
 
+      <view class="db-tab-spacer" />
     </view>
   </scroll-view>
 </view>

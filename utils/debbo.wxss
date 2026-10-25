@@ -27,6 +27,7 @@ page {
   --ok-soft: #DDF1E6;
   --warn: #9A5B00;
   --warn-soft: #FBEBD2;
+  height: 100%;
   background-color: var(--bg);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   font-size: 30rpx;
@@ -36,10 +37,11 @@ page {
 /* --------------------------------------------------------------------------
    Page Layout
    -------------------------------------------------------------------------- */
+/* 100% of the page window (100vh can include the area under the tab bar) */
 .db-screen {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   background: var(--bg);
 }
@@ -1054,4 +1056,73 @@ page {
 
 @media (prefers-reduced-motion: reduce) {
   .db-deliv-moto { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Choices (reminder settings) & notification preview
+   -------------------------------------------------------------------------- */
+.db-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: -8rpx;
+}
+
+.db-choice {
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 26rpx;
+  font-weight: 600;
+  transition: transform 160ms ease-out;
+}
+
+.db-choice:active {
+  transform: scale(0.96);
+}
+
+.db-choice-on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.db-notif {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: var(--sunk);
+  border: 2rpx solid var(--line);
+}
+
+.db-notif-app {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  background: #FF7900;
+  color: #000;
+  font-size: 16rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-choice { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Tab pages: keep the last section clear of the custom tab bar
+   (bar 120rpx + raised Urgence button + home indicator)
+   -------------------------------------------------------------------------- */
+.db-tab-spacer {
+  flex-shrink: 0;
+  height: calc(160rpx + constant(safe-area-inset-bottom));
+  height: calc(160rpx + env(safe-area-inset-bottom));
 }
