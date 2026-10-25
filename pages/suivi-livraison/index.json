@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "app-nav-bar": "/components/ui/nav-bar/index",
     "app-stepper": "/components/ui/stepper/index"
   },
   "navigationStyle": "custom"
