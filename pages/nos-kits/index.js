@@ -1,6 +1,10 @@
+import { go } from '../../utils/helpers/debbo-nav';
+import { KITS } from '../../utils/debbo-catalog';
+
 Page({
-  data: {},
-  goBack() { wx.navigateBack() },
-  goRetirer() { wx.navigateTo({ url: '/pages/urgence/index' }) },
-  goBoutique() { wx.navigateTo({ url: '/pages/boutique/index' }) },
+  data: {
+    kits: KITS,
+  },
+  goCommander(e) { go(`/pages/urgence/index?kit=${e.currentTarget.dataset.id}`) },
+  goBoutique() { go('/pages/boutique/index') },
 });

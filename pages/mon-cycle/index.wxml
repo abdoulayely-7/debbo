@@ -1,17 +1,9 @@
 <view class="db-screen">
-
-  <!-- App Header -->
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack">
-      <image src="/assets/icons/back.svg" class="db-icon" />
-    </view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Mon cycle</text>
-    </view>
-  </view>
+  <app-nav-bar title="Mon cycle" backIcon="/assets/icons/back.svg" />
 
   <!-- Corps scrollable -->
-  <scroll-view scroll-y class="db-body">
+  <scroll-view scroll-y class="db-scroll">
+    <view class="db-body">
 
     <!-- Carte cycle ring -->
     <view class="db-card">
@@ -45,7 +37,7 @@
         <view style="display:flex;gap:8rpx;padding:4rpx 0;">
           <view
             wx:for="{{days}}"
-            wx:key="num"
+            wx:key="key"
             class="db-day {{item.today ? 'db-day-today' : ''}} {{item.period ? 'db-day-period' : ''}} {{item.remind ? 'db-day-remind' : ''}}">
             <text class="db-small">{{item.label}}</text>
             <text class="db-bold">{{item.num}}</text>
@@ -66,10 +58,60 @@
       </view>
     </view>
 
+    <!-- Rappel de kit -->
+    <view class="db-card">
+      <view class="db-row">
+        <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/bell.svg" class="db-icon" /></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
+          <text class="db-bold">Rappel de kit</text>
+          <text class="db-small db-muted">Pour commander avant vos règles</text>
+        </view>
+        <view class="db-switch {{reminder.enabled ? 'db-switch-on' : ''}}" bindtap="toggleReminder" aria-role="switch" aria-label="Rappel de kit">
+          <view class="db-switch-thumb {{reminder.enabled ? 'db-switch-thumb-on' : ''}}"></view>
+        </view>
+      </view>
+
+      <block wx:if="{{reminder.enabled}}">
+        <text class="db-label">Me prévenir</text>
+        <view class="db-choices">
+          <view wx:for="{{daysBefore}}" wx:key="*this" class="db-choice {{reminder.daysBefore === item ? 'db-choice-on' : ''}}" bindtap="setDaysBefore" data-d="{{item}}">
+            <text>{{item}} j avant</text>
+          </view>
+        </view>
+
+        <text class="db-label">Moment</text>
+        <view class="db-choices">
+          <view wx:for="{{times}}" wx:key="key" class="db-choice {{reminder.time === item.key ? 'db-choice-on' : ''}}" bindtap="setTime" data-t="{{item.key}}">
+            <text>{{item.label}} · {{item.hour}} h</text>
+          </view>
+        </view>
+
+        <text class="db-label">Kit à recommander</text>
+        <view class="db-choices">
+          <view wx:for="{{kits}}" wx:key="id" class="db-choice {{reminder.kitId === item.id ? 'db-choice-on' : ''}}" bindtap="setKit" data-id="{{item.id}}">
+            <text>{{item.name}} · {{item.priceLabel}}</text>
+          </view>
+        </view>
+
+        <!-- Aperçu : libellé neutre, rien sur les règles -->
+        <view class="db-notif" bindtap="showNotif">
+          <view class="db-notif-app"><text>Max it</text></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <view class="db-row" style="gap:8rpx;">
+              <text class="db-bold db-grow" style="font-size:26rpx;">Max it · Debbo</text>
+              <text class="db-small db-muted">{{reminderAt}}</text>
+            </view>
+            <text class="db-small">Votre commande Bien-être est à renouveler. Un tap pour commander.</text>
+          </view>
+        </view>
+        <text class="db-small db-muted">Notification discrète : aucun mot sur les règles, même écran verrouillé.</text>
+      </block>
+    </view>
+
     <!-- Bouton recommander -->
     <view class="db-btn db-btn-indigo" bindtap="goToReorder">
       <image src="/assets/icons/refresh.svg" class="db-icon" />
-      <text>Recommander mon Kit Essentiel · 1 500 FCFA</text>
+      <text>Recommander mon {{selectedKit.name}} · {{selectedKit.priceLabel}}</text>
     </view>
 
     <!-- Carte paramètres -->
@@ -81,13 +123,6 @@
       <view class="db-kv">
         <text class="db-muted">Durée du cycle</text>
         <text class="db-bold">28 jours</text>
-      </view>
-      <view class="db-kv">
-        <text class="db-muted">Me prévenir</text>
-        <text class="db-bold">3 j avant</text>
-      </view>
-      <view class="db-btn db-btn-ghost db-btn-sm" bindtap="showNotif">
-        <text>Voir la notification que vous recevrez</text>
       </view>
     </view>
 
@@ -104,6 +139,7 @@
       </view>
     </view>
 
+  </view>
   </scroll-view>
 
 </view>

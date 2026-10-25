@@ -1,9 +1,11 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: {
     pin: '',
     dots: [false, false, false, false],
   },
-  goBack() { wx.navigateBack() },
+  goBack() { back() },
   pressKey(e) {
     const key = e.currentTarget.dataset.key;
     let pin = this.data.pin;
@@ -16,7 +18,7 @@ Page({
     this.setData({ pin, dots });
     if (pin.length === 4) {
       setTimeout(() => {
-        wx.navigateTo({ url: '/pages/paiement-verification/index' });
+        go('/pages/paiement-verification/index');
       }, 300);
     }
   },

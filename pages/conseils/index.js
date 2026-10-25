@@ -1,4 +1,11 @@
+import { back } from '../../utils/helpers/debbo-nav';
+
 Page({
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setActiveTab('conseils');
+    }
+  },
   data: {
     sections: [
       {
@@ -32,7 +39,7 @@ Page({
       },
     ],
   },
-  goBack() { wx.navigateBack() },
+  goBack() { back() },
   toggleSection(e) {
     const id = e.currentTarget.dataset.id;
     const sections = this.data.sections.map(s => ({ ...s, open: s.id === id ? !s.open : s.open }));

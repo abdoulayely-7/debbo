@@ -44,7 +44,7 @@ Component({
       type: Boolean,
       value: false,
     },
-    /** Visual style variant: 'default' | 'compact' | 'pill' */
+    /** Visual style variant: 'default' | 'compact' | 'pill' | 'dense' */
     variant: {
       type: String,
       value: 'default',

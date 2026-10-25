@@ -27,6 +27,7 @@ page {
   --ok-soft: #DDF1E6;
   --warn: #9A5B00;
   --warn-soft: #FBEBD2;
+  height: 100%;
   background-color: var(--bg);
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
   font-size: 30rpx;
@@ -36,45 +37,45 @@ page {
 /* --------------------------------------------------------------------------
    Page Layout
    -------------------------------------------------------------------------- */
+/* 100% of the page window (100vh can include the area under the tab bar) */
 .db-screen {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
   background: var(--bg);
 }
 
-.db-apphead {
-  display: flex;
-  align-items: center;
-  gap: 20rpx;
-  padding: 24rpx 32rpx;
-  background: var(--surface);
-  border-bottom: 1rpx solid var(--line);
-}
-
-.db-apphead-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: var(--ink);
-  flex: 1;
-}
-
-.db-apphead-sub {
-  font-size: 24rpx;
-  color: var(--muted);
-  margin-top: 2rpx;
-}
-
 .db-body {
-  flex: 1;
-  padding: 32rpx;
+  padding: 32rpx 32rpx 56rpx;
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 32rpx;
+  animation: db-rise 320ms ease-out both;
+}
+
+/* Vertical page scroller. app.wxss gives every scroll-view
+   display:flex + white-space:nowrap (horizontal-carousel defaults), which
+   squeezes and overflows page content: reset both here. It also needs a
+   real height to scroll inside the 100vh column. */
+.db-scroll {
+  display: block;
+  white-space: normal;
+  flex: 1;
+  height: 0;
+}
+
+/* Never let a section shrink below its content (overflow:hidden cards) */
+.db-body > view,
+.db-body > text {
+  flex-shrink: 0;
 }
 
 .db-footbar {
-  padding: 24rpx 32rpx 48rpx;
+  flex-shrink: 0;
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
   background: var(--surface);
   border-top: 1rpx solid var(--line);
 }
@@ -118,12 +119,14 @@ page {
 }
 
 .db-btn:active {
-  opacity: 0.85;
+  opacity: 0.9;
+  transform: scale(0.98);
 }
 
 .db-btn-primary {
   background: var(--grad-btn);
   color: #fff;
+  box-shadow: 0 12rpx 32rpx -16rpx var(--fuchsia);
 }
 
 .db-btn-ghost {
@@ -156,7 +159,7 @@ page {
   background: var(--surface);
   border: 2rpx solid var(--line);
   border-radius: 32rpx;
-  padding: 28rpx;
+  padding: 32rpx;
   display: flex;
   flex-direction: column;
   gap: 20rpx;
@@ -216,18 +219,19 @@ page {
 }
 
 .db-label {
-  font-size: 24rpx;
-  letter-spacing: 0.12em;
+  font-size: 22rpx;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  font-weight: 600;
-  padding: 8rpx 0;
+  font-weight: 700;
+  padding-top: 8rpx;
 }
 
 .db-sec {
-  font-size: 28rpx;
-  font-weight: 700;
+  font-size: 34rpx;
+  font-weight: 800;
   color: var(--ink);
+  margin-top: 8rpx;
 }
 
 /* --------------------------------------------------------------------------
@@ -248,21 +252,22 @@ page {
    Segment Control
    -------------------------------------------------------------------------- */
 .db-seg {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8rpx;
-  background: var(--sunk);
+  display: flex;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
   border-radius: 24rpx;
-  padding: 8rpx;
+  padding: 6rpx;
 }
 
 .db-seg-btn {
-  padding: 18rpx;
+  flex: 1;
+  padding: 20rpx 8rpx;
   border-radius: 18rpx;
   font-weight: 600;
   font-size: 28rpx;
   color: var(--muted);
   text-align: center;
+  transition: background 200ms ease-out, color 200ms ease-out;
 }
 
 .db-seg-btn-active {
@@ -277,10 +282,11 @@ page {
   background: var(--surface);
   border: 3rpx solid var(--line);
   border-radius: 28rpx;
-  padding: 24rpx;
+  padding: 28rpx;
   display: flex;
   align-items: flex-start;
-  gap: 20rpx;
+  gap: 24rpx;
+  transition: transform 160ms ease-out;
 }
 
 .db-opt-selected {
@@ -306,13 +312,20 @@ page {
    Grid 2 columns
    -------------------------------------------------------------------------- */
 .db-grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 20rpx;
 }
 
-.db-grid2-wide {
-  grid-column: 1 / -1;
+/* 2 columns without CSS grid (older WebViews): each child takes half */
+.db-grid2 > view {
+  width: calc(50% - 10rpx);
+  box-sizing: border-box;
+}
+
+.db-grid2 > .db-grid2-wide {
+  width: 100%;
 }
 
 /* --------------------------------------------------------------------------
@@ -459,13 +472,32 @@ page {
    SOS / Urgence button
    -------------------------------------------------------------------------- */
 .db-sos {
+  position: relative;
+  overflow: hidden;
   background: var(--grad);
-  border-radius: 40rpx;
-  padding: 32rpx;
+  border-radius: 44rpx;
+  padding: 44rpx 40rpx;
   display: flex;
   flex-direction: column;
-  gap: 8rpx;
+  gap: 12rpx;
   color: white;
+  box-shadow: 0 24rpx 56rpx -28rpx var(--fuchsia);
+}
+
+.db-sos::after {
+  content: "";
+  position: absolute;
+  right: -60rpx;
+  top: -60rpx;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  border: 36rpx solid #fff;
+  opacity: 0.12;
+}
+
+.db-sos:active {
+  transform: scale(0.98);
 }
 
 .db-sos-kicker {
@@ -477,14 +509,14 @@ page {
 }
 
 .db-sos-title {
-  font-size: 44rpx;
+  font-size: 56rpx;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .db-sos-sub {
-  font-size: 26rpx;
-  opacity: 0.85;
+  font-size: 28rpx;
+  opacity: 0.92;
 }
 
 /* --------------------------------------------------------------------------
@@ -493,11 +525,13 @@ page {
 .db-tile {
   background: var(--surface);
   border: 2rpx solid var(--line);
-  border-radius: 28rpx;
-  padding: 24rpx;
+  border-radius: 32rpx;
+  padding: 28rpx;
+  min-height: 208rpx;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10rpx;
+  gap: 12rpx;
 }
 
 .db-tile:active {
@@ -505,13 +539,18 @@ page {
 }
 
 .db-tile-cy {
-  background: var(--indigo-soft);
-  border-color: transparent;
+  background: var(--surface);
 }
 
 .db-tile-icon {
-  font-size: 36rpx;
-  margin-bottom: 4rpx;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 20rpx;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8rpx;
 }
 
 .db-tile-title {
@@ -570,10 +609,12 @@ page {
    Product cards (boutique)
    -------------------------------------------------------------------------- */
 .db-prod {
+  height: 100%;
+  box-sizing: border-box;
   background: var(--surface);
   border: 2rpx solid var(--line);
   border-radius: 28rpx;
-  padding: 20rpx;
+  padding: 16rpx 16rpx 24rpx;
   display: flex;
   flex-direction: column;
   gap: 10rpx;
@@ -584,30 +625,99 @@ page {
 }
 
 .db-thumb {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1;
+  height: 300rpx;
   border-radius: 20rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 72rpx;
+  overflow: hidden;
+  background: var(--accent-soft);
   margin-bottom: 8rpx;
 }
 
-.db-thumb-prot {
-  background: #FFE0EC;
+.db-thumb-badge {
+  position: absolute;
+  left: 12rpx;
+  bottom: 12rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ok);
+  font-size: 20rpx;
+  font-weight: 700;
 }
 
-.db-thumb-hyg {
-  background: #E0F0FF;
+/* Quick add: 64rpx visual, padded to a ~88rpx touch area */
+.db-add {
+  position: absolute;
+  right: 4rpx;
+  top: 4rpx;
+  width: 64rpx;
+  height: 64rpx;
+  margin: 8rpx;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent-text);
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 60rpx;
+  text-align: center;
+  box-shadow: 0 6rpx 16rpx rgba(43, 15, 28, 0.15);
 }
 
-.db-thumb-bien {
-  background: #E8FFE8;
+.db-add:active {
+  transform: scale(0.9);
 }
 
-.db-thumb-acc {
-  background: #FFF0E0;
+.db-filters {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.db-filter {
+  flex-shrink: 0;
+  display: inline-flex;
+  margin-right: 12rpx;
+  padding: 14rpx 26rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.db-filter-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.db-cart-btn {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.db-cart-badge {
+  position: absolute;
+  top: 6rpx;
+  right: 4rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  box-sizing: border-box;
+  border-radius: 999rpx;
+  background: var(--accent);
+  color: #fff;
+  font-size: 20rpx;
+  font-weight: 700;
+  line-height: 32rpx;
+  text-align: center;
 }
 
 .db-prod-name {
@@ -830,4 +940,189 @@ page {
   gap: 16rpx;
   align-items: flex-start;
   font-size: 28rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Press feedback & motion (transform/opacity only)
+   -------------------------------------------------------------------------- */
+.db-press {
+  opacity: 0.85;
+}
+
+.db-opt:active,
+.db-tile:active,
+.db-prod:active,
+.db-feat:active {
+  transform: scale(0.98);
+}
+
+@keyframes db-rise {
+  from { opacity: 0; transform: translateY(16rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-body { animation: none; }
+  .db-opt, .db-seg-btn, .db-switch, .db-switch-thumb { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Home extras
+   -------------------------------------------------------------------------- */
+.db-stat-big {
+  display: block;
+  font-size: 64rpx;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.db-chip-glass {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.db-goal-soft {
+  background: var(--accent-soft);
+}
+
+.db-goal-soft .db-goal-fill {
+  background: var(--grad-btn);
+}
+
+.db-feat-kits,
+.db-feat-tips {
+  min-height: 240rpx;
+  box-sizing: border-box;
+  justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   Photo media (kits, fiche produit, services)
+   -------------------------------------------------------------------------- */
+.db-kit-media,
+.db-hero-media,
+.db-service-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--accent-soft);
+}
+
+.db-kit-media {
+  height: 280rpx;
+  border-radius: 24rpx;
+}
+
+.db-hero-media {
+  height: 520rpx;
+  border-radius: 32rpx;
+}
+
+.db-service-media {
+  height: 240rpx;
+  border-radius: 24rpx;
+}
+
+.db-kit-tag {
+  position: absolute;
+  left: 16rpx;
+  top: 16rpx;
+}
+
+/* --------------------------------------------------------------------------
+   Delivery banner (urgence, panier)
+   -------------------------------------------------------------------------- */
+.db-deliv-hero {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 28rpx;
+  border-radius: 28rpx;
+  background: linear-gradient(120deg, #FFE2EF 0%, #FFF0F6 100%);
+  border: 2rpx solid var(--line);
+}
+
+.db-deliv-moto {
+  width: 96rpx;
+  height: 96rpx;
+  flex-shrink: 0;
+  animation: db-ride 1s ease-in-out infinite alternate;
+}
+
+@keyframes db-ride {
+  from { transform: translateX(-4rpx); }
+  to   { transform: translateX(4rpx); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-deliv-moto { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Choices (reminder settings) & notification preview
+   -------------------------------------------------------------------------- */
+.db-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: -8rpx;
+}
+
+.db-choice {
+  padding: 14rpx 24rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 26rpx;
+  font-weight: 600;
+  transition: transform 160ms ease-out;
+}
+
+.db-choice:active {
+  transform: scale(0.96);
+}
+
+.db-choice-on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.db-notif {
+  display: flex;
+  align-items: flex-start;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: var(--sunk);
+  border: 2rpx solid var(--line);
+}
+
+.db-notif-app {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  background: #FF7900;
+  color: #000;
+  font-size: 16rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-choice { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Tab pages: keep the last section clear of the custom tab bar
+   (bar 120rpx + raised Urgence button + home indicator)
+   -------------------------------------------------------------------------- */
+.db-tab-spacer {
+  flex-shrink: 0;
+  height: calc(160rpx + constant(safe-area-inset-bottom));
+  height: calc(160rpx + env(safe-area-inset-bottom));
 }

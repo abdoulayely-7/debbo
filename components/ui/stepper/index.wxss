@@ -177,3 +177,28 @@
 .osn-stepper--compact .osn-stepper__label {
   font-size: 24rpx;
 }
+
+/* ============================================================================
+   VARIANT: DENSE (4+ steps on a phone width)
+   ============================================================================ */
+
+.osn-stepper--dense .osn-stepper__step {
+  padding: 6rpx 10rpx;
+  gap: 8rpx;
+}
+
+.osn-stepper--dense .osn-stepper__indicator {
+  width: 34rpx;
+  height: 34rpx;
+  font-size: 20rpx;
+}
+
+.osn-stepper--dense .osn-stepper__label {
+  font-size: 23rpx;
+}
+
+.osn-stepper--dense .osn-stepper__line {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 12rpx;
+}

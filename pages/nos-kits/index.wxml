@@ -1,105 +1,41 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Nos kits</text>
-      <view><text class="db-apphead-sub">Ce qu'il y a dans chaque kit</text></view>
-    </view>
-  </view>
+  <app-nav-bar title="Nos kits" sub="Ce qu'il y a dans chaque kit" backIcon="/assets/icons/back.svg" />
 
-  <scroll-view scroll-y style="flex:1;">
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
-      <text class="db-small db-muted">Préparés par les pharmacies partenaires avec des produits vendus en pharmacie, remis dans un sachet opaque. Le contenu est identique dans toutes les pharmacies.</text>
+      <text class="db-small db-muted">Préparés par les pharmacies partenaires avec des produits vendus en pharmacie, remis dans un sachet opaque. Le contenu est identique partout.</text>
 
-      <!-- Kit Dépannage -->
-      <view class="db-card">
+      <app-card wx:for="{{kits}}" wx:key="id" containerClass="db-card db-kit">
+        <view class="db-kit-media">
+          <app-image
+            src="{{item.image}}"
+            mode="aspectFill"
+            containerStyle="width:100%;height:100%;"
+            imageStyle="width:100%;height:100%;display:block;"
+          />
+          <view class="db-chip {{item.tagClass}} db-kit-tag"><text>{{item.tag}}</text></view>
+        </view>
         <view class="db-row" style="align-items:flex-start;">
-          <view class="db-grow">
-            <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
-              <text class="db-bold" style="font-size:32rpx;">Kit Dépannage</text>
-              <view class="db-chip db-chip-ok"><text>Petit budget</text></view>
-            </view>
-            <text class="db-small db-muted">Pour tenir une demi-journée, le temps de rentrer.</text>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <text class="db-bold" style="font-size:34rpx;">{{item.name}}</text>
+            <text class="db-small db-muted">{{item.pitch}}</text>
           </view>
-          <text class="db-bold" style="white-space:nowrap;color:var(--accent-text);">500 FCFA</text>
+          <text class="db-bold" style="white-space:nowrap;color:var(--accent-text);font-size:32rpx;">{{item.priceLabel}}</text>
         </view>
         <view class="db-contents">
-          <view class="db-ci"><text class="db-qty">×3</text><text>Serviettes jour <text class="db-small db-muted">· ailettes, 24 cm</text></text></view>
-          <view class="db-ci"><text class="db-qty">×2</text><text>Lingettes intimes <text class="db-small db-muted">· sans alcool</text></text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Sachet opaque refermable <text class="db-small db-muted">· pour jeter discrètement</text></text></view>
-        </view>
-        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goRetirer"><text>Retirer ce kit maintenant</text></view>
-      </view>
-
-      <!-- Kit Essentiel -->
-      <view class="db-card">
-        <view class="db-row" style="align-items:flex-start;">
-          <view class="db-grow">
-            <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
-              <text class="db-bold" style="font-size:32rpx;">Kit Essentiel</text>
-              <view class="db-chip db-chip-ind"><text>Le plus choisi</text></view>
-            </view>
-            <text class="db-small db-muted">Pour un cycle de 4 à 5 jours avec un flux moyen.</text>
+          <view wx:for="{{item.items}}" wx:for-item="line" wx:key="1" class="db-ci">
+            <text class="db-qty">{{line[0]}}</text>
+            <text>{{line[1]}}<text wx:if="{{line[2]}}" class="db-small db-muted"> · {{line[2]}}</text></text>
           </view>
-          <text class="db-bold" style="white-space:nowrap;color:var(--accent-text);">1 500 FCFA</text>
         </view>
-        <view class="db-contents">
-          <view class="db-ci"><text class="db-qty">×8</text><text>Serviettes jour <text class="db-small db-muted">· ailettes, 24 cm</text></text></view>
-          <view class="db-ci"><text class="db-qty">×2</text><text>Serviettes nuit <text class="db-small db-muted">· 29 cm, plus absorbantes</text></text></view>
-          <view class="db-ci"><text class="db-qty">×4</text><text>Lingettes intimes <text class="db-small db-muted">· sans alcool</text></text></view>
-          <view class="db-ci"><text class="db-qty">×2</text><text>Sachets opaques refermables</text></view>
-        </view>
-        <view class="db-btn db-btn-primary db-btn-sm" bindtap="goRetirer"><text>Retirer ce kit maintenant</text></view>
-      </view>
+        <view class="db-btn db-btn-ghost db-btn-sm" hover-class="db-press" bindtap="goCommander" data-id="{{item.id}}"><text>Commander ce kit</text></view>
+      </app-card>
 
-      <!-- Kit Confort -->
-      <view class="db-card">
-        <view class="db-row" style="align-items:flex-start;">
-          <view class="db-grow">
-            <text class="db-bold" style="font-size:32rpx;">Kit Confort</text>
-            <text class="db-small db-muted">Pour un cycle, avec de quoi se changer et se soulager.</text>
-          </view>
-          <text class="db-bold" style="white-space:nowrap;color:var(--accent-text);">3 000 FCFA</text>
-        </view>
-        <view class="db-contents">
-          <view class="db-ci"><text class="db-qty">×8</text><text>Serviettes jour <text class="db-small db-muted">· ailettes, 24 cm</text></text></view>
-          <view class="db-ci"><text class="db-qty">×2</text><text>Serviettes nuit</text></view>
-          <view class="db-ci"><text class="db-qty">×4</text><text>Lingettes intimes</text></view>
-          <view class="db-ci"><text class="db-qty">×2</text><text>Patchs chauffants <text class="db-small db-muted">· chaleur douce 8 h contre les crampes</text></text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Culotte coton de rechange</text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Pochette zippée</text></view>
-        </view>
-        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goRetirer"><text>Retirer ce kit maintenant</text></view>
-      </view>
-
-      <!-- Kit Lavable -->
-      <view class="db-card">
-        <view class="db-row" style="align-items:flex-start;">
-          <view class="db-grow">
-            <view class="db-row" style="flex-wrap:wrap;gap:8rpx;">
-              <text class="db-bold" style="font-size:32rpx;">Kit Lavable</text>
-              <view class="db-chip db-chip-ind"><text>Économique sur la durée</text></view>
-            </view>
-            <text class="db-small db-muted">Environ 2 ans d'usage. Cousu par un atelier de femmes à Thiès.</text>
-          </view>
-          <text class="db-bold" style="white-space:nowrap;color:var(--accent-text);">4 500 FCFA</text>
-        </view>
-        <view class="db-contents">
-          <view class="db-ci"><text class="db-qty">×3</text><text>Serviettes lavables <text class="db-small db-muted">· coton absorbant et wax</text></text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Pochette imperméable</text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Savon doux 100 g <text class="db-small db-muted">· pour le lavage à l'eau froide</text></text></view>
-          <view class="db-ci"><text class="db-qty">×1</text><text>Notice d'entretien <text class="db-small db-muted">· en français, wolof et pulaar</text></text></view>
-        </view>
-        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goRetirer"><text>Retirer ce kit maintenant</text></view>
-      </view>
-
-      <!-- Boutique CTA -->
       <view class="db-card">
         <text class="db-bold">Besoin d'autre chose ?</text>
-        <text class="db-small db-muted">Composez votre propre panier dans la boutique : coupe menstruelle, culotte menstruelle, tampons, produits faits au Sénégal.</text>
-        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goBoutique"><text>Ouvrir la boutique</text></view>
+        <text class="db-small db-muted">Composez votre panier dans la boutique : coupe menstruelle, culotte menstruelle, tampons, produits faits au Sénégal.</text>
+        <view class="db-btn db-btn-indigo db-btn-sm" bindtap="goBoutique"><text>Voir la boutique</text></view>
       </view>
-
     </view>
   </scroll-view>
 </view>

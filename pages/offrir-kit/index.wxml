@@ -1,16 +1,10 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Offrir un kit</text>
-      <view><text class="db-apphead-sub">Ouvert à tous</text></view>
-    </view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Offrir un kit" sub="Ouvert à tous" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-card">
         <view class="db-row">
-          <text style="font-size:36rpx;color:var(--accent-text);">🛍</text>
+          <image class="db-icon" src="/assets/icons/bag.svg" />
           <text class="db-bold db-grow">Pour une femme de ma famille</text>
         </view>
         <text class="db-small db-muted">Un père, un frère, un mari ou une amie peut payer le kit. La personne reçoit un code de retrait à présenter en pharmacie.</text>

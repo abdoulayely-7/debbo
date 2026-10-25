@@ -1,26 +1,39 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack">
-      <image src="/assets/icons/back.svg" class="db-icon" />
-    </view>
-    <view class="db-grow">
-      <text class="db-apphead-title">J'ai besoin maintenant</text>
-      <view><text class="db-apphead-sub">Dakar · position approximative</text></view>
-    </view>
-  </view>
+  <app-nav-bar title="J'ai besoin maintenant" sub="Dakar · position approximative" backIcon="/assets/icons/back.svg" />
 
-  <scroll-view scroll-y style="flex:1;">
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
 
-      <!-- Segment mode -->
+      <!-- Mode : livraison par défaut, retrait en option -->
       <view class="db-seg">
-        <view class="db-seg-btn {{mode==='retrait' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="retrait">
-          <text>Retrait en pharmacie</text>
-        </view>
         <view class="db-seg-btn {{mode==='livraison' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="livraison">
           <text>Livraison discrète</text>
         </view>
+        <view class="db-seg-btn {{mode==='retrait' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="retrait">
+          <text>Retrait en pharmacie</text>
+        </view>
       </view>
+
+      <block wx:if="{{mode==='livraison'}}">
+        <view class="db-deliv-hero">
+          <image src="/assets/icons/moto.svg" class="db-deliv-moto" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <text class="db-bold" style="font-size:32rpx;">Vous serez bientôt livrée</text>
+            <text class="db-small db-muted">~30 min · sachet opaque, aucun nom de produit · suivi du livreur en direct</text>
+          </view>
+        </view>
+        <text class="db-label">Adresse de livraison</text>
+        <view class="db-opt db-opt-selected">
+          <image src="/assets/icons/pin.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+            <text class="db-bold">Sacré-Cœur 3, villa 12</text>
+            <text class="db-small db-muted">Dakar · position approximative</text>
+          </view>
+          <text class="db-small" style="color:var(--accent-text);font-weight:700;">Modifier</text>
+        </view>
+      </block>
+
+      <block wx:else>
       <text class="db-small db-muted">Votre kit est préparé au comptoir. Vous montrez un code, vous n'avez rien à demander à voix haute.</text>
 
       <!-- Pharmacies -->
@@ -60,6 +73,8 @@
           <view class="db-chip db-chip-warn"><text>Rupture</text></view>
         </view>
       </view>
+
+      </block>
 
       <!-- Kits -->
       <text class="db-label">Choisir le kit</text>
@@ -127,7 +142,7 @@
 
   <view class="db-footbar">
     <view class="db-btn db-btn-primary" bindtap="goPay">
-      <text>Payer 1 500 FCFA avec Max it</text>
+      <text>Payer {{kits[selectedKit].priceLabel}} avec Max it</text>
     </view>
   </view>
 </view>

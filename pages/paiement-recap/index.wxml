@@ -1,21 +1,19 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Récapitulatif</text></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Récapitulatif" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-card">
         <text class="db-label">Votre commande</text>
-        <view class="db-kv"><text class="db-muted">Kit</text><text class="db-bold">Kit Essentiel</text></view>
-        <view class="db-kv"><text class="db-muted">Pharmacie</text><text class="db-bold">Pharmacie partenaire Sacré-Cœur</text></view>
-        <view class="db-kv"><text class="db-muted">Mode</text><text class="db-bold">Retrait par code</text></view>
+        <view class="db-kv"><text class="db-muted">Commande</text><text class="db-bold">{{order.label}}</text></view>
+        <view wx:if="{{order.mode==='livraison'}}" class="db-kv"><text class="db-muted">Livraison</text><text class="db-bold">Sacré-Cœur 3 · ~30 min</text></view>
+        <view wx:else class="db-kv"><text class="db-muted">Pharmacie</text><text class="db-bold">Pharmacie partenaire Sacré-Cœur</text></view>
+        <view class="db-kv"><text class="db-muted">Mode</text><text class="db-bold">{{order.mode==='livraison' ? 'Livraison discrète' : 'Retrait par code'}}</text></view>
         <view class="db-kv"><text class="db-muted">Dans votre historique</text><text class="db-bold">Achat Bien-être</text></view>
       </view>
       <view class="db-card">
         <view class="db-kv" style="border-bottom:none;">
           <text class="db-muted" style="font-size:32rpx;">Total à payer</text>
-          <text class="db-bold" style="font-size:40rpx;color:var(--accent-text);">1 500 FCFA</text>
+          <text class="db-bold" style="font-size:40rpx;color:var(--accent-text);">{{amountLabel}} FCFA</text>
         </view>
       </view>
       <view class="db-card">

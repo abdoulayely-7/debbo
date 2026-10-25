@@ -1,8 +1,10 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: { selectedAmount: 1500 },
-  goBack() { wx.navigateBack() },
-  goSolidaire() { wx.navigateTo({ url: '/pages/solidaire/index' }) },
-  goBuyRelative() { wx.navigateTo({ url: '/pages/paiement-recap/index' }) },
+  goBack() { back() },
+  goSolidaire() { go('/pages/solidaire/index') },
+  goBuyRelative() { go('/pages/paiement-recap/index') },
   selectAmount(e) { this.setData({ selectedAmount: Number(e.currentTarget.dataset.amount) }) },
-  giveAsso() { wx.navigateTo({ url: '/pages/paiement-recap/index' }) },
+  giveAsso() { go('/pages/paiement-recap/index') },
 });

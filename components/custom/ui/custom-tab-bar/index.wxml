@@ -1,0 +1,26 @@
+<view class="tb" role="tablist">
+  <view
+    wx:for="{{ tabs }}"
+    wx:key="key"
+    class="tb__item {{ item.action ? 'tb__item--action' : '' }} {{ activeTab === item.key ? 'tb__item--on' : '' }}"
+    hover-class="tb__item--press"
+    hover-stay-time="80"
+    data-key="{{ item.key }}"
+    bindtap="onTap"
+    aria-role="tab"
+    aria-label="{{ item.label }}"
+  >
+    <block wx:if="{{ item.action }}">
+      <view class="tb__sos">
+        <image class="tb__sos-icon" src="/assets/icons/tab/sos.svg" />
+      </view>
+      <text class="tb__label tb__label--sos">{{ item.label }}</text>
+    </block>
+    <block wx:else>
+      <view class="tb__pill">
+        <image class="tb__icon" src="/assets/icons/tab/{{ item.icon }}-{{ activeTab === item.key ? 'on' : 'off' }}.svg" />
+      </view>
+      <text class="tb__label">{{ item.label }}</text>
+    </block>
+  </view>
+</view>

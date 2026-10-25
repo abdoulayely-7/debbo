@@ -1,7 +1,9 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: { defaultRound: false },
-  goBack() { wx.navigateBack() },
-  goOffrir() { wx.navigateTo({ url: '/pages/offrir-kit/index' }) },
-  goBoutique() { wx.navigateTo({ url: '/pages/boutique/index' }) },
+  goBack() { back() },
+  goOffrir() { go('/pages/offrir-kit/index') },
+  goBoutique() { go('/pages/boutique/index') },
   toggleDefault() { this.setData({ defaultRound: !this.data.defaultRound }) },
 });
