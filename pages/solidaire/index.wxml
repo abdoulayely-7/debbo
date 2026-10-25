@@ -1,12 +1,6 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Debbo Solidaire</text>
-      <view><text class="db-apphead-sub">Aucune élève ne devrait manquer les cours à cause de ses règles</text></view>
-    </view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Debbo Solidaire" sub="Aucune élève ne devrait manquer les cours à cause de ses règles" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-grid2">
         <view class="db-stat"><text class="db-stat-num">1 284</text><text class="db-small db-muted">kits offerts ce trimestre</text></view>
@@ -46,8 +40,11 @@
       </view>
 
       <view class="db-card">
+        <view class="db-service-media">
+          <app-image src="/assets/images/services/ecole.jpg" mode="aspectFill" containerStyle="width:100%;height:100%;" imageStyle="width:100%;height:100%;display:block;" />
+        </view>
         <view class="db-row" style="align-items:flex-start;gap:16rpx;">
-          <text style="font-size:36rpx;">🏫</text>
+          <image src="/assets/icons/gift.svg" class="db-icon" />
           <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
             <text class="db-bold">Boîte Debbo à l'école</text>
             <text class="db-small db-muted">Une réserve de kits chez l'infirmière, réapprovisionnée par les dons. Une élève en urgence n'a rien à payer ni à expliquer.</text>
@@ -56,12 +53,28 @@
       </view>
 
       <view class="db-card">
+        <view class="db-service-media">
+          <app-image src="/assets/images/services/couturieres.jpg" mode="aspectFill" containerStyle="width:100%;height:100%;" imageStyle="width:100%;height:100%;display:block;" />
+        </view>
         <view class="db-row" style="align-items:flex-start;gap:16rpx;">
           <image src="/assets/icons/store.svg" class="db-icon" />
           <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
             <text class="db-bold">Revenus pour les créatrices locales</text>
             <text class="db-small db-muted">Les serviettes lavables, trousses et tisanes sont fabriquées par des ateliers et coopératives de femmes.</text>
             <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goBoutique"><text>Voir leurs produits</text></view>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-card">
+        <view class="db-service-media">
+          <app-image src="/assets/images/services/sage-femme.jpg" mode="aspectFill" containerStyle="width:100%;height:100%;" imageStyle="width:100%;height:100%;display:block;" />
+        </view>
+        <view class="db-row" style="align-items:flex-start;gap:16rpx;">
+          <image src="/assets/icons/check-circle.svg" class="db-icon" />
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:8rpx;">
+            <text class="db-bold">Causeries avec des sages-femmes</text>
+            <text class="db-small db-muted">Séances dans les collèges et les quartiers, en français, wolof et pulaar, pour remplacer les idées reçues par des informations vérifiées.</text>
           </view>
         </view>
       </view>

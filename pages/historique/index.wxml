@@ -1,10 +1,10 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Historique Max it</text></view>
-    <view class="db-iconbtn" bindtap="showNotif"><image src="/assets/icons/info.svg" class="db-icon" /></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Historique Max it" backIcon="/assets/icons/back.svg">
+    <view slot="right" class="db-row" style="gap:0;">
+    <view class="db-iconbtn" hover-class="db-press" bindtap="showNotif"><image src="/assets/icons/info.svg" class="db-icon" /></view>
+    </view>
+  </app-nav-bar>
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <!-- Discretion card -->
       <view class="db-card hist-disc">
@@ -21,32 +21,32 @@
 
       <!-- transactions -->
       <view class="db-card hist-row">
-        <text class="hist-icon">🚌</text>
+        <image class="db-icon" src="/assets/icons/bus.svg" />
         <view class="db-grow"><text class="db-bold">Transport Dakar Dem Dikk</text><text class="db-small db-muted">24 oct. 2024</text></view>
         <text class="hist-neg">-500 FCFA</text>
       </view>
       <view class="db-card hist-row">
-        <text class="hist-icon">🤝</text>
+        <image class="db-icon" src="/assets/icons/transfer.svg" />
         <view class="db-grow"><text class="db-bold">Tontine Famille</text><text class="db-small db-muted">22 oct. 2024</text></view>
         <text class="hist-neg">-10 000 FCFA</text>
       </view>
       <view class="db-card hist-row">
-        <text class="hist-icon">💡</text>
+        <image class="db-icon" src="/assets/icons/bolt.svg" />
         <view class="db-grow"><text class="db-bold">Facture SENELEC</text><text class="db-small db-muted">20 oct. 2024</text></view>
         <text class="hist-neg">-12 500 FCFA</text>
       </view>
       <view class="db-card hist-row">
-        <text class="hist-icon">📥</text>
+        <image class="db-icon" src="/assets/icons/download.svg" />
         <view class="db-grow"><text class="db-bold">Transfert reçu — Maman</text><text class="db-small db-muted">18 oct. 2024</text></view>
         <text class="hist-pos">+25 000 FCFA</text>
       </view>
       <view class="db-card hist-row">
-        <text class="hist-icon">🚌</text>
+        <image class="db-icon" src="/assets/icons/bus.svg" />
         <view class="db-grow"><text class="db-bold">Transport Dakar Dem Dikk</text><text class="db-small db-muted">17 oct. 2024</text></view>
         <text class="hist-neg">-500 FCFA</text>
       </view>
       <view class="db-card hist-row">
-        <text class="hist-icon">🛒</text>
+        <image class="db-icon" src="/assets/icons/cart.svg" />
         <view class="db-grow"><text class="db-bold">Supermarché Casino</text><text class="db-small db-muted">15 oct. 2024</text></view>
         <text class="hist-neg">-8 700 FCFA</text>
       </view>

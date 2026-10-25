@@ -1,42 +1,47 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Boutique Debbo</text>
-      <view><text class="db-apphead-sub">Pharmacies et créatrices vérifiées</text></view>
-    </view>
-    <view class="db-iconbtn" bindtap="goPanier">
+  <app-nav-bar title="Boutique Debbo" sub="Pharmacies et créatrices vérifiées" showBack="{{false}}">
+    <view slot="right" class="db-cart-btn" hover-class="db-press" bindtap="goPanier" aria-role="button" aria-label="Panier, {{cartCount}} article(s)">
       <image src="/assets/icons/cart.svg" class="db-icon" />
+      <view wx:if="{{cartCount}}" class="db-cart-badge"><text>{{cartCount}}</text></view>
     </view>
-  </view>
+  </app-nav-bar>
 
-  <scroll-view scroll-y style="flex:1;">
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
 
-      <!-- Filter chips -->
-      <scroll-view scroll-x style="white-space:nowrap;">
-        <view style="display:flex;gap:12rpx;padding:4rpx 0;">
-          <view class="db-chip {{activeFilter==='tout' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="tout"><text>Tout</text></view>
-          <view class="db-chip {{activeFilter==='prot' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="prot"><text>Protections</text></view>
-          <view class="db-chip {{activeFilter==='hyg' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="hyg"><text>Hygiène</text></view>
-          <view class="db-chip {{activeFilter==='bien' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="bien"><text>Bien-être</text></view>
-          <view class="db-chip {{activeFilter==='acc' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="acc"><text>Accessoires</text></view>
-          <view class="db-chip {{activeFilter==='local' ? 'db-chip-acc' : ''}}" bindtap="setFilter" data-cat="local"><text>Fait au Sénégal</text></view>
-        </view>
+      <!-- Filtres -->
+      <scroll-view scroll-x class="db-filters" enable-flex>
+        <view
+          wx:for="{{filters}}"
+          wx:key="key"
+          class="db-filter {{activeFilter===item.key ? 'db-filter-on' : ''}}"
+          bindtap="setFilter"
+          data-cat="{{item.key}}"
+        ><text>{{item.label}}</text></view>
       </scroll-view>
 
-      <!-- Product grid -->
+      <!-- Produits -->
       <view class="db-grid2">
-        <view wx:for="{{filtered}}" wx:key="id" class="db-prod" bindtap="goFicheProduit">
-          <view class="db-thumb db-thumb-prot"><text style="font-size:72rpx;">{{item.emoji}}</text></view>
-          <view wx:if="{{item.local}}"><view class="db-chip db-chip-ok"><text>Fait au Sénégal</text></view></view>
-          <text class="db-prod-name">{{item.name}}</text>
-          <text class="db-prod-vendor">{{item.vendor}}</text>
-          <text class="db-prod-price">{{item.price}}</text>
+        <view wx:for="{{filtered}}" wx:key="id" hover-class="db-press" bindtap="goFicheProduit" data-id="{{item.id}}">
+          <app-card containerClass="db-prod">
+            <view class="db-thumb">
+              <app-image
+                src="{{item.image}}"
+                mode="aspectFill"
+                containerStyle="width:100%;height:100%;"
+                imageStyle="width:100%;height:100%;display:block;"
+              />
+              <view wx:if="{{item.local}}" class="db-thumb-badge"><text>Fait au Sénégal</text></view>
+              <view class="db-add" catchtap="addQuick" data-id="{{item.id}}" aria-role="button" aria-label="Ajouter {{item.name}} au panier"><text>+</text></view>
+            </view>
+            <text class="db-prod-name">{{item.name}}</text>
+            <text class="db-prod-vendor">{{item.vendor}}</text>
+            <text class="db-prod-price">{{item.priceLabel}}</text>
+          </app-card>
         </view>
       </view>
 
-      <text class="db-small db-muted">Retrait en pharmacie partenaire ou livraison discrète. Libellé « Achat Bien-être » dans l'historique.</text>
+      <text class="db-small db-muted">Livraison discrète ou retrait en pharmacie partenaire. Libellé « Achat Bien-être » dans l'historique.</text>
 
     </view>
   </scroll-view>

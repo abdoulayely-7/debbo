@@ -1,17 +1,9 @@
 <view class="db-screen">
-
-  <!-- App Header -->
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack">
-      <image src="/assets/icons/back.svg" class="db-icon" />
-    </view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Mon cycle</text>
-    </view>
-  </view>
+  <app-nav-bar title="Mon cycle" backIcon="/assets/icons/back.svg" />
 
   <!-- Corps scrollable -->
-  <scroll-view scroll-y class="db-body">
+  <scroll-view scroll-y class="db-scroll">
+    <view class="db-body">
 
     <!-- Carte cycle ring -->
     <view class="db-card">
@@ -104,6 +96,7 @@
       </view>
     </view>
 
+  </view>
   </scroll-view>
 
 </view>

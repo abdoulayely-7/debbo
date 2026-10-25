@@ -1,15 +1,5 @@
 <view class="db-screen">
-
-  <!-- App Header -->
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack">
-      <image src="/assets/icons/back.svg" class="db-icon" />
-    </view>
-    <view class="db-grow">
-      <text class="db-apphead-title">Mon cycle</text>
-      <view><text class="db-apphead-sub">Espace protégé</text></view>
-    </view>
-  </view>
+  <app-nav-bar title="Mon cycle" sub="Espace protégé" showBack="{{false}}" backIcon="/assets/icons/back.svg" />
 
   <!-- Body centré -->
   <view class="db-body" style="justify-content:center;align-items:center;">

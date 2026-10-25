@@ -1,9 +1,16 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setActiveTab('cycle');
+    }
+  },
   data: {
     code: '',
     dots: [false, false, false, false]
   },
-  goBack() { wx.navigateBack() },
+  goBack() { back() },
   pressKey(e) {
     const key = e.currentTarget.dataset.key;
     let code = this.data.code;
@@ -16,7 +23,7 @@ Page({
     this.setData({ code, dots });
     if (code.length === 4) {
       if (code === '1234') {
-        wx.navigateTo({ url: '/pages/mon-cycle/index' });
+        go('/pages/mon-cycle/index');
       } else {
         setTimeout(() => {
           this.setData({ code: '', dots: [false, false, false, false] });

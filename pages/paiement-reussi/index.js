@@ -1,5 +1,7 @@
+import { back, home } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: {},
-  goBack() { wx.navigateBack() },
-  goHome() { wx.reLaunch({ url: '/pages/accueil/index' }) },
+  goBack() { back() },
+  goHome() { home() },
 });

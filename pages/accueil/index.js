@@ -1,12 +1,19 @@
+import { go } from '../../utils/helpers/debbo-nav';
+
 Page({
+  onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setActiveTab('home');
+    }
+  },
   data: {},
-  goToUrgence() { wx.navigateTo({ url: '/pages/urgence/index' }) },
-  goToCycle() { wx.navigateTo({ url: '/pages/cycle-code/index' }) },
-  goToBoutique() { wx.navigateTo({ url: '/pages/boutique/index' }) },
-  goToNosKits() { wx.navigateTo({ url: '/pages/nos-kits/index' }) },
-  goToConseils() { wx.navigateTo({ url: '/pages/conseils/index' }) },
-  goToSolidaire() { wx.navigateTo({ url: '/pages/solidaire/index' }) },
-  goToHistorique() { wx.navigateTo({ url: '/pages/historique/index' }) },
-  goToVieprivee() { wx.navigateTo({ url: '/pages/vie-privee/index' }) },
-  goToReorder() { wx.navigateTo({ url: '/pages/urgence/index' }) },
+  goToUrgence() { go('/pages/urgence/index') },
+  goToCycle() { go('/pages/cycle-code/index') },
+  goToBoutique() { go('/pages/boutique/index') },
+  goToNosKits() { go('/pages/nos-kits/index') },
+  goToConseils() { go('/pages/conseils/index') },
+  goToSolidaire() { go('/pages/solidaire/index') },
+  goToHistorique() { go('/pages/historique/index') },
+  goToVieprivee() { go('/pages/vie-privee/index') },
+  goToReorder() { go('/pages/urgence/index') },
 });

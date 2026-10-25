@@ -1,3 +1,5 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: {
     trackingOn: true,
@@ -16,8 +18,8 @@ Page({
       { label: 'lun', num: 2,  today: false, period: false, remind: false },
     ]
   },
-  goBack() { wx.navigateBack() },
-  goToReorder() { wx.navigateTo({ url: '/pages/urgence/index' }) },
+  goBack() { back() },
+  goToReorder() { go('/pages/urgence/index') },
   toggleTracking() {
     this.setData({ trackingOn: !this.data.trackingOn });
   },

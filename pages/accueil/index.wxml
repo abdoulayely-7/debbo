@@ -1,104 +1,100 @@
 <view class="db-screen">
+  <app-nav-bar title="Bonjour" sub="Debbo · dans Max it" showBack="{{false}}" />
 
-  <!-- App Header -->
-  <view class="db-apphead">
-    <view class="db-grow">
-      <text class="db-apphead-title">Bonjour</text>
-    </view>
-  </view>
+  <scroll-view scroll-y class="db-scroll">
+    <view class="db-body">
 
-  <!-- Body -->
-  <scroll-view scroll-y class="db-body">
+      <!-- Urgence -->
+      <view class="db-sos" bindtap="goToUrgence" aria-role="button">
+        <text class="db-sos-kicker">Urgence</text>
+        <text class="db-sos-title">J'ai besoin{{"\n"}}maintenant</text>
+        <text class="db-sos-sub">Livrée en ~30 min, en toute discrétion · ou retrait en pharmacie à 0,4 km</text>
+      </view>
 
-    <!-- SOS / Urgence -->
-    <view class="db-sos" bindtap="goToUrgence">
-      <text class="db-sos-kicker">Urgence</text>
-      <text class="db-sos-title">J'ai besoin{"\n"}maintenant</text>
-      <text class="db-sos-sub">Pharmacie la plus proche à 0,4 km · retrait par code</text>
-    </view>
-
-    <!-- Grid de tuiles -->
-    <view class="db-grid2">
-
-      <!-- Mon cycle -->
-      <view class="db-tile db-tile-cy" bindtap="goToCycle">
-        <view class="db-tile-icon">
-          <image src="/assets/icons/calendar.svg" class="db-icon" />
+      <!-- Raccourcis -->
+      <view class="db-grid2">
+        <view class="db-tile" hover-class="db-press" bindtap="goToCycle">
+          <view class="db-tile-icon"><image src="/assets/icons/calendar.svg" class="db-icon" /></view>
+          <view class="db-row" style="gap:8rpx;">
+            <text class="db-tile-title">Mon cycle</text>
+            <image src="/assets/icons/lock.svg" style="width:28rpx;height:28rpx;" />
+          </view>
+          <text class="db-tile-sub">Règles dans ~5 jours</text>
+          <view class="db-goal db-goal-soft"><view class="db-goal-fill" style="width:82%;"></view></view>
         </view>
-        <text class="db-tile-title"><text class="db-bold">Mon cycle</text> <image src="/assets/icons/lock.svg" class="db-icon" /></text>
-        <text class="db-tile-sub">Règles dans ~5 jours</text>
-      </view>
 
-      <!-- Mon kit habituel (reorder) -->
-      <view class="db-tile" bindtap="goToReorder">
-        <view class="db-tile-icon">
-          <image src="/assets/icons/refresh.svg" class="db-icon" />
+        <view class="db-tile" hover-class="db-press" bindtap="goToReorder">
+          <view class="db-tile-icon"><image src="/assets/icons/refresh.svg" class="db-icon" /></view>
+          <text class="db-tile-title">Mon kit habituel</text>
+          <text class="db-tile-sub">Kit Essentiel · 1 500 FCFA</text>
         </view>
-        <text class="db-tile-title"><text class="db-bold">Mon kit habituel</text></text>
-        <text class="db-tile-sub">Kit Essentiel · 1 500 FCFA</text>
-      </view>
 
-      <!-- Boutique (wide) -->
-      <view class="db-tile db-grid2-wide" bindtap="goToBoutique">
-        <view class="db-tile-icon">
-          <image src="/assets/icons/store.svg" class="db-icon" />
-        </view>
-        <text class="db-tile-title"><text class="db-bold">Boutique</text></text>
-        <text class="db-tile-sub">12 produits · fait au Sénégal</text>
-      </view>
-
-    </view>
-
-    <!-- Section Découvrir -->
-    <text class="db-sec">Découvrir</text>
-
-    <!-- Grille features -->
-    <view class="db-grid2">
-
-      <view class="db-feat db-feat-kits" bindtap="goToNosKits">
-        <text class="db-feat-title"><text class="db-bold">Nos kits</text></text>
-        <view class="db-chip db-chip-ind"><text>dès 500 FCFA</text></view>
-      </view>
-
-      <view class="db-feat db-feat-tips" bindtap="goToConseils">
-        <text class="db-feat-title"><text class="db-bold">Conseils</text></text>
-        <view class="db-chip db-chip-ok">
-          <image src="/assets/icons/check-circle.svg" class="db-icon" />
-          <text>Sages-femmes</text>
+        <view class="db-tile db-grid2-wide db-row" hover-class="db-press" bindtap="goToBoutique" style="min-height:0;flex-direction:row;align-items:center;">
+          <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/store.svg" class="db-icon" /></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+            <text class="db-tile-title">Boutique</text>
+            <text class="db-tile-sub">12 produits · fait au Sénégal</text>
+          </view>
+          <text class="db-muted">→</text>
         </view>
       </view>
 
-    </view>
+      <!-- Découvrir -->
+      <text class="db-sec">Découvrir</text>
 
-    <!-- Solidaire (pleine largeur) -->
-    <view class="db-feat db-feat-soli" bindtap="goToSolidaire">
-      <view class="db-row" style="gap:16rpx;align-items:center;">
-        <image src="/assets/icons/heart.svg" class="db-icon" />
-        <view class="db-grow">
-          <text class="db-bold" style="font-size:36rpx;">1 284</text>
-          <text class="db-small"> kits offerts aux élèves</text>
+      <view class="db-grid2">
+        <view class="db-feat db-feat-kits" bindtap="goToNosKits">
+          <image src="/assets/icons/gift.svg" style="width:64rpx;height:64rpx;" />
+          <text class="db-feat-title">Nos kits</text>
+          <view class="db-chip"><text>dès 500 FCFA</text></view>
         </view>
-        <view class="db-chip db-chip-acc"><text>Offrir →</text></view>
+
+        <view class="db-feat db-feat-tips" bindtap="goToConseils">
+          <image src="/assets/icons/check-circle.svg" style="width:64rpx;height:64rpx;" />
+          <text class="db-feat-title">Conseils</text>
+          <view class="db-chip db-chip-ok"><text>Sages-femmes</text></view>
+        </view>
       </view>
-      <text class="db-small db-muted">Objectif 2 000 ce trimestre</text>
-    </view>
 
-    <!-- Historique discret -->
-    <view class="db-feat db-feat-hist" bindtap="goToHistorique">
-      <text class="db-feat-title"><text class="db-bold">Discret dans Max it</text></text>
-      <text class="db-small db-muted">Achat Bien-être · Sans nom de produit · −1 500 FCFA</text>
-    </view>
-
-    <!-- Vie privée -->
-    <view class="db-card db-row" bindtap="goToVieprivee" style="gap:16rpx;align-items:flex-start;">
-      <image src="/assets/icons/shield.svg" class="db-icon" />
-      <view class="db-grow">
-        <text class="db-bold">Votre vie privée</text>
-        <text class="db-small db-muted"> Ce qui reste sur votre téléphone, et comment tout effacer.</text>
+      <!-- Solidaire -->
+      <view class="db-feat db-feat-soli" bindtap="goToSolidaire">
+        <view class="db-row" style="gap:20rpx;align-items:center;">
+          <view class="db-grow">
+            <text class="db-stat-big">1 284</text>
+            <text class="db-small" style="display:block;opacity:.92;">kits offerts aux élèves</text>
+          </view>
+          <view class="db-chip db-chip-glass"><text>Offrir →</text></view>
+        </view>
+        <view class="db-goal"><view class="db-goal-fill" style="width:64%;"></view></view>
+        <text class="db-small" style="opacity:.9;">Objectif 2 000 ce trimestre</text>
       </view>
-      <text class="db-muted">→</text>
-    </view>
 
+      <!-- Historique discret -->
+      <view class="db-card" hover-class="db-press" bindtap="goToHistorique">
+        <view class="db-row">
+          <text class="db-bold db-grow">Discret dans Max it</text>
+          <image src="/assets/icons/shield.svg" class="db-icon" />
+        </view>
+        <view class="db-mini-tx">
+          <view class="db-av"><image src="/assets/icons/cart.svg" class="db-icon" /></view>
+          <view class="db-grow" style="display:flex;flex-direction:column;">
+            <text class="db-bold">Achat Bien-être</text>
+            <text class="db-small db-muted">Sans nom de produit</text>
+          </view>
+          <text class="db-amt">−1 500 FCFA</text>
+        </view>
+      </view>
+
+      <!-- Vie privée -->
+      <view class="db-card db-row" hover-class="db-press" bindtap="goToVieprivee" style="flex-direction:row;align-items:center;">
+        <image src="/assets/icons/shield.svg" class="db-icon" />
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <text class="db-bold">Votre vie privée</text>
+          <text class="db-small db-muted">Ce qui reste sur votre téléphone, et comment tout effacer.</text>
+        </view>
+        <text class="db-muted">→</text>
+      </view>
+
+    </view>
   </scroll-view>
-
 </view>

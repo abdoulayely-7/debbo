@@ -1,16 +1,13 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Mon panier</text></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Mon panier" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-card">
         <view class="db-hist">
           <view wx:for="{{items}}" wx:key="id" class="db-it">
             <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
               <text class="db-bold">{{item.name}}</text>
-              <text class="db-small db-muted">{{item.price}} FCFA</text>
+              <text class="db-small db-muted">{{item.price}} FCFA · {{item.vendor}}</text>
             </view>
             <view class="db-qty-ctrl">
               <view class="db-qty-btn" bindtap="changeQty" data-id="{{item.id}}" data-d="-1"><text>−</text></view>
@@ -22,17 +19,24 @@
       </view>
 
       <view class="db-seg">
-        <view class="db-seg-btn {{mode==='retrait' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="retrait"><text>Retrait en pharmacie</text></view>
         <view class="db-seg-btn {{mode==='livraison' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="livraison"><text>Livraison discrète</text></view>
+        <view class="db-seg-btn {{mode==='retrait' ? 'db-seg-btn-active' : ''}}" bindtap="selectMode" data-mode="retrait"><text>Retrait en pharmacie</text></view>
       </view>
-      <text class="db-small db-muted">Tout est regroupé à la Pharmacie partenaire Sacré-Cœur (5 min à pied), dans un sachet opaque.</text>
+      <view wx:if="{{mode==='livraison'}}" class="db-deliv-hero">
+        <image src="/assets/icons/moto.svg" class="db-deliv-moto" />
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <text class="db-bold">Vous serez bientôt livrée</text>
+          <text class="db-small db-muted">~30 min à Sacré-Cœur 3 · sachet opaque · suivi en direct</text>
+        </view>
+      </view>
+      <text wx:else class="db-small db-muted">Tout est regroupé à la Pharmacie partenaire Sacré-Cœur (5 min à pied), dans un sachet opaque.</text>
 
       <view class="db-card">
-        <view class="db-kv"><text class="db-muted">Sous-total</text><text class="db-bold">6 000 FCFA</text></view>
+        <view class="db-kv"><text class="db-muted">Sous-total</text><text class="db-bold">{{total}} FCFA</text></view>
       </view>
     </view>
   </scroll-view>
   <view class="db-footbar">
-    <view class="db-btn db-btn-primary" bindtap="goPay"><text>Payer 6 000 FCFA avec Max it</text></view>
+    <view class="db-btn db-btn-primary" bindtap="goPay"><text>Payer {{total}} FCFA avec Max it</text></view>
   </view>
 </view>

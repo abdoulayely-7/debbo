@@ -1,9 +1,6 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Vie privée</text></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Vie privée" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <!-- Info cards -->
       <view class="db-card">

@@ -1,29 +1,35 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Boutique</text></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="{{product.name}}" sub="{{product.vendor}}" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
-      <view style="width:100%;aspect-ratio:16/9;background:linear-gradient(160deg,#FFE6F1,#FFD0E5);border-radius:32rpx;display:flex;align-items:center;justify-content:center;">
-        <text style="font-size:120rpx;">🎨</text>
+      <view class="db-hero-media">
+        <app-image
+          wx:if="{{product.image}}"
+          src="{{product.image}}"
+          mode="aspectFill"
+          previewable
+          containerStyle="width:100%;height:100%;"
+          imageStyle="width:100%;height:100%;display:block;"
+        />
+        <view wx:if="{{product.local}}" class="db-thumb-badge"><text>Fait au Sénégal</text></view>
       </view>
       <view class="db-row" style="align-items:flex-start;">
-        <view class="db-grow">
-          <text class="db-bold" style="font-size:40rpx;">Serviettes lavables en wax ×3</text>
-          <view><text class="db-small db-muted">Atelier de couturières, Thiès</text></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:6rpx;">
+          <text class="db-bold" style="font-size:40rpx;line-height:1.2;">{{product.name}}</text>
+          <text class="db-small db-muted">{{product.vendor}}</text>
         </view>
-        <text class="db-bold" style="font-size:36rpx;white-space:nowrap;color:var(--accent-text);">4 500 FCFA</text>
+        <text class="db-bold" style="font-size:36rpx;white-space:nowrap;color:var(--accent-text);">{{product.priceLabel}}</text>
       </view>
-      <view><text>Coton absorbant, dessus en wax, pression pour fixer à la culotte. Environ 2 ans d'usage.</text></view>
+      <text style="line-height:1.6;">{{product.desc}}</text>
       <view class="db-card">
-        <view class="db-kv"><text class="db-muted">Vendu par</text><text class="db-bold">Atelier de couturières, Thiès</text></view>
-        <view class="db-kv"><text class="db-muted">Réception</text><text class="db-bold">Retrait ou livraison discrète</text></view>
-        <view class="db-kv"><text class="db-muted">Part pour la créatrice</text><text class="db-bold">60 % du prix</text></view>
+        <view class="db-kv"><text class="db-muted">Vendu par</text><text class="db-bold">{{product.vendor}}</text></view>
+        <view class="db-kv"><text class="db-muted">Réception</text><text class="db-bold">Livraison discrète ou retrait</text></view>
+        <view class="db-kv"><text class="db-muted">Dans l'historique</text><text class="db-bold">Achat Bien-être</text></view>
+        <view wx:if="{{product.local}}" class="db-kv"><text class="db-muted">Part pour la créatrice</text><text class="db-bold">60 % du prix</text></view>
       </view>
     </view>
   </scroll-view>
   <view class="db-footbar">
-    <view class="db-btn db-btn-primary" bindtap="addToCart"><text>Ajouter au panier</text></view>
+    <view class="db-btn db-btn-primary" bindtap="addToCart"><text>Ajouter au panier · {{product.priceLabel}}</text></view>
   </view>
 </view>

@@ -1,7 +1,9 @@
+import { go, back } from '../../utils/helpers/debbo-nav';
+
 Page({
   data: {},
-  goBack() { wx.navigateBack() },
-  goConseils() { wx.navigateTo({ url: '/pages/conseils/index' }) },
+  goBack() { back() },
+  goConseils() { go('/pages/conseils/index') },
   wipeAll() {
     wx.showModal({
       title: 'Tout effacer',

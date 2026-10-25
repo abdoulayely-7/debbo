@@ -13,6 +13,7 @@
     "pages/paiement-verification/index",
     "pages/paiement-reussi/index",
     "pages/code-retrait/index",
+    "pages/suivi-livraison/index",
     "pages/conseils/index",
     "pages/solidaire/index",
     "pages/offrir-kit/index",
@@ -27,7 +28,8 @@
     "navigationBarBackgroundColor": "#FFF6FA",
     "navigationBarTitleText": "Debbo",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "backgroundColor": "#FFF6FA"
   },
   "permission": {
     "scope.camera": {
@@ -36,5 +38,35 @@
     "scope.album": {
       "desc": "Need photo album access to select media"
     }
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#74566A",
+    "selectedColor": "#B3105F",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/accueil/index",
+        "text": "Accueil"
+      },
+      {
+        "pagePath": "pages/cycle-code/index",
+        "text": "Cycle"
+      },
+      {
+        "pagePath": "pages/boutique/index",
+        "text": "Boutique"
+      },
+      {
+        "pagePath": "pages/conseils/index",
+        "text": "Conseils"
+      }
+    ]
+  },
+  "usingComponents": {
+    "app-nav-bar": "/components/ui/nav-bar/index",
+    "app-card": "/components/ui/card/index",
+    "app-image": "/components/ui/image/index"
   }
 }

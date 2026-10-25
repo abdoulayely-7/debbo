@@ -1,9 +1,6 @@
 <view class="db-screen">
-  <view class="db-apphead">
-    <view class="db-iconbtn" bindtap="goBack"><image src="/assets/icons/back.svg" class="db-icon" /></view>
-    <view class="db-grow"><text class="db-apphead-title">Kit prêt à retirer</text></view>
-  </view>
-  <scroll-view scroll-y style="flex:1;">
+  <app-nav-bar title="Kit prêt à retirer" backIcon="/assets/icons/back.svg" />
+  <scroll-view scroll-y class="db-scroll">
     <view class="db-body" style="align-items:center;">
       <image src="/assets/icons/check-circle.svg" style="width:80rpx;height:80rpx;" />
       <text class="db-bold db-center" style="font-size:40rpx;text-align:center;">Montrez ce code au comptoir</text>

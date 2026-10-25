@@ -1,0 +1,92 @@
+<view class="sl">
+  <app-nav-bar title="Suivi de livraison" sub="{{order.label}} · sachet opaque" backIcon="/assets/icons/back.svg" />
+
+  <!-- Carte stylisée -->
+  <view id="map" class="sl-map">
+    <view class="sl-park sl-park--a" />
+    <view class="sl-park sl-park--b" />
+    <view class="sl-sea" />
+    <text class="sl-place" style="left:6%;top:88%;">Pharmacie Sacré-Cœur</text>
+    <text class="sl-place" style="left:52%;top:42%;">VDN</text>
+    <text class="sl-place" style="left:60%;top:10%;">Sacré-Cœur 3</text>
+
+    <block wx:if="{{ready}}">
+      <view
+        wx:for="{{segments}}"
+        wx:key="index"
+        class="sl-route {{item.horizontal ? 'sl-route--h' : 'sl-route--v'}}"
+        style="left:{{item.left}}px;top:{{item.top}}px;{{item.horizontal ? 'width' : 'height'}}:{{item.size}}px;"
+      />
+
+      <view class="sl-pin sl-pin--start" style="transform:translate({{pins.start.x}}px,{{pins.start.y}}px);">
+        <view class="sl-pin__dot"><image src="/assets/icons/store.svg" class="sl-pin__icon" /></view>
+      </view>
+
+      <view class="sl-pin sl-pin--end" style="transform:translate({{pins.end.x}}px,{{pins.end.y}}px);">
+        <view class="sl-pin__halo" />
+        <view class="sl-pin__dot sl-pin__dot--home"><image src="/assets/icons/pin.svg" class="sl-pin__icon" /></view>
+      </view>
+
+      <view class="sl-moto {{stage==='prep' ? 'sl-moto--wait' : ''}}" style="transform:translate({{moto.x}}px,{{moto.y}}px);">
+        <view class="sl-moto__pulse" />
+        <view class="sl-moto__bubble">
+          <image src="/assets/icons/moto.svg" class="sl-moto__img {{moto.flip ? 'sl-moto__img--flip' : ''}}" />
+        </view>
+      </view>
+    </block>
+
+    <view class="sl-eta-chip">
+      <text wx:if="{{stage==='prep'}}">Préparation…</text>
+      <text wx:elif="{{stage==='ride'}}">{{etaMin}} min</text>
+      <text wx:else>Arrivée</text>
+    </view>
+  </view>
+
+  <!-- Panneau du bas -->
+  <scroll-view scroll-y class="sl-sheet">
+    <view class="sl-sheet__inner">
+      <view class="sl-handle" />
+
+      <text class="sl-title" wx:if="{{stage==='prep'}}">Votre kit est en préparation</text>
+      <text class="sl-title" wx:elif="{{stage==='ride'}}">Vous serez bientôt livrée</text>
+      <text class="sl-title" wx:else>Votre livreuse est arrivée</text>
+      <text class="sl-sub" wx:if="{{stage!=='arrived'}}">Arrivée estimée dans <text class="sl-strong">{{etaMin}} min</text> · Sacré-Cœur 3, villa 12</text>
+      <text class="sl-sub" wx:else>Donnez-lui le code de remise ci-dessous.</text>
+
+      <!-- Étapes -->
+      <view class="sl-steps">
+        <view class="sl-step sl-step--done"><view class="sl-step__bar" /><text>Payé</text></view>
+        <view class="sl-step {{stage!=='prep' ? 'sl-step--done' : 'sl-step--live'}}"><view class="sl-step__bar" /><text>Préparé</text></view>
+        <view class="sl-step {{stage==='arrived' ? 'sl-step--done' : (stage==='ride' ? 'sl-step--live' : '')}}"><view class="sl-step__bar" /><text>En route</text></view>
+        <view class="sl-step {{stage==='arrived' ? 'sl-step--done' : ''}}"><view class="sl-step__bar" /><text>Livré</text></view>
+      </view>
+
+      <!-- Livreuse -->
+      <view class="sl-courier">
+        <view class="sl-avatar"><text>{{courier.name[0]}}</text></view>
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
+          <text class="db-bold">{{courier.name}} · livreuse partenaire</text>
+          <text class="db-small db-muted">Moto · {{courier.plate}} · ★ {{courier.rating}}</text>
+        </view>
+        <view class="sl-action" hover-class="db-press" bindtap="messageCourier" aria-role="button" aria-label="Envoyer un message"><image src="/assets/icons/chat.svg" class="db-icon" /></view>
+        <view class="sl-action" hover-class="db-press" bindtap="callCourier" aria-role="button" aria-label="Appeler"><image src="/assets/icons/phone.svg" class="db-icon" /></view>
+      </view>
+
+      <!-- Code de remise -->
+      <view class="sl-code">
+        <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
+          <text class="db-label" style="padding:0;">Code de remise</text>
+          <text class="db-small db-muted">À dire à la livreuse, rien d'autre.</text>
+        </view>
+        <text class="sl-code__value">{{handoverCode}}</text>
+      </view>
+
+      <view class="db-row" style="gap:12rpx;align-items:flex-start;">
+        <image src="/assets/icons/shield.svg" class="db-icon" />
+        <text class="db-small db-muted db-grow">Sachet opaque scellé : la livreuse ne connaît pas le contenu. Appels et messages passent par un numéro masqué.</text>
+      </view>
+
+      <view class="db-btn db-btn-ghost" hover-class="db-press" bindtap="goHome"><text>Retour à l'accueil</text></view>
+    </view>
+  </scroll-view>
+</view>

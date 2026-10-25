@@ -1,0 +1,347 @@
+@import "/utils/debbo.wxss";
+
+/* Full-height column: nav bar, map (fixed share), sheet (scrolls) */
+.sl {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ---------------------------------------------------------------- Map */
+.sl-map {
+  position: relative;
+  height: 46vh;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #F4EEF1;
+  /* street grid */
+  background-image:
+    linear-gradient(#FFFFFF 10rpx, transparent 10rpx),
+    linear-gradient(90deg, #FFFFFF 10rpx, transparent 10rpx),
+    linear-gradient(#FBF7F9 4rpx, transparent 4rpx),
+    linear-gradient(90deg, #FBF7F9 4rpx, transparent 4rpx);
+  background-size: 220rpx 180rpx, 220rpx 180rpx, 55rpx 45rpx, 55rpx 45rpx;
+}
+
+.sl-park {
+  position: absolute;
+  border-radius: 24rpx;
+  background: #DDEFE3;
+}
+
+.sl-park--a { left: 58%; top: 52%; width: 150rpx; height: 110rpx; }
+.sl-park--b { left: 24%; top: 12%; width: 120rpx; height: 150rpx; }
+
+.sl-sea {
+  position: absolute;
+  right: -80rpx;
+  bottom: -80rpx;
+  width: 300rpx;
+  height: 260rpx;
+  border-radius: 50%;
+  background: #DCEBF5;
+}
+
+.sl-place {
+  position: absolute;
+  font-size: 20rpx;
+  font-weight: 600;
+  color: #9C8592;
+  letter-spacing: 0.02em;
+}
+
+.sl-route {
+  position: absolute;
+  border-color: var(--accent);
+  border-style: dashed;
+  border-width: 0;
+}
+
+.sl-route--h { height: 0; border-top-width: 6rpx; margin-top: -3rpx; }
+.sl-route--v { width: 0; border-left-width: 6rpx; margin-left: -3rpx; }
+
+/* Markers are translated to the point, children centre on it */
+.sl-pin,
+.sl-moto {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
+.sl-pin__dot {
+  position: absolute;
+  left: -32rpx;
+  top: -32rpx;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 16rpx rgba(43, 15, 28, 0.18);
+}
+
+.sl-pin__dot--home {
+  background: var(--accent-soft);
+  border: 4rpx solid #FFFFFF;
+}
+
+.sl-pin__icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.sl-pin__halo {
+  position: absolute;
+  left: -56rpx;
+  top: -56rpx;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.18;
+  animation: sl-breathe 2.4s ease-in-out infinite;
+}
+
+/* Courier: the transition interpolates between two setData ticks */
+.sl-moto {
+  z-index: 3;
+  transition: transform 1.6s linear;
+}
+
+.sl-moto__bubble {
+  position: absolute;
+  left: -44rpx;
+  top: -44rpx;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10rpx 24rpx -6rpx rgba(217, 20, 122, 0.45);
+  animation: sl-bob 0.9s ease-in-out infinite alternate;
+}
+
+.sl-moto--wait .sl-moto__bubble {
+  animation: none;
+}
+
+.sl-moto__img {
+  width: 64rpx;
+  height: 64rpx;
+  transition: transform 300ms ease-out;
+}
+
+.sl-moto__img--flip {
+  transform: scaleX(-1);
+}
+
+.sl-moto__pulse {
+  position: absolute;
+  left: -60rpx;
+  top: -60rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  animation: sl-ping 1.8s ease-out infinite;
+}
+
+.sl-eta-chip {
+  position: absolute;
+  left: 24rpx;
+  top: 24rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: var(--ink);
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: 700;
+  box-shadow: 0 8rpx 20rpx rgba(43, 15, 28, 0.25);
+}
+
+/* -------------------------------------------------------------- Sheet */
+.sl-sheet {
+  flex: 1;
+  height: 0;
+  margin-top: -40rpx;
+  position: relative;
+  z-index: 5;
+  background: var(--surface);
+  border-radius: 40rpx 40rpx 0 0;
+  box-shadow: 0 -12rpx 40rpx rgba(43, 15, 28, 0.08);
+}
+
+.sl-sheet__inner {
+  padding: 16rpx 32rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+  animation: sl-sheet-in 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.sl-handle {
+  align-self: center;
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 999rpx;
+  background: var(--line);
+}
+
+.sl-title {
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.sl-sub {
+  margin-top: -16rpx;
+  font-size: 28rpx;
+  color: var(--muted);
+}
+
+.sl-strong {
+  color: var(--accent-text);
+  font-weight: 700;
+}
+
+.sl-steps {
+  display: flex;
+  gap: 10rpx;
+}
+
+.sl-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.sl-step__bar {
+  position: relative;
+  height: 10rpx;
+  border-radius: 999rpx;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.sl-step__bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--grad-btn);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms ease-out;
+}
+
+.sl-step--done { color: var(--accent-text); }
+.sl-step--done .sl-step__bar::after { transform: scaleX(1); }
+.sl-step--live { color: var(--ink); }
+.sl-step--live .sl-step__bar::after {
+  transform: scaleX(1);
+  animation: sl-shimmer 1.4s ease-in-out infinite;
+}
+
+.sl-courier {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx;
+  border-radius: 28rpx;
+  background: var(--sunk);
+}
+
+.sl-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #FFFFFF;
+  font-size: 36rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sl-action {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2rpx solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sl-code {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 24rpx 28rpx;
+  border-radius: 28rpx;
+  border: 3rpx dashed var(--accent);
+}
+
+.sl-code__value {
+  font-size: 56rpx;
+  font-weight: 800;
+  letter-spacing: 12rpx;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- Motion */
+@keyframes sl-ping {
+  0%   { transform: scale(0.4); opacity: 0.35; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes sl-breathe {
+  0%, 100% { transform: scale(0.85); }
+  50%      { transform: scale(1.1); }
+}
+
+@keyframes sl-bob {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-6rpx); }
+}
+
+@keyframes sl-shimmer {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+@keyframes sl-sheet-in {
+  from { opacity: 0; transform: translateY(40rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-moto { transition: none; }
+  .sl-moto__bubble,
+  .sl-moto__pulse,
+  .sl-pin__halo,
+  .sl-step--live .sl-step__bar::after,
+  .sl-sheet__inner { animation: none; }
+}
