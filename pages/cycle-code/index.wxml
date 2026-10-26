@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Mon cycle" sub="Espace protégé" showBack="{{false}}" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Cycle" backIcon="/assets/icons/back.svg" />
 
   <scroll-view scroll-y class="db-scroll">
   <view class="db-body" style="align-items:center;">
@@ -9,7 +9,7 @@
     <text class="db-bold" style="font-size:32rpx;margin-bottom:8rpx;">Entrez votre code</text>
 
     <text class="db-small db-muted db-center" style="max-width:500rpx;text-align:center;margin-bottom:32rpx;">
-      Code de l'espace Mon cycle, différent de votre code Max it.
+      Utile quand le téléphone est partagé en famille. Ce code est différent de votre code secret Max it.
     </text>
 
     <!-- Indicateur à points -->

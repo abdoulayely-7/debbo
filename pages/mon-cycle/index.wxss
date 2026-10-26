@@ -1,1 +1,468 @@
 @import "/utils/debbo.wxss";
+
+.db-cycle-body {
+  gap: 24rpx;
+  padding-bottom: 24rpx;
+}
+
+.db-cycle-card,
+.db-cycle-calendar-card,
+.db-cycle-settings,
+.db-cycle-regularity,
+.db-cycle-feelings,
+.db-cycle-tracking {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.db-icon {
+  width: 36rpx;
+  height: 36rpx;
+  flex-shrink: 0;
+}
+
+.db-cycle-ring-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20rpx 0 8rpx;
+}
+
+.db-cycle-ring {
+  position: relative;
+  display: block;
+  width: 400rpx;
+  height: 400rpx;
+  padding: 0;
+  border-radius: 50%;
+  background: #ffddeb;
+  flex-direction: initial;
+  align-items: initial;
+  gap: 0;
+  transition: background 120ms linear;
+}
+
+.db-cycle-ring-inner {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  bottom: 16rpx;
+  left: 16rpx;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.db-cycle-ring-dot {
+  position: absolute;
+  z-index: 2;
+  width: 28rpx;
+  height: 28rpx;
+  border: 6rpx solid #d9147a;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  transition: left 120ms linear, top 120ms linear;
+}
+
+.db-cycle-ring-center {
+  position: absolute;
+  z-index: 1;
+  inset: 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  text-align: center;
+}
+
+.db-cycle-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+}
+
+.db-cycle-number {
+  color: #c4126c;
+  font-size: 72rpx;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.db-cycle-caption {
+  color: var(--muted);
+  font-size: 26rpx;
+}
+
+.db-cycle-adjust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52rpx;
+  height: 52rpx;
+  border: 2rpx solid #f3a5ca;
+  border-radius: 50%;
+  color: #c4126c;
+  font-size: 36rpx;
+  line-height: 1;
+}
+
+.db-cycle-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  padding: 36rpx 24rpx;
+  border-radius: 24rpx;
+  background: #fff3f8;
+}
+
+.db-center {
+  display: block;
+  text-align: center;
+}
+
+.db-cycle-phase {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  padding: 20rpx;
+  border: 2rpx solid #f7d5e5;
+  border-radius: 22rpx;
+  background: #fff9fc;
+}
+
+.db-cycle-phase .db-icon {
+  margin-top: 2rpx;
+}
+
+.db-cycle-phase .db-grow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6rpx;
+}
+
+.db-cycle-disclaimer {
+  flex-basis: 100%;
+  margin-top: 6rpx;
+  color: var(--muted);
+  font-size: 22rpx;
+}
+
+.db-cycle-alert {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background: #fff0f4;
+  color: #7e284b;
+}
+
+.db-cycle-start-btn,
+.db-cycle-reorder {
+  min-height: 92rpx;
+  margin-top: 4rpx;
+}
+
+.db-cycle-section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.db-cycle-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10rpx 8rpx;
+}
+
+.db-cycle-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6rpx;
+  min-width: 0;
+  height: 92rpx;
+  border: 2rpx solid transparent;
+  border-radius: 20rpx;
+  background: #fff8fb;
+  color: var(--ink);
+}
+
+.db-cycle-day-name {
+  color: var(--muted);
+  font-size: 20rpx;
+  line-height: 1.1;
+}
+
+.db-cycle-day-number {
+  font-size: 26rpx;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.db-cycle-day-today {
+  border-color: #31223b;
+}
+
+.db-cycle-day-period {
+  background: linear-gradient(135deg, #b20f67, #d9147a);
+  color: #fff;
+}
+
+.db-cycle-day-period .db-cycle-day-name {
+  color: #fff;
+}
+
+.db-cycle-day-remind {
+  background: #ffe2ee;
+  color: #7e284b;
+}
+
+.db-cycle-day-remind .db-cycle-day-name {
+  color: #7e284b;
+}
+
+.db-cycle-day-selected {
+  box-shadow: 0 0 0 4rpx #b20f67;
+}
+
+.db-cycle-selected-detail {
+  min-height: 44rpx;
+  padding: 12rpx 14rpx;
+  border-radius: 14rpx;
+  background: #fff8fb;
+  line-height: 1.5;
+}
+
+.db-cycle-calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx 24rpx;
+}
+
+.db-cycle-calendar-legend .db-row {
+  gap: 8rpx;
+}
+
+.db-cycle-legend-dot {
+  width: 22rpx;
+  height: 22rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.db-cycle-settings-grid {
+  display: flex;
+  gap: 14rpx;
+}
+
+.db-cycle-field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10rpx;
+  min-width: 0;
+}
+
+.db-cycle-label {
+  color: var(--ink);
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.db-cycle-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78rpx;
+  padding: 16rpx 18rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 20rpx;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 24rpx;
+}
+
+.db-cycle-date {
+  justify-content: flex-start;
+  gap: 14rpx;
+}
+
+.db-cycle-date-day {
+  color: #c4126c;
+  font-size: 42rpx;
+  font-weight: 800;
+}
+
+.db-cycle-date-month {
+  color: var(--muted);
+  font-size: 23rpx;
+}
+
+.db-cycle-status-regular {
+  background: #e6f6eb;
+  color: #246b3c;
+}
+
+.db-cycle-status-irregular {
+  background: #fff0db;
+  color: #89500a;
+}
+
+.db-cycle-status-pending {
+  background: #f2edf4;
+  color: #514658;
+}
+
+.db-cycle-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  min-height: 240rpx;
+  padding: 12rpx 20rpx 0;
+  border-bottom: 2rpx solid var(--line);
+}
+
+.db-cycle-chart-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8rpx;
+  height: 230rpx;
+}
+
+.db-cycle-chart-value {
+  color: #8b1553;
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.db-cycle-chart-track {
+  display: flex;
+  align-items: flex-end;
+  width: 56rpx;
+  height: 150rpx;
+  border-radius: 18rpx 18rpx 6rpx 6rpx;
+  background: #fff0f6;
+  overflow: hidden;
+}
+
+.db-cycle-chart-bar {
+  width: 100%;
+  min-height: 18rpx;
+  border-radius: 18rpx 18rpx 0 0;
+  background: linear-gradient(180deg, #ff9bc8, #d9147a);
+  transform-origin: bottom;
+  animation: db-cycle-bar-rise 500ms ease-out both;
+}
+
+.db-cycle-chart-column:nth-child(2) .db-cycle-chart-bar {
+  animation-delay: 100ms;
+}
+
+.db-cycle-chart-column:nth-child(3) .db-cycle-chart-bar {
+  animation-delay: 200ms;
+}
+
+.db-cycle-feeling-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.db-cycle-feeling {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  min-height: 68rpx;
+  padding: 12rpx 16rpx;
+  border: 2rpx solid #f3d9e5;
+  border-radius: 999rpx;
+  background: #fff9fc;
+  color: #60384d;
+  font-size: 23rpx;
+}
+
+.db-cycle-feeling-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.db-cycle-feeling-selected {
+  border-color: #d9147a;
+  background: linear-gradient(135deg, #b20f67, #d9147a);
+  color: #fff;
+}
+
+.db-cycle-feeling-selected .db-cycle-feeling-icon {
+  filter: brightness(0) invert(1);
+}
+
+.db-cycle-advice {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  background: #fff3f8;
+  animation: db-cycle-advice-in 220ms ease-out;
+}
+
+.db-cycle-advice-product {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding-top: 12rpx;
+  border-top: 2rpx solid #f2d7e4;
+}
+
+.db-cycle-advice-product .db-grow {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.db-cycle-advice-image {
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 16rpx;
+  background: #fff;
+}
+
+.db-cycle-delete {
+  align-self: flex-start;
+  padding: 8rpx 0;
+  color: #9f2459;
+  font-size: 25rpx;
+  font-weight: 600;
+}
+
+.db-tab-spacer {
+  height: 24rpx;
+}
+
+@keyframes db-cycle-bar-rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes db-cycle-advice-in {
+  from { opacity: 0; transform: translateY(10rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-cycle-ring,
+  .db-cycle-ring-dot,
+  .db-cycle-chart-bar,
+  .db-cycle-advice {
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Boutique Debbo" sub="Pharmacies et créatrices vérifiées" showBack="{{false}}">
+  <app-nav-bar title="Boutique">
     <view slot="right" class="db-cart-btn" hover-class="db-press" bindtap="goPanier" aria-role="button" aria-label="Panier, {{cartCount}} article(s)">
       <image src="/assets/icons/cart.svg" class="db-icon" />
       <view wx:if="{{cartCount}}" class="db-cart-badge"><text>{{cartCount}}</text></view>
@@ -10,14 +10,16 @@
     <view class="db-body">
 
       <!-- Filtres -->
-      <scroll-view scroll-x class="db-filters" enable-flex>
-        <view
-          wx:for="{{filters}}"
-          wx:key="key"
-          class="db-filter {{activeFilter===item.key ? 'db-filter-on' : ''}}"
-          bindtap="setFilter"
-          data-cat="{{item.key}}"
-        ><text>{{item.label}}</text></view>
+      <scroll-view scroll-x class="db-filters">
+        <view class="db-filters-track">
+          <view
+            wx:for="{{filters}}"
+            wx:key="key"
+            class="db-filter {{activeFilter===item.key ? 'db-filter-on' : ''}}"
+            bindtap="setFilter"
+            data-cat="{{item.key}}"
+          ><text>{{item.label}}</text></view>
+        </view>
       </scroll-view>
 
       <!-- Produits -->

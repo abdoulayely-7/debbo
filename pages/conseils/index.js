@@ -1,4 +1,5 @@
 import { back } from '../../utils/helpers/debbo-nav';
+import { ADVICE_PRODUCTS } from '../../utils/debbo-catalog';
 
 Page({
   onShow() {
@@ -7,6 +8,7 @@ Page({
     }
   },
   data: {
+    adviceProducts: ADVICE_PRODUCTS,
     sections: [
       {
         id: 0, open: true,

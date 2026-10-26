@@ -1,6 +1,6 @@
 // ============================================================================
 // DEBBO CATALOG
-// Demo data shared by Boutique, Fiche produit, Panier and Nos kits.
+// Demo data shared by Boutique, Conseils, Fiche produit, Panier and Nos kits.
 // Photos: /assets/images (sources and licences in assets/images/CREDITS.md).
 // ============================================================================
 
@@ -8,7 +8,7 @@ import { formatFcfa } from './debbo-order';
 
 const IMG = '/assets/images/products/';
 
-export const PRODUCTS = [
+const CATALOG = [
   { id: 'serv', cat: 'prot', name: 'Serviettes jour ×10', vendor: 'Pharmacie partenaire Sacré-Cœur', price: 1000, local: false,
     desc: 'Serviettes avec ailettes, 24 cm, pour un flux moyen. Vendues en pharmacie.' },
   { id: 'lavwax', cat: 'prot', name: 'Serviettes lavables en wax ×3', vendor: 'Atelier de couturières, Thiès', price: 4500, local: true,
@@ -34,6 +34,11 @@ export const PRODUCTS = [
   { id: 'cul3', cat: 'acc', name: 'Culottes coton ×3', vendor: 'Pharmacie partenaire Mermoz', price: 3000, local: false,
     desc: 'Coton respirant, tailles S à XL.' },
 ].map((p) => ({ ...p, image: `${IMG}${p.id}.jpg`, priceLabel: `${formatFcfa(p.price)} FCFA` }));
+
+const ADVICE_PRODUCT_IDS = ['bouil', 'tis'];
+
+export const ADVICE_PRODUCTS = CATALOG.filter((product) => ADVICE_PRODUCT_IDS.includes(product.id));
+export const PRODUCTS = CATALOG.filter((product) => !ADVICE_PRODUCT_IDS.includes(product.id));
 
 export const KITS = [
   { id: 'mini', name: 'Kit Dépannage', image: `${IMG}serv.jpg`, price: 500, tag: 'Petit budget', tagClass: 'db-chip-ok',

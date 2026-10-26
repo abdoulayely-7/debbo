@@ -48,6 +48,25 @@ export const navigateTo = (url) => {
   });
 };
 
+/** Runs one navigation per page until the platform reports success or failure. */
+export const navigateWithLock = (page, navigation, lockKey = '_navigationLocked', cooldownMs = 500) => {
+  if (!page || page[lockKey]) return false;
+  page[lockKey] = true;
+
+  const release = () => setTimeout(() => { page[lockKey] = false; }, cooldownMs);
+  Promise.resolve()
+    .then(navigation)
+    .catch((err) => console.warn('[Nav] Locked navigation failed:', err))
+    .then(release);
+
+  return true;
+};
+
+/** Opens a page once per tap sequence, with the standard stack-limit fallback. */
+export const navigateToLocked = (page, url, lockKey = '_navigationLocked') => (
+  navigateWithLock(page, () => navigateTo(url), lockKey)
+);
+
 /**
  * Replaces the current page. Cannot target tabBar pages.
  *
@@ -105,14 +124,13 @@ export const reLaunch = (url) => {
  * await navigateBack();      // go back 1
  * await navigateBack(2);     // go back 2
  */
-export const navigateBack = (delta = 1) => {
+export const navigateBack = (delta = 1, fallbackUrl = '/pages/accueil/index') => {
   return new Promise((resolve, reject) => {
     const pages = getCurrentPages();
 
     if (pages.length <= 1) {
-      // Nothing to go back to — go home instead
-      console.warn('[Nav] No pages to go back to, reLaunching home');
-      wx.reLaunch({ url: '/pages/index/index', success: resolve, fail: reject });
+      console.warn('[Nav] No pages to go back to, opening fallback');
+      wx.reLaunch({ url: fallbackUrl, success: resolve, fail: reject });
       return;
     }
 
@@ -121,7 +139,7 @@ export const navigateBack = (delta = 1) => {
       success: resolve,
       fail: (err) => {
         console.warn('[Nav] navigateBack failed:', err.errMsg);
-        wx.reLaunch({ url: '/pages/index/index', success: resolve, fail: reject });
+        wx.reLaunch({ url: fallbackUrl, success: resolve, fail: reject });
       },
     });
   });

@@ -6,3 +6,34 @@
 .db-accord-arrow { font-size:28rpx; color:var(--muted); transition:transform 0.2s; }
 .db-accord-arrow-open { transform:rotate(180deg); }
 .db-accord-body { padding:0 32rpx 28rpx; display:flex; flex-direction:column; gap:12rpx; }
+
+.db-advice-products {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.db-advice-product {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 28rpx;
+  background: var(--surface);
+}
+
+.db-advice-product-image {
+  width: 144rpx;
+  height: 144rpx;
+  flex-shrink: 0;
+  border-radius: 20rpx;
+  background: var(--sunk);
+}
+
+.db-advice-product-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  min-width: 0;
+}

@@ -1,3 +1,5 @@
+import { navigateBack } from '../../../utils/helpers/navigation';
+
 /**
  * Nav Bar Component
  * Custom navigation bar with safe area handling, back button, and title.
@@ -27,7 +29,7 @@ Component({
     title: { type: String, value: '' },
     sub: { type: String, value: '' },
     showBack: { type: Boolean, value: true },
-    backIcon: { type: String, value: '' },
+    backIcon: { type: String, value: '/assets/icons/back.svg' },
     fallbackUrl: { type: String, value: '/pages/accueil/index' },
     transparent: { type: Boolean, value: false },
   },
@@ -58,18 +60,7 @@ Component({
   methods: {
     goBack() {
       this.triggerEvent('back');
-      const pages = getCurrentPages();
-      if (pages.length > 1) {
-        wx.navigateBack();
-        return;
-      }
-      // Opened directly (deep link, reLaunch, DevTools): go to the fallback.
-      const url = this.data.fallbackUrl;
-      if (!url) return;
-      wx.switchTab({
-        url,
-        fail: () => wx.reLaunch({ url }),
-      });
+      return navigateBack(1, this.data.fallbackUrl);
     },
   },
 });

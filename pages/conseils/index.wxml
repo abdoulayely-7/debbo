@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Conseils" sub="Validés par des sages-femmes partenaires" showBack="{{false}}" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Conseils" backIcon="/assets/icons/back.svg" />
   <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view style="display:flex;gap:12rpx;flex-wrap:wrap;">
@@ -23,6 +23,18 @@
           </view>
           <view wx:if="{{item.note}}">
             <text class="db-small db-muted">{{item.note}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="db-advice-products">
+        <text class="db-bold">Des gestes qui peuvent soulager</text>
+        <text class="db-small db-muted">La chaleur et une boisson chaude peuvent aider à apaiser les crampes légères.</text>
+        <view wx:for="{{adviceProducts}}" wx:key="id" class="db-advice-product">
+          <image class="db-advice-product-image" src="{{item.image}}" mode="aspectFill" />
+          <view class="db-advice-product-copy">
+            <text class="db-bold">{{item.name}}</text>
+            <text class="db-small db-muted">{{item.desc}}</text>
           </view>
         </view>
       </view>

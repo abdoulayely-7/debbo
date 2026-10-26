@@ -8,14 +8,14 @@
 // after reLaunch). These helpers pick the right API for each case.
 // ============================================================================
 
-import { navigateTo } from './navigation';
+import { navigateBack, navigateTo } from './navigation';
 
 export const HOME = '/pages/accueil/index';
 
 /** Pages declared in app.json > tabBar.list (keep in sync). */
 export const TAB_PAGES = [
   '/pages/accueil/index',
-  '/pages/cycle-code/index',
+  '/pages/mon-cycle/index',
   '/pages/boutique/index',
   '/pages/conseils/index',
 ];
@@ -38,11 +38,7 @@ export const go = (url) => {
  * Goes back one page, or home when there is nothing to go back to.
  */
 export const back = () => {
-  if (getCurrentPages().length > 1) {
-    wx.navigateBack({ delta: 1 });
-    return;
-  }
-  wx.switchTab({ url: HOME });
+  return navigateBack(1, HOME);
 };
 
 /** Clears the stack and lands on the home tab (end of a purchase flow). */

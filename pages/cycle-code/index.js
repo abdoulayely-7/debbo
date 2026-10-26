@@ -1,4 +1,6 @@
 import { go, back } from '../../utils/helpers/debbo-nav';
+import { grantCycleAccess } from '../../utils/debbo-cycle-access';
+import { storage } from '../../utils/storage';
 
 Page({
   onShow() {
@@ -23,6 +25,7 @@ Page({
     this.setData({ code, dots });
     if (code.length === 4) {
       if (code === '1234') {
+        grantCycleAccess();
         go('/pages/mon-cycle/index');
       } else {
         setTimeout(() => {
@@ -33,6 +36,12 @@ Page({
     }
   },
   forgot() {
+    const cycleRemoved = storage.remove('debbo.cycle.settings');
+    const reminderRemoved = storage.remove('debbo.reminder');
+    if (!cycleRemoved || !reminderRemoved) {
+      wx.showToast({ title: 'Impossible d’effacer les données', icon: 'none' });
+      return;
+    }
     wx.showToast({ title: 'Données effacées', icon: 'success' });
     this.setData({ code: '', dots: [false, false, false, false] });
   }

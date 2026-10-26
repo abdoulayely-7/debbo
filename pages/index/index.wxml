@@ -1,6 +1,6 @@
 <view class="d-flex flex-column w-100" style="min-height: 100vh; background: #f8f9fa;">
   <!-- Custom Navigation Bar -->
-  <app-nav-bar title="TCMPP Boilerplate" showBack="{{ false }}" />
+  <app-nav-bar title="Accueil" />
 
   <!-- Page Content -->
   <view class="d-flex flex-column gap-3 p-3" style="flex: 1;">

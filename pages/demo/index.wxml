@@ -2,7 +2,7 @@
 
 <view class="d-flex flex-column w-100" style="min-height: 100vh; background: #f8f9fa;">
   <!-- Custom Navigation Bar with back button -->
-  <app-nav-bar title="Component Demo" />
+  <app-nav-bar title="Démo" />
 
   <!-- Page Content -->
   <view class="d-flex flex-column gap-3 p-3" style="flex: 1;">

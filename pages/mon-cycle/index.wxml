@@ -1,145 +1,228 @@
 <view class="db-screen">
-  <app-nav-bar title="Mon cycle" backIcon="/assets/icons/back.svg" />
+  <block wx:if="{{accessGranted}}">
+    <app-nav-bar title="Cycle" backIcon="/assets/icons/back.svg" />
 
-  <!-- Corps scrollable -->
-  <scroll-view scroll-y class="db-scroll">
-    <view class="db-body">
+    <scroll-view scroll-y class="db-scroll">
+      <view class="db-body db-cycle-body">
+      <view class="db-card db-cycle-card">
+        <view class="db-row">
+          <image src="/assets/icons/calendar.svg" class="db-icon" aria-hidden="true" />
+          <text class="db-bold db-grow">Suivi du cycle privé</text>
+          <view class="db-chip {{regularityClass}}"><text>{{cycleStatusLabel}}</text></view>
+        </view>
 
-    <!-- Carte cycle ring -->
-    <view class="db-card">
-      <view class="db-row">
-        <image src="/assets/icons/calendar.svg" class="db-icon" />
-        <text class="db-bold db-grow">Suivi du cycle privé</text>
-        <view class="db-chip db-chip-ind"><text>Jour 24 sur 28</text></view>
-      </view>
+        <view wx:if="{{configured}}" class="db-cycle-ring-wrap">
+          <view
+            class="db-cycle-ring"
+            style="background:conic-gradient(from -90deg, #FF8CC0 0deg, #D9147A {{ringDegrees}}deg, #FFDDEB {{ringDegrees}}deg 360deg);"
+            aria-role="img"
+            aria-label="Progression du cycle, jour {{cycleDay}} sur {{cycleLength}}"
+          >
+            <view class="db-cycle-ring-inner"></view>
+            <view class="db-cycle-ring-dot" style="{{ringDotStyle}}"></view>
+            <view class="db-cycle-ring-center">
+              <block wx:if="{{inPeriod}}">
+                <text class="db-small db-muted">Règles en cours</text>
+                <text class="db-cycle-number">{{periodDay}} j</text>
+                <text class="db-cycle-caption">{{periodDaysRemaining}} j restants</text>
+              </block>
+              <block wx:elif="{{overdueDays > 0}}">
+                <text class="db-small db-muted">Date estimée dépassée</text>
+                <text class="db-cycle-number">{{overdueDays}} j</text>
+                <text class="db-cycle-caption">vos dates peuvent varier</text>
+              </block>
+              <block wx:else>
+                <text class="db-small db-muted">Dans</text>
+                <view class="db-cycle-value">
+                  <view class="db-cycle-adjust" bindtap="adjustNextPeriod" data-delta="-1" aria-role="button" aria-label="Règles un jour plus tôt">−</view>
+                  <text class="db-cycle-number">{{displayDays}} j</text>
+                  <view class="db-cycle-adjust" bindtap="adjustNextPeriod" data-delta="1" aria-role="button" aria-label="Règles un jour plus tard">+</view>
+                </view>
+                <text class="db-cycle-caption">Règles prévues</text>
+              </block>
+            </view>
+          </view>
+        </view>
+        <view wx:else class="db-cycle-empty">
+          <text class="db-bold">{{trackingEnabled ? 'Commencez le suivi de votre cycle' : 'Suivi désactivé'}}</text>
+          <text class="db-small db-muted">{{trackingEnabled ? 'Sélectionnez une date de début de règles pour obtenir une estimation.' : 'Réactivez le suivi pour afficher vos estimations.'}}</text>
+        </view>
 
-      <!-- Cercle visuel simplifié -->
-      <view class="db-cycle-ring">
-        <text class="db-small db-muted">Dans</text>
-        <text style="font-size:64rpx;font-weight:800;color:var(--accent);">5 j</text>
-        <text class="db-small" style="color:var(--accent-text);">Règles prévues</text>
-      </view>
+        <text wx:if="{{configured}}" class="db-small db-center">{{nextPeriodLabel}}</text>
 
-      <text class="db-small db-center db-muted">Vers le <text class="db-bold">27 oct.</text> · estimation</text>
+        <view wx:if="{{configured}}" class="db-cycle-phase">
+          <image src="/assets/icons/info.svg" class="db-icon" aria-hidden="true" />
+          <view class="db-grow">
+            <text class="db-bold">Phase du cycle · {{cyclePhase}}</text>
+            <text class="db-small db-muted">{{cyclePhaseDescription}}</text>
+            <text class="db-cycle-disclaimer">L’ovulation affichée est une estimation, jamais une méthode de contraception.</text>
+          </view>
+        </view>
 
-      <view class="db-row" style="gap:12rpx;align-items:flex-start;">
-        <image src="/assets/icons/info.svg" class="db-icon" />
-        <view class="db-grow">
-          <text class="db-bold">Phase lutéale</text>
-          <text class="db-small db-muted"> · Fatigue ou crampes légères possibles. Une tisane chaude peut aider.</text>
+        <view wx:if="{{cycleAlertText}}" class="db-cycle-alert">
+          <text class="db-small">{{cycleAlertText}}</text>
+          <view class="db-btn db-btn-ghost db-btn-sm" bindtap="askQuestion"><text>Poser une question</text></view>
+        </view>
+
+        <view
+          wx:if="{{trackingEnabled}}"
+          class="db-btn {{inPeriod ? 'db-btn-ghost' : 'db-btn-primary'}} db-cycle-start-btn"
+          bindtap="onPeriodAction"
+          aria-role="button"
+          aria-label="{{startButtonLabel}}"
+        >
+          <text>{{startButtonLabel}}</text>
         </view>
       </view>
-    </view>
 
-    <!-- Bande de jours -->
-    <view class="db-card">
-      <scroll-view scroll-x style="white-space:nowrap;">
-        <view style="display:flex;gap:8rpx;padding:4rpx 0;">
+      <view class="db-card db-cycle-calendar-card">
+        <view class="db-cycle-section-heading">
+          <text class="db-bold">Calendrier</text>
+          <text class="db-small db-muted">Sélectionnez un jour pour afficher les détails.</text>
+        </view>
+
+        <view class="db-cycle-days">
           <view
             wx:for="{{days}}"
             wx:key="key"
-            class="db-day {{item.today ? 'db-day-today' : ''}} {{item.period ? 'db-day-period' : ''}} {{item.remind ? 'db-day-remind' : ''}}">
-            <text class="db-small">{{item.label}}</text>
-            <text class="db-bold">{{item.num}}</text>
+            class="db-cycle-day {{item.today ? 'db-cycle-day-today' : ''}} {{item.period ? 'db-cycle-day-period' : ''}} {{item.remind ? 'db-cycle-day-remind' : ''}} {{item.selected ? 'db-cycle-day-selected' : ''}}"
+            bindtap="selectCalendarDay"
+            data-date="{{item.value}}"
+            aria-role="button"
+            aria-label="{{item.label}} {{item.number}}"
+            aria-pressed="{{item.selected}}"
+          >
+            <text class="db-cycle-day-name">{{item.label}}</text>
+            <text class="db-cycle-day-number">{{item.number}}</text>
           </view>
         </view>
-      </scroll-view>
 
-      <!-- Légende -->
-      <view class="db-row" style="gap:24rpx;flex-wrap:wrap;margin-top:16rpx;">
-        <view class="db-row" style="gap:8rpx;align-items:center;">
-          <view class="db-day db-day-period" style="width:24rpx;height:24rpx;padding:0;min-width:24rpx;"></view>
-          <text class="db-small db-muted">Règles estimées</text>
+        <view class="db-cycle-selected-detail">
+          <text class="db-small">{{selectedDateLabel}}</text>
         </view>
-        <view class="db-row" style="gap:8rpx;align-items:center;">
-          <view class="db-day db-day-remind" style="width:24rpx;height:24rpx;padding:0;min-width:24rpx;"></view>
-          <text class="db-small db-muted">Période de rappel</text>
-        </view>
-      </view>
-    </view>
 
-    <!-- Rappel de kit -->
-    <view class="db-card">
-      <view class="db-row">
-        <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/bell.svg" class="db-icon" /></view>
-        <view class="db-grow" style="display:flex;flex-direction:column;gap:2rpx;">
-          <text class="db-bold">Rappel de kit</text>
-          <text class="db-small db-muted">Pour commander avant vos règles</text>
-        </view>
-        <view class="db-switch {{reminder.enabled ? 'db-switch-on' : ''}}" bindtap="toggleReminder" aria-role="switch" aria-label="Rappel de kit">
-          <view class="db-switch-thumb {{reminder.enabled ? 'db-switch-thumb-on' : ''}}"></view>
+        <view class="db-cycle-calendar-legend">
+          <view class="db-row"><view class="db-cycle-legend-dot db-cycle-day-period" /><text class="db-small">Règles estimées</text></view>
+          <view class="db-row"><view class="db-cycle-legend-dot db-cycle-day-remind" /><text class="db-small">Période de rappel</text></view>
         </view>
       </view>
 
-      <block wx:if="{{reminder.enabled}}">
-        <text class="db-label">Me prévenir</text>
-        <view class="db-choices">
-          <view wx:for="{{daysBefore}}" wx:key="*this" class="db-choice {{reminder.daysBefore === item ? 'db-choice-on' : ''}}" bindtap="setDaysBefore" data-d="{{item}}">
-            <text>{{item}} j avant</text>
-          </view>
-        </view>
+      <view class="db-btn db-btn-primary db-cycle-reorder" bindtap="goToReorder">
+        <image src="/assets/icons/refresh.svg" class="db-icon" aria-hidden="true" />
+        <text>Recommander mon {{selectedKit.name}} · {{selectedKit.priceLabel}}</text>
+      </view>
 
-        <text class="db-label">Moment</text>
-        <view class="db-choices">
-          <view wx:for="{{times}}" wx:key="key" class="db-choice {{reminder.time === item.key ? 'db-choice-on' : ''}}" bindtap="setTime" data-t="{{item.key}}">
-            <text>{{item.label}} · {{item.hour}} h</text>
-          </view>
-        </view>
+      <view class="db-card db-cycle-settings">
+        <text class="db-bold">Enregistrer mes règles</text>
+        <text class="db-small db-muted">Le jour où vos règles commencent, appuyez sur « Mes règles ont commencé » dans la carte au-dessus. Pour ajouter une date passée, choisissez le premier jour des règles ci-dessous.</text>
 
-        <text class="db-label">Kit à recommander</text>
-        <view class="db-choices">
-          <view wx:for="{{kits}}" wx:key="id" class="db-choice {{reminder.kitId === item.id ? 'db-choice-on' : ''}}" bindtap="setKit" data-id="{{item.id}}">
-            <text>{{item.name}} · {{item.priceLabel}}</text>
-          </view>
-        </view>
-
-        <!-- Aperçu : libellé neutre, rien sur les règles -->
-        <view class="db-notif" bindtap="showNotif">
-          <view class="db-notif-app"><text>Max it</text></view>
-          <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
-            <view class="db-row" style="gap:8rpx;">
-              <text class="db-bold db-grow" style="font-size:26rpx;">Max it · Debbo</text>
-              <text class="db-small db-muted">{{reminderAt}}</text>
+        <view class="db-cycle-field">
+          <text class="db-cycle-label">Ajouter une date de début passée</text>
+          <picker mode="date" value="{{lastPeriodValue}}" end="{{todayValue}}" bindchange="setLastPeriod">
+            <view class="db-cycle-picker db-cycle-date">
+              <text class="db-cycle-date-day">{{lastPeriodDay}}</text>
+              <text class="db-cycle-date-month">{{lastPeriodMonthYear}}</text>
             </view>
-            <text class="db-small">Votre commande Bien-être est à renouveler. Un tap pour commander.</text>
+          </picker>
+          <text class="db-small db-muted">Choisissez le premier jour des règles, pas le dernier.</text>
+        </view>
+
+        <view class="db-cycle-settings-grid">
+          <view class="db-cycle-field">
+            <text class="db-cycle-label">Durée du cycle</text>
+            <picker mode="selector" range="{{cycleLengthLabels}}" value="{{cycleLengthIndex}}" bindchange="changeCycleLength">
+              <view class="db-cycle-picker">{{cycleLength}} jours</view>
+            </picker>
+            <text wx:if="{{cycleDurationSub}}" class="db-small db-muted">{{cycleDurationSub}}</text>
+          </view>
+          <view class="db-cycle-field">
+            <text class="db-cycle-label">Me prévenir</text>
+            <picker mode="selector" range="{{reminderLabels}}" value="{{reminderIndex}}" bindchange="changeReminderDays">
+              <view class="db-cycle-picker">{{reminder.daysBefore}} j avant</view>
+            </picker>
           </view>
         </view>
-        <text class="db-small db-muted">Notification discrète : aucun mot sur les règles, même écran verrouillé.</text>
-      </block>
-    </view>
 
-    <!-- Bouton recommander -->
-    <view class="db-btn db-btn-indigo" bindtap="goToReorder">
-      <image src="/assets/icons/refresh.svg" class="db-icon" />
-      <text>Recommander mon {{selectedKit.name}} · {{selectedKit.priceLabel}}</text>
-    </view>
+        <view class="db-btn db-btn-ghost db-btn-sm" bindtap="showNotif"><text>Votre rappel Max it</text></view>
 
-    <!-- Carte paramètres -->
-    <view class="db-card">
-      <view class="db-kv">
-        <text class="db-muted">Début des dernières règles</text>
-        <text class="db-bold">29 sept. 2026</text>
       </view>
-      <view class="db-kv">
-        <text class="db-muted">Durée du cycle</text>
-        <text class="db-bold">28 jours</text>
-      </view>
-    </view>
 
-    <!-- Carte switch + effacement -->
-    <view class="db-card">
-      <view class="db-row">
-        <text class="db-bold db-grow">Suivi activé</text>
-        <view class="db-switch {{trackingOn ? 'db-switch-on' : ''}}" bindtap="toggleTracking">
-          <view class="db-switch-thumb {{trackingOn ? 'db-switch-thumb-on' : ''}}"></view>
+      <view class="db-card db-cycle-regularity">
+        <view class="db-row">
+          <text class="db-bold db-grow">Régularité calculée automatiquement</text>
+          <view class="db-chip {{regularityClass}}"><text>{{regularityLabel}}</text></view>
+        </view>
+
+        <view wx:if="{{cycleBars.length}}" class="db-cycle-chart">
+          <view wx:for="{{cycleBars}}" wx:key="key" class="db-cycle-chart-column">
+            <text class="db-cycle-chart-value">{{item.days}} j</text>
+            <view class="db-cycle-chart-track">
+              <view class="db-cycle-chart-bar" style="height:{{item.height}}%;"></view>
+            </view>
+            <text class="db-small db-muted">{{item.label}}</text>
+          </view>
+        </view>
+        <text class="db-small db-muted">{{regularityDescription}}</text>
+        <text class="db-small db-muted">Un cycle va du premier jour des règles au premier jour des règles suivantes. Après 3 cycles complets (4 dates de début), l’application compare leur durée : écart de 7 jours ou moins = régulier ; plus de 7 jours = irrégulier.</text>
+        <text class="db-small db-muted">Exemple : 28, 30 et 28 jours = régulier. 24, 34 et 29 jours = irrégulier. Vous n’avez pas à choisir le résultat.</text>
+
+        <view wx:if="{{irregularAdviceVisible}}" class="db-cycle-alert">
+          <text class="db-small">Votre cycle varie de plus de 7 jours. C’est fréquent (adolescence, stress, voyage). Si cela continue, ou sans règles depuis 3 mois, parlez-en à une sage-femme.</text>
+          <view class="db-btn db-btn-ghost db-btn-sm" bindtap="askQuestion"><text>Poser une question</text></view>
         </view>
       </view>
-      <view class="db-btn db-btn-danger db-btn-sm" bindtap="wipeData">
-        <text>Effacer toutes mes données de cycle</text>
+
+      <view class="db-card db-cycle-feelings">
+        <text class="db-bold">Comment vous sentez-vous aujourd’hui ?</text>
+        <view class="db-cycle-feeling-list">
+          <view
+            wx:for="{{feelingOptions}}"
+            wx:key="id"
+            class="db-cycle-feeling {{selectedFeeling === item.id ? 'db-cycle-feeling-selected' : ''}}"
+            bindtap="selectFeeling"
+            data-feeling="{{item.id}}"
+            aria-role="button"
+            aria-pressed="{{selectedFeeling === item.id}}"
+          >
+            <image src="{{item.icon}}" class="db-cycle-feeling-icon" aria-hidden="true" />
+            <text>{{item.label}}</text>
+          </view>
+        </view>
+
+        <view wx:if="{{selectedFeelingAdvice}}" class="db-cycle-advice">
+          <text class="db-small">{{selectedFeelingAdvice}}</text>
+          <view wx:if="{{selectedFeeling === 'cramps'}}" class="db-cycle-advice-product">
+            <image src="{{adviceProduct.image}}" class="db-cycle-advice-image" mode="aspectFill" />
+            <view class="db-grow">
+              <text class="db-bold">{{adviceProduct.name}}</text>
+              <text class="db-small db-muted">{{adviceProduct.priceLabel}}</text>
+            </view>
+            <view class="db-btn db-btn-ghost db-btn-sm" bindtap="goToAdviceProduct"><text>Voir</text></view>
+          </view>
+        </view>
+        <text class="db-small db-muted">Gardé uniquement sur ce téléphone, comme vos dates.</text>
       </view>
-    </view>
 
-  </view>
-  </scroll-view>
+      <view class="db-card db-cycle-tracking">
+        <view class="db-row">
+          <text class="db-bold db-grow">{{trackingEnabled ? 'Suivi activé' : 'Suivi désactivé'}}</text>
+          <view
+            class="db-switch {{trackingEnabled ? 'db-switch-on' : ''}}"
+            bindtap="toggleTracking"
+            aria-role="switch"
+            aria-checked="{{trackingEnabled}}"
+            aria-label="Activer ou désactiver le suivi du cycle"
+          >
+            <view class="db-switch-thumb {{trackingEnabled ? 'db-switch-thumb-on' : ''}}" />
+          </view>
+        </view>
+        <view class="db-cycle-delete" bindtap="wipeData" aria-role="button">
+          <text>Effacer toutes mes données de cycle</text>
+        </view>
+      </view>
 
+        <view class="db-tab-spacer" />
+      </view>
+    </scroll-view>
+  </block>
 </view>

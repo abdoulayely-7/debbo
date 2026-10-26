@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Debbo Solidaire" sub="Aucune élève ne devrait manquer les cours à cause de ses règles" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Solidaire" backIcon="/assets/icons/back.svg" />
   <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-grid2">

@@ -1,14 +1,13 @@
 <view class="db-screen">
-  <app-nav-bar title="Bonjour" sub="Debbo · dans Max it" showBack="{{false}}" />
+  <app-nav-bar title="Accueil" showBack="{{false}}" />
 
   <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
 
       <!-- Urgence -->
       <view class="db-sos" bindtap="goToUrgence" aria-role="button">
-        <text class="db-sos-kicker">Urgence</text>
-        <text class="db-sos-title">J'ai besoin{{"\n"}}maintenant</text>
-        <text class="db-sos-sub">Livrée en ~30 min, en toute discrétion · ou retrait en pharmacie à 0,4 km</text>
+        <text class="db-sos-kicker {{bannerUrgent ? 'db-sos-kicker-urgent' : ''}}">{{bannerStatus}}</text>
+        <text class="db-sos-title db-sos-countdown">{{bannerCountdown}}</text>
       </view>
 
       <!-- Raccourcis -->
@@ -19,7 +18,7 @@
             <text class="db-tile-title">Mon cycle</text>
             <image src="/assets/icons/lock.svg" style="width:28rpx;height:28rpx;" />
           </view>
-          <text class="db-tile-sub">Règles dans ~5 jours</text>
+          <text class="db-tile-sub">{{periodTileText}}</text>
           <view class="db-row" style="gap:6rpx;"><image src="/assets/icons/bell.svg" style="width:24rpx;height:24rpx;" /><text class="db-small" style="color:var(--accent-text);font-size:22rpx;font-weight:600;">{{reminderText}}</text></view>
           <view class="db-goal db-goal-soft"><view class="db-goal-fill" style="width:82%;"></view></view>
         </view>
@@ -34,7 +33,7 @@
           <view class="db-tile-icon" style="margin-bottom:0;"><image src="/assets/icons/store.svg" class="db-icon" /></view>
           <view class="db-grow" style="display:flex;flex-direction:column;gap:4rpx;">
             <text class="db-tile-title">Boutique</text>
-            <text class="db-tile-sub">12 produits · fait au Sénégal</text>
+            <text class="db-tile-sub">10 produits · fait au Sénégal</text>
           </view>
           <text class="db-muted">→</text>
         </view>

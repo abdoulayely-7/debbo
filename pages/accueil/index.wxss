@@ -1,1 +1,25 @@
 @import "/utils/debbo.wxss";
+
+.db-sos-countdown {
+  animation: db-countdown-pulse 1.4s ease-in-out infinite;
+}
+
+.db-sos-kicker-urgent {
+  align-self: flex-start;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  letter-spacing: 0.04em;
+}
+
+@keyframes db-countdown-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-sos-countdown {
+    animation: none;
+  }
+}

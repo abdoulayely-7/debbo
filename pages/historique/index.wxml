@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Historique Max it" backIcon="/assets/icons/back.svg">
+  <app-nav-bar title="Historique" backIcon="/assets/icons/back.svg">
     <view slot="right" class="db-row" style="gap:0;">
     <view class="db-iconbtn" hover-class="db-press" bindtap="showNotif"><image src="/assets/icons/info.svg" class="db-icon" /></view>
     </view>

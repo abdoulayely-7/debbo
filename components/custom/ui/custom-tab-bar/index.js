@@ -41,9 +41,6 @@ Component({
       }
       if (key === this.data.activeTab) return;
 
-      if (typeof wx.vibrateShort === 'function') {
-        wx.vibrateShort({ type: 'light', fail() {} });
-      }
       this.triggerEvent('change', { tab: key });
       go(tab.url);
     },

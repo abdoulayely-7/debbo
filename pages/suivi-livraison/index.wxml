@@ -1,5 +1,5 @@
 <view class="sl">
-  <app-nav-bar title="Suivi de commande" sub="{{orderCode}} · {{order.label}}" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Suivi" backIcon="/assets/icons/back.svg" />
 
   <!-- Statut + étapes -->
   <view class="sl-head">

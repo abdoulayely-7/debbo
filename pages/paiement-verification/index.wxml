@@ -1,5 +1,5 @@
 <view class="db-screen verif-screen">
-  <app-nav-bar title="Vérification" showBack="{{false}}" />
+  <app-nav-bar title="Vérification" />
   <view class="verif-center">
     <image src="/assets/icons/spinner.svg" class="spinner-anim" mode="aspectFit"/>
     <text class="verif-title">Vérification en cours…</text>

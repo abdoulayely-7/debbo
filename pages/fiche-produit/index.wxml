@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="{{product.name}}" sub="{{product.vendor}}" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Produit" backIcon="/assets/icons/back.svg" />
   <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <view class="db-hero-media">

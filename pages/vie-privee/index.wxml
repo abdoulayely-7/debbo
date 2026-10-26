@@ -1,5 +1,5 @@
 <view class="db-screen">
-  <app-nav-bar title="Vie privée" backIcon="/assets/icons/back.svg" />
+  <app-nav-bar title="Confidentialité" backIcon="/assets/icons/back.svg" />
   <scroll-view scroll-y class="db-scroll">
     <view class="db-body">
       <!-- Info cards -->

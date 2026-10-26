@@ -1,2 +1,23 @@
 @import "/utils/debbo.wxss";
 .db-chip { cursor: pointer; }
+
+.db-filters {
+  display: block;
+  width: 100%;
+  height: 80rpx;
+  flex-shrink: 0;
+}
+
+.db-filters-track {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.db-filter {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1.2;
+}
